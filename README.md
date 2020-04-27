@@ -1,3 +1,7 @@
-# Spring Cloud Data Flow UI v3
+# Spring Cloud Data Flow UI Clarity
 
-Work in progress...
+Run:
+```
+npm install
+npm run-script start
+```
