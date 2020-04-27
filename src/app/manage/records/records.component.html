@@ -1,0 +1,120 @@
+<h1>Records</h1>
+<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
+  <clr-dg-action-bar>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="refresh(state)">
+      <clr-icon shape="refresh"></clr-icon>
+      Refresh
+    </button>
+  </clr-dg-action-bar>
+  <clr-dg-column class="cell-id" [clrDgField]="'id'" [clrDgSortOrder]="-1">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      ID
+    </ng-container>
+    <clr-dg-filter style="display:none;"></clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'createdOn'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Created On
+    </ng-container>
+    <clr-dg-filter [clrDgFilter]="datesFilter">
+      <app-clr-datagrid-date-filter #datesFilter></app-clr-datagrid-date-filter>
+    </clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'auditAction'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Actions
+      <clr-dg-filter style="display:none;"></clr-dg-filter>
+    </ng-container>
+    <clr-dg-filter [clrDgFilter]="actionFilter">
+      <app-clr-datagrid-action-filter #actionFilter></app-clr-datagrid-action-filter>
+    </clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'auditOperation'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Operations
+      <clr-dg-filter style="display:none;"></clr-dg-filter>
+    </ng-container>
+    <clr-dg-filter [clrDgFilter]="operationFilter">
+      <app-clr-datagrid-operation-filter #operationFilter></app-clr-datagrid-operation-filter>
+    </clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'correlationId'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Operation ID
+      <clr-dg-filter style="display:none;"></clr-dg-filter>
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'createdBy'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Create by
+      <clr-dg-filter style="display:none;"></clr-dg-filter>
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'platformName'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Platform name
+      <clr-dg-filter style="display:none;"></clr-dg-filter>
+    </ng-container>
+  </clr-dg-column>
+  <clr-dg-row *ngFor="let record of page?.items" [clrDgItem]="record">
+    <clr-dg-cell class="cell-id">{{record.auditRecordId}}</clr-dg-cell>
+    <clr-dg-cell>{{record.createdOn | datetime}}</clr-dg-cell>
+    <clr-dg-cell><span class="label label-{{record.auditActionColor}}">{{record.auditAction}}</span></clr-dg-cell>
+    <clr-dg-cell><span class="label">{{record.auditOperation}}</span></clr-dg-cell>
+    <clr-dg-cell>{{record.correlationId}}</clr-dg-cell>
+    <clr-dg-cell>{{record.createdBy || 'N/A'}}</clr-dg-cell>
+    <clr-dg-cell>{{record.platformName || 'N/A'}}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-detail *clrIfDetail="let detail">
+    <clr-dg-detail-header>
+      Record {{detail.auditRecordId}}
+    </clr-dg-detail-header>
+    <clr-dg-detail-body>
+      <table class="table">
+        <thead>
+        <th class="left" width="150px">Property</th>
+        <th class="left">Value</th>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="left"><strong>Created On</strong></td>
+          <td class="left">{{detail.createdOn | datetime}}</td>
+        </tr>
+        <tr>
+          <td class="left"><strong>Actions</strong></td>
+          <td class="left"><span class="label label-{{detail.auditActionColor}}">{{detail.auditAction}}</span></td>
+        </tr>
+        <tr>
+          <td class="left"><strong>Operations</strong></td>
+          <td class="left"><span class="label">{{detail.auditOperation}}</span></td>
+        </tr>
+        <tr>
+          <td class="left"><strong>Operation ID</strong></td>
+          <td class="left">{{detail.correlationId}}</td>
+        </tr>
+        <tr>
+          <td class="left"><strong>Create by</strong></td>
+          <td class="left">{{detail.createdBy || 'N/A'}}</td>
+        </tr>
+        <tr>
+          <td class="left"><strong>Platform name</strong></td>
+          <td class="left">{{detail.platformName || 'N/A'}}</td>
+        </tr>
+        <tr>
+          <td class="left"><strong>Data</strong></td>
+          <td class="left"><code style="word-break: break-all">{{detail.auditData || 'N/A'}}</code></td>
+        </tr>
+        </tbody>
+      </table>
+    </clr-dg-detail-body>
+  </clr-dg-detail>
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgTotalItems]="page?.total" [clrDgPageSize]="20">
+      <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Records per page</clr-dg-page-size>
+      {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+      of {{page?.total}} records
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
+
+<app-unregister #unregisterModal (onUnregistered)="refresh(state)"></app-unregister>

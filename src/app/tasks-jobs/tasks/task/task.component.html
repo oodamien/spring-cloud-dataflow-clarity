@@ -1,0 +1,38 @@
+<h1>Task <strong *ngIf="task">{{task.name}}</strong></h1>
+
+<div *ngIf="task">
+
+  <div class="datagrid-action-bar">
+    <button type="button" class="btn btn-sm btn-secondary" (click)="destroy()">
+      Destroy task
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="launch()">
+      Launch task
+    </button>
+  </div>
+
+  <table class="table" style="width: auto;">
+    <thead>
+    <tr>
+      <th class="left">Property</th>
+      <th class="left">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="left"><strong>Description</strong></td>
+      <td class="left">{{task.description}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Definition</strong></td>
+      <td class="left"><span class="dsl-text">{{task.dslText}}</span></td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Status</strong></td>
+      <td class="left"><span class="label label-{{task.statusColor}}">{{task.status}}</span></td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+<app-task-destroy #destroyModal (onDestroyed)="back()"></app-task-destroy>

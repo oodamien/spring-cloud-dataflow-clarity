@@ -1,0 +1,78 @@
+<h1>Task executions</h1>
+
+<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" [(clrDgSelected)]="!grouped ? null : selected">
+  <clr-dg-action-bar *ngIf="grouped">
+    <button type="button" class="btn btn-sm btn-outline-danger" (click)="setMode(false)">
+      Cancel
+    </button>
+    <button type="button" [disabled]="selected?.length === 0" class="btn btn-sm btn-secondary"
+            (click)="cleanUpExecutions(selected)">
+      Clean Up task execution(s)
+    </button>
+  </clr-dg-action-bar>
+  <clr-dg-action-bar *ngIf="!grouped">
+    <button type="button" class="btn btn-sm btn-secondary" (click)="setMode(true)">
+      Group Actions
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="refresh(state)">
+      <clr-icon shape="refresh"></clr-icon>
+      Refresh
+    </button>
+  </clr-dg-action-bar>
+  <clr-dg-column [clrDgField]="'TASK_EXECUTION_ID'" [clrDgSortOrder]="-1">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Execution ID
+    </ng-container>
+    <clr-dg-filter style="display:none;"></clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'TASK_NAME'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Task name
+    </ng-container>
+    <clr-dg-filter style="display:none;"></clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'START_TIME'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Start Date
+    </ng-container>
+    <clr-dg-filter style="display:none;"></clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'END_TIME'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      End Date
+    </ng-container>
+    <clr-dg-filter style="display:none;"></clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column [clrDgField]="'EXIT_CODE'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Exit Code
+    </ng-container>
+    <clr-dg-filter style="display:none;"></clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-row *ngFor="let execution of page?.items" [clrDgItem]="execution">
+    <clr-dg-cell>
+      <a routerLink="/tasks-jobs/task-executions/{{execution.executionId}}">{{execution.executionId}}</a>
+    </clr-dg-cell>
+    <clr-dg-cell>{{execution.taskName}}</clr-dg-cell>
+    <clr-dg-cell>{{execution.startTime | datetime}}</clr-dg-cell>
+    <clr-dg-cell>{{execution.endTime | datetime}}</clr-dg-cell>
+    <clr-dg-cell>{{execution.exitCode}}</clr-dg-cell>
+    <clr-dg-action-overflow *ngIf="!grouped">
+      <button class="action-item" (click)="details(execution)">Details</button>
+      <button class="action-item" (click)="taskDetails(execution)">Task details</button>
+      <button class="action-item" (click)="relaunch(execution)">Relaunch task</button>
+      <button class="action-item" (click)="stop(execution)"
+              [disabled]="!(execution.taskExecutionStatus !== 'COMPLETE' && execution.taskExecutionStatus !== 'ERROR')">
+        Stop task
+      </button>
+    </clr-dg-action-overflow>
+  </clr-dg-row>
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgTotalItems]="page?.total" [clrDgPageSize]="20">
+      <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Task executions per page</clr-dg-page-size>
+      {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+      of {{page?.total}} task executions
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
+<app-execution-stop #stopModal (onStopped)="refresh(state)"></app-execution-stop>

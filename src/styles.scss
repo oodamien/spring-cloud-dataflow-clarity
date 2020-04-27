@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+
+h1 {
+  margin-top: 0;
+}
+
+.datagrid-action-bar {
+  margin-top: .6rem;
+}
+
+.dsl-text {
+  background: hsl(198, 83%, 94%);
+  color: hsl(198, 100%, 24%);
+  padding: .1rem .4rem;
+  border-radius: 3px;
+}
+
+.key-value-wrapper {
+  .clr-input-wrapper, .key-value-wrapper .clr-input {
+    max-height: none;
+    height: auto;
+    border-bottom: 0 none;
+  }
+
+  clr-control-helper {
+    pre {
+      display: inline-block;
+      margin: 0.1rem 0;
+      padding: 0.2rem;
+
+      code {
+        border: 0 none;
+        padding: 0;
+        border-radius: 0;
+      }
+    }
+
+    code {
+      border: 1px solid var(--clr-color-neutral-400, #cccccc);
+      border-radius: 2px;
+      padding: 0 .2rem;
+    }
+  }
+  .clr-error {
+    code {
+      border: 1px solid var(--clr-color-danger-300, #c21d00);
+      border-radius: 2px;
+      padding: 0 .2rem;
+    }
+  }
+}
+
+.key-value-wrapper {
+  clr-icon {
+    vertical-align: top;
+  }
+}
