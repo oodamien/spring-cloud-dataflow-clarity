@@ -6,6 +6,8 @@ import { ExecutionsComponent } from './executions/executions.component';
 import { TaskComponent } from './tasks/task/task.component';
 import { LaunchComponent } from './tasks/launch/launch.component';
 import { ExecutionComponent } from './executions/execution/execution.component';
+import { ExecutionComponent as JobExecutionComponent } from './jobs/execution/execution.component';
+import { StepComponent } from './jobs/step/step.component';
 
 const routes: Routes = [
   {
@@ -29,9 +31,17 @@ const routes: Routes = [
     component: ExecutionComponent
   },
   {
-    path: 'tasks-jobs/jobs',
+    path: 'tasks-jobs/job-executions',
     component: JobsComponent
-  }
+  },
+  {
+    path: 'tasks-jobs/job-executions/:executionId',
+    component: JobExecutionComponent
+  },
+  {
+    path: 'tasks-jobs/job-executions/:executionId/:stepId',
+    component: StepComponent
+  },
 ];
 
 @NgModule({

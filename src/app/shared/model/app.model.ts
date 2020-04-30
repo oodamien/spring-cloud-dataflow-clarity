@@ -13,7 +13,6 @@ export class App {
   type: ApplicationType;
   uri: string;
   metaDataUri: string;
-  typeColor: string;
   version: string;
   defaultVersion: boolean;
 
@@ -24,25 +23,23 @@ export class App {
     app.uri = input.uri;
     app.version = input.version;
     app.defaultVersion = input.defaultVersion;
-    switch (app.type.toString()) {
+    return app;
+  }
+
+  typeColor() {
+    switch (this.type.toString()) {
       case 'source':
-        app.typeColor = 'info';
-        break;
+        return 'info';
       case 'sink':
-        app.typeColor = 'success';
-        break;
+        return 'success';
       case 'processor':
-        app.typeColor = 'danger';
-        break;
+        return 'danger';
       case 'task':
-        app.typeColor = 'warning';
-        break;
+        return 'warning';
       default:
       case 'app':
-        app.typeColor = 'purple';
-        break;
+        return 'purple';
     }
-    return app;
   }
 }
 

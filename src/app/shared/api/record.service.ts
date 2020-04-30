@@ -4,7 +4,8 @@ import { Observable, of } from 'rxjs';
 import { RecordActionType, RecordOperationType, RecordPage } from '../model/record.model';
 import { HttpUtils } from '../support/http.utils';
 import { DateTime } from 'luxon';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ErrorUtils } from '../support/error.utils';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class RecordService {
       .get<any>('/audit-records', { params, headers })
       .pipe(
         map(RecordPage.parse),
-        // catchError(this.errorHandler.handleError)
+        catchError(ErrorUtils.catchError)
       );
   }
 
@@ -55,13 +56,8 @@ export class RecordService {
     return this.httpClient
       .get<any>('/audit-records/audit-operation-types', { headers: HttpUtils.getDefaultHttpHeaders() })
       .pipe(
-        map(response => {
-          const operationTypes: RecordOperationType[] = response.map(RecordOperationType.parse);
-          // this.auditOperationTypes$.next(auditOperationTypes);
-
-          return operationTypes;
-        }),
-       // catchError(this.errorHandler.handleError)
+        map(response => response.map(RecordOperationType.parse)),
+        catchError(ErrorUtils.catchError)
       );
   }
 
@@ -72,11 +68,8 @@ export class RecordService {
     return this.httpClient
       .get<any>('/audit-records/audit-action-types', { headers: HttpUtils.getDefaultHttpHeaders() })
       .pipe(
-        map(response => {
-          const actionTypes: RecordActionType[] = response.map(RecordActionType.parse);
-          return actionTypes;
-        }),
-        // catchError(this.errorHandler.handleError)
+        map(response => response.map(RecordActionType.parse)),
+        catchError(ErrorUtils.catchError)
       );
   }
 

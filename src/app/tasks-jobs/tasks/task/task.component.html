@@ -1,6 +1,6 @@
 <h1>Task <strong *ngIf="task">{{task.name}}</strong></h1>
 
-<div *ngIf="task">
+<div *ngIf="!loading">
 
   <div class="datagrid-action-bar">
     <button type="button" class="btn btn-sm btn-secondary" (click)="destroy()">
@@ -29,7 +29,7 @@
     </tr>
     <tr>
       <td class="left"><strong>Status</strong></td>
-      <td class="left"><span class="label label-{{task.statusColor}}">{{task.status}}</span></td>
+      <td class="left"><span class="label label-{{task.statusColor()}}">{{task.status}}</span></td>
     </tr>
     </tbody>
   </table>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TaskExecution } from '../../../shared/model/task-execution.model';
 import { TaskService } from '../../../shared/api/task.service';
+import { NotificationService } from '../../../shared/service/notification.service';
 
 @Component({
   selector: 'app-execution-stop',
@@ -12,7 +13,8 @@ export class StopComponent {
   execution: TaskExecution;
   @Output() onStopped = new EventEmitter();
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService,
+              private notificationService: NotificationService) {
   }
 
   open(execution: TaskExecution) {
@@ -21,15 +23,16 @@ export class StopComponent {
   }
 
   stop() {
-    this.taskService.stop(this.execution)
+    this.taskService.executionStop(this.execution)
       .subscribe(
         data => {
-          // this.notificationService.success(`${data.length} app(s) unregistered.`);
+          this.notificationService.success('Stop task execution(s)', `Request submitted to stop ${data.length} task execution(s).`);
           this.onStopped.emit(data);
           this.isOpen = false;
           this.execution = null;
         }, error => {
-          // this.notificationService.error(AppError.is(error) ? error.getMessage() : error);
+          this.notificationService.error('An error occurred', 'An error occurred while stopping task executions. ' +
+            'Please check the server logs for more details.');
           this.isOpen = false;
           this.execution = null;
         });

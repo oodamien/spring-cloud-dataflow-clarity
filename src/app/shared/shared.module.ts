@@ -1,40 +1,52 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClarityModule } from '@clr/angular';
-import { AppService } from './api/app.service';
-import { RecordService } from './api/record.service';
-import { TaskService } from './api/task.service';
-import { JobService } from './api/job.service';
 import { KeyValueComponent } from './component/key-value/key-value.component';
 import { DatetimePipe } from './pipe/datetime.pipe';
 import { OrderByPipe } from './pipe/order-by.pipe';
-import { ClipboardCopyService } from './service/clipboard-copy.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { DurationPipe } from './pipe/duration.pipe';
+import { ConfirmComponent } from './component/confirm/confirm.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ToastComponent } from './component/toast/toast.component';
+import { SearchComponent } from './component/search/search.component';
 
 @NgModule({
+  entryComponents: [
+    ToastComponent
+  ],
   declarations: [
     KeyValueComponent,
     DatetimePipe,
-    OrderByPipe
+    OrderByPipe,
+    DurationPipe,
+    ConfirmComponent,
+    ToastComponent,
+    ToastComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
     ClarityModule,
     ReactiveFormsModule,
-    FormsModule
-  ],
-  providers: [
-    AppService,
-    RecordService,
-    TaskService,
-    JobService,
-    ClipboardCopyService
+    FormsModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      tapToDismiss: false,
+      preventDuplicates: false,
+      maxOpened: 6,
+      enableHtml: true,
+      closeButton: true,
+      toastComponent: ToastComponent
+    })
   ],
   exports: [
     KeyValueComponent,
+    ConfirmComponent,
     DatetimePipe,
-    OrderByPipe
+    OrderByPipe,
+    DurationPipe,
+    SearchComponent
   ]
 })
 export class SharedModule {

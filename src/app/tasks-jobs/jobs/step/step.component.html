@@ -1,0 +1,230 @@
+<h1>
+  Step Execution
+  <span *ngIf="stepResource && execution">
+    <strong>{{stepResource.stepExecution.name}} ({{stepResource.stepExecution.id}})</strong> -
+  Job execution <strong>{{execution.name}} ({{execution.jobExecutionId}})</strong>
+  </span>
+</h1>
+
+<div *ngIf="!loading">
+
+
+  <div class="datagrid-action-bar">
+    <button type="button" class="btn btn-sm btn-secondary" (click)="refresh()">
+      Refresh
+    </button>
+  </div>
+
+  <!--  <div *ngIf="stepProgress.percentageComplete < 1">-->
+  <!--    <h4>Step Execution Progress</h4>-->
+  <!--    <progressbar [animate]="false" max="100"-->
+  <!--                 [value]="stepProgress.percentageComplete * 100"-->
+  <!--                 type="success">-->
+  <!--      <b>{{stepProgress.percentageComplete * 100}}%</b>-->
+  <!--    </progressbar>-->
+  <!--  </div>-->
+
+  <h3>Step Execution</h3>
+  <div id="nostepexecution" *ngIf="!stepResource.stepExecution">
+    No Step Execution available.
+  </div>
+
+  <table *ngIf="stepResource?.stepExecution" class="table" style="width: auto;">
+    <thead>
+    <tr>
+      <th class="left">Property</th>
+      <th class="left">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="left"><strong>Step Execution Id</strong></td>
+      <td class="left">{{stepResource.stepExecution.id}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Job Execution Id</strong></td>
+      <td class="left">{{stepResource.jobExecutionId}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Step Name</strong></td>
+      <td class="left">{{stepResource.stepExecution.name}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Step Type</strong></td>
+      <td class="left">{{stepResource.stepType}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Status</strong></td>
+      <td class="left">
+        <!--        <app-job-execution-status-->
+        <!--          [status]="stepExecutionDetails.stepExecution.stepExecution.status"></app-job-execution-status>-->
+      </td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Commits</strong></td>
+      <td class="left">{{stepResource.stepExecution.commitCount}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Duration</strong></td>
+      <td class="left">{{stepResource.stepExecution.startTime | duration: stepResource.stepExecution.endTime}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Filter Count</strong></td>
+      <td class="left">{{stepResource.stepExecution.filterCount}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Process Skips</strong></td>
+      <td class="left">{{stepResource.stepExecution.processSkipCount}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Reads</strong></td>
+      <td class="left">{{stepResource.stepExecution.readCount}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Read Skips</strong></td>
+      <td class="left">{{stepResource.stepExecution.readSkipCount}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Rollbacks</strong></td>
+      <td class="left">{{stepResource.stepExecution.rollbackCount}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Skips</strong></td>
+      <td class="left">{{stepResource.stepExecution.skipCount}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Writes</strong></td>
+      <td class="left">{{stepResource.stepExecution.writeCount}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Write Skips</strong></td>
+      <td class="left">{{stepResource.stepExecution.writeSkipCount}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="stepResource?.stepExecution?.exitMessage">
+    <h4>Exit Description</h4>
+    <pre class="exit">{{stepResource?.stepExecution?.exitMessage || 'N/A'}}</pre>
+  </div>
+
+  <div *ngIf="stepResource?.stepExecution?.executionContext?.values">
+    <h3>Step Execution Context</h3>
+    <table id="stepExecutionContext" class="table table-hover" style="width: auto;">
+      <thead>
+      <tr>
+        <th class="left">Key</th>
+        <th class="left">Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-template ngFor let-item [ngForOf]="stepResource.stepExecution.executionContext.values | keyvalue">
+        <tr>
+          <td class="left"><strong>{{item.key}}</strong></td>
+          <td class="left">{{item.value}}</td>
+        </tr>
+      </ng-template>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="stepProgress?.stepExecutionHistory">
+    <h3>Step Execution History</h3>
+    <table *ngIf="stepProgress?.stepExecutionHistory" class="table " style="width: auto;">
+      <thead>
+      <tr>
+        <th class="left">Name</th>
+        <th class="left">Count</th>
+        <th class="left">Min</th>
+        <th class="left">Max</th>
+        <th class="left">Mean</th>
+        <th class="left">Standard Deviation</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="left"><strong>Commit Count</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.commitCount.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.commitCount.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.commitCount.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.commitCount.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.commitCount.standardDeviation }}</td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Duration</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.duration.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.duration.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.duration.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.duration.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.duration.standardDeviation }}</td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Duration per Read</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.durationPerRead.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.durationPerRead.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.durationPerRead.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.durationPerRead.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.durationPerRead.standardDeviation }}</td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Filter Count</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.filterCount.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.filterCount.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.filterCount.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.filterCount.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.filterCount.standardDeviation }}</td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Process Skip Count</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.processSkipCount.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.processSkipCount.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.processSkipCount.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.processSkipCount.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.processSkipCount.standardDeviation }}
+        </td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Read Count</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readCount.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readCount.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readCount.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readCount.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readCount.standardDeviation }}</td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Read Skip Count</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readSkipCount.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readSkipCount.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readSkipCount.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readSkipCount.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.readSkipCount.standardDeviation }}</td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Rollback Count</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.rollbackCount.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.rollbackCount.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.rollbackCount.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.rollbackCount.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.rollbackCount.standardDeviation }}</td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Write Count</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeCount.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeCount.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeCount.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeCount.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeCount.standardDeviation }}</td>
+      </tr>
+      <tr>
+        <td class="left"><strong>Write Skip Count</strong></td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeSkipCount.count }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeSkipCount.min }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeSkipCount.max }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeSkipCount.mean }}</td>
+        <td class="left">{{ stepProgress.stepExecutionHistory.writeSkipCount.standardDeviation }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

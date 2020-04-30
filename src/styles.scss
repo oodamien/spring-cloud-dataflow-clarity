@@ -11,8 +11,9 @@ h1 {
 .dsl-text {
   background: hsl(198, 83%, 94%);
   color: hsl(198, 100%, 24%);
-  padding: .1rem .4rem;
+  padding: .3rem .5rem;
   border-radius: 3px;
+  display: inline-block;
 }
 
 .key-value-wrapper {
@@ -41,6 +42,7 @@ h1 {
       padding: 0 .2rem;
     }
   }
+
   .clr-error {
     code {
       border: 1px solid var(--clr-color-danger-300, #c21d00);
@@ -54,4 +56,36 @@ h1 {
   clr-icon {
     vertical-align: top;
   }
+}
+
+.clr-log {
+  padding: 1rem 0;
+
+  pre {
+    overflow: scroll;
+    background: var(--clr-header-6-bg-color, #00364d);
+    padding: 1rem;
+    color: var(--clr-header-title-color, #fafafa);
+    border: 0 none;
+    margin: 0;
+  }
+}
+
+.logo {
+  height: 30px;
+  width: 42px;
+  color: white;
+  margin-right: 16px;
+}
+
+.toast-container {
+  pointer-events: none;
+  position: fixed;
+  z-index: 999999;
+  top: 82px;
+  right: 12px;
+}
+
+.branding {
+  width: 240px;
 }

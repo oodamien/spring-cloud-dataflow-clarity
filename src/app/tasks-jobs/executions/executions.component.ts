@@ -4,6 +4,7 @@ import { ClrDatagridStateInterface } from '@clr/angular';
 import { Router } from '@angular/router';
 import { TaskExecution, TaskExecutionPage } from '../../shared/model/task-execution.model';
 import { StopComponent } from './stop/stop.component';
+import { CleanupComponent } from './cleanup/cleanup.component';
 
 @Component({
   selector: 'app-executions',
@@ -17,6 +18,7 @@ export class ExecutionsComponent {
   grouped = false;
   state: ClrDatagridStateInterface;
   @ViewChild('stopModal', { static: true }) stopModal: StopComponent;
+  @ViewChild('cleanModal', { static: true }) cleanModal: CleanupComponent;
 
   constructor(private taskService: TaskService,
               private router: Router) {
@@ -63,8 +65,8 @@ export class ExecutionsComponent {
     this.selected = [];
   }
 
-  cleanUpExecutions(executions: TaskExecution[]) {
-    // this.destroyModal.open(executions);
+  cleanup(executions: TaskExecution[]) {
+    this.cleanModal.open(executions);
   }
 
 }

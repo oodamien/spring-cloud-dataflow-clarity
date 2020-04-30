@@ -1,57 +1,59 @@
 <h1>
   Application <strong>{{ app.name }}</strong>&nbsp;
-  <span class="label label-{{ app.typeColor }}">{{ app.type }}</span>
+  <span class="label label-{{ app.typeColor() }}">{{ app.type }}</span>
   <span *ngIf="defaultApp" class="label">{{ defaultApp.version }}</span>
 </h1>
 
-<div class="datagrid-action-bar">
-  <button type="button" class="btn btn-sm btn-secondary" (click)="unregister()">
-    Unregister Application
-  </button>
-</div>
+<div *ngIf="!loading">
+  <div class="datagrid-action-bar">
+    <button type="button" class="btn btn-sm btn-secondary" (click)="unregister()">
+      Unregister Application
+    </button>
+  </div>
 
-<table class="table" *ngIf="defaultApp">
-  <thead>
-  <th class="left">Property</th>
-  <th class="left">Value</th>
-  </thead>
-  <tbody>
-  <tr>
-    <td class="left"><strong>URI</strong></td>
-    <td class="left">{{ defaultApp.uri }}</td>
-  </tr>
-  <tr>
-    <td class="left"><strong>Version</strong></td>
-    <td class="left">{{ defaultApp.version }}</td>
-  </tr>
-  </tbody>
-</table>
-
-<div *ngIf="detailedApp && detailedApp.options?.length > 0">
-  <br>
-  <h3>Application properties</h3>
-  <table class="table">
+  <table class="table" *ngIf="defaultApp">
     <thead>
-    <tr>
-      <th class="left">Property</th>
-      <th class="left">Description</th>
-    </tr>
+    <th class="left">Property</th>
+    <th class="left">Value</th>
     </thead>
     <tbody>
-    <tr *ngFor="let property of detailedApp.options | orderby:'name':'ASC'">
-      <td class="left">
-        <strong>{{ property.name }}</strong>
-        <div *ngIf="property.isDeprecated">
-          <span class="label label-warning">Deprecation level: {{ property.deprecation.level }}</span>
-        </div>
-      </td>
-      <td class="left">
-        <div>{{ property.description ? property.description : '(No Description Available)' }}</div>
-        <div class="type-block"><code>{{ property.type }}</code>&nbsp;<span
-          *ngIf="property.defaultValue">(Default value: <code>{{ property.defaultValue }}</code>)</span></div>
-      </td>
+    <tr>
+      <td class="left"><strong>URI</strong></td>
+      <td class="left">{{ defaultApp.uri }}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Version</strong></td>
+      <td class="left">{{ defaultApp.version }}</td>
     </tr>
     </tbody>
   </table>
+
+  <div *ngIf="detailedApp && detailedApp.options?.length > 0">
+    <br>
+    <h3>Application properties</h3>
+    <table class="table">
+      <thead>
+      <tr>
+        <th class="left">Property</th>
+        <th class="left">Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let property of detailedApp.options | orderby:'name':'ASC'">
+        <td class="left">
+          <strong>{{ property.name }}</strong>
+          <div *ngIf="property.isDeprecated">
+            <span class="label label-warning">Deprecation level: {{ property.deprecation.level }}</span>
+          </div>
+        </td>
+        <td class="left">
+          <div>{{ property.description ? property.description : '(No Description Available)' }}</div>
+          <div class="type-block"><code>{{ property.type }}</code>&nbsp;<span
+            *ngIf="property.defaultValue">(Default value: <code>{{ property.defaultValue }}</code>)</span></div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <app-unregister #unregisterModal (onUnregistered)="back()"></app-unregister>

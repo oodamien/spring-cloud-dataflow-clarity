@@ -3,9 +3,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Task, TaskPage } from '../model/task.model';
 import { forkJoin, Observable } from 'rxjs';
 import { HttpUtils } from '../support/http.utils';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { TaskExecution, TaskExecutionPage } from '../model/task-execution.model';
 import { Platform, PlatformTaskList } from '../model/platform.model';
+import { ErrorUtils } from '../support/error.utils';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class TaskService {
       .get<any>('/tasks/definitions', { headers, params })
       .pipe(
         map(TaskPage.parse),
-        // catchError(this.errorHandler.handleError)
+        catchError(ErrorUtils.catchError)
       );
   }
 
@@ -38,17 +39,17 @@ export class TaskService {
       .get<any>(`/tasks/definitions/${name}`, { headers })
       .pipe(
         map(Task.parse),
-        // catchError(this.errorHandler.handleError)
+        catchError(ErrorUtils.catchError)
       );
   }
 
   destroyTask(task: Task): Observable<any> {
     const headers = HttpUtils.getDefaultHttpHeaders();
     return this.httpClient
-      .delete('/tasks/definitions/' + task.name, { headers, observe: 'response' });
-    // .pipe(
-    //   catchError(this.errorHandler.handleError)
-    // );
+      .delete('/tasks/definitions/' + task.name, { headers, observe: 'response' })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
   }
 
   destroyTasks(tasks: Task[]): Observable<any[]> {
@@ -65,19 +66,32 @@ export class TaskService {
       params = params.append('properties', props);
     }
     return this.httpClient
-      .post('/tasks/executions', {}, { headers, params });
-    // .pipe(
-    //   catchError(this.errorHandler.handleError)
-    // );
+      .post('/tasks/executions', {}, { headers, params })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
   }
 
-  stop(taskExecution: TaskExecution): Observable<any> {
+  executionStop(taskExecution: TaskExecution): Observable<any> {
     const headers = HttpUtils.getDefaultHttpHeaders();
     return this.httpClient
-      .post<any>(`/tasks/executions/${taskExecution.executionId}`, { headers });
-    // .pipe(
-    //   catchError(this.errorHandler.handleError)
-    // );
+      .post<any>(`/tasks/executions/${taskExecution.executionId}`, { headers })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  executionClean(taskExecution: TaskExecution): Observable<any> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    return this.httpClient
+      .delete<any>(`/tasks/executions/${taskExecution.executionId}?action=REMOVE_DATA`, { headers, observe: 'response' })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  executionsClean(taskExecutions: TaskExecution[]): Observable<any> {
+    return forkJoin(taskExecutions.map(execution => this.executionClean(execution)));
   }
 
   getExecutions(page: number, size: number, taskName?: string, sort?: string, order?: string): Observable<TaskExecutionPage> {
@@ -93,7 +107,33 @@ export class TaskService {
       .get<any>('/tasks/executions', { headers, params })
       .pipe(
         map(TaskExecutionPage.parse),
-        // catchError(this.errorHandler.handleError)
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  getExecution(executionId: string): Observable<TaskExecution> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    return this.httpClient
+      .get<any>(`/tasks/executions/${executionId}`, { headers })
+      .pipe(
+        map(TaskExecution.parse),
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  getExecutionLogs(taskExecution: TaskExecution): Observable<any> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    let platform = '';
+    if (taskExecution.arguments) {
+      taskExecution.arguments.forEach(arg => {
+        const split = arg.split('=');
+        platform = (split[0] === '--spring.cloud.data.flow.platformname') ? `?platformName=${split[1]}` : '';
+      });
+    }
+    return this.httpClient
+      .get<any>(`/tasks/logs/${taskExecution.externalExecutionId}${platform}`, { headers })
+      .pipe(
+        catchError(ErrorUtils.catchError)
       );
   }
 
@@ -104,7 +144,7 @@ export class TaskService {
       .get<any>('/tasks/platforms', { params, headers })
       .pipe(
         map(PlatformTaskList.parse),
-        // catchError(this.errorHandler.handleError)
+        catchError(ErrorUtils.catchError)
       );
   }
 

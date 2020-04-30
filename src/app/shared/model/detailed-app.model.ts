@@ -52,24 +52,6 @@ export class DetailedApp extends App {
     app.uri = input.uri;
     app.version = input.version;
     app.defaultVersion = input.defaultVersion;
-    switch (app.type.toString()) {
-      case 'source':
-        app.typeColor = 'info';
-        break;
-      case 'sink':
-        app.typeColor = 'success';
-        break;
-      case 'processor':
-        app.typeColor = 'danger';
-        break;
-      case 'task':
-        app.typeColor = 'warning';
-        break;
-      default:
-      case 'app':
-        app.typeColor = 'purple';
-        break;
-    }
     if (input.options) {
       app.options = [];
       for (const option of input.options) {

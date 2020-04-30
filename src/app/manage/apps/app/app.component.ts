@@ -4,6 +4,9 @@ import { AppService } from '../../../shared/api/app.service';
 import { App } from '../../../shared/model/app.model';
 import { DetailedApp } from '../../../shared/model/detailed-app.model';
 import { UnregisterComponent } from '../unregister/unregister.component';
+import { NotificationService } from '../../../shared/service/notification.service';
+import { HttpError } from '../../../shared/model/error.model';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-app',
@@ -21,7 +24,8 @@ export class AppComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private appsService: AppService,
-              private router: Router) {
+              private router: Router,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -36,6 +40,10 @@ export class AppComponent implements OnInit {
     this.appsService
       .getAppVersions(this.app.name, this.app.type)
       .subscribe((apps: App[]) => {
+          if (apps.length === 0) {
+            this.notificationService.error('An error occurred', 'No application found.');
+            this.back();
+          }
           this.versions = apps;
           this.defaultApp = this.versions.find((a) => a.defaultVersion);
           if (this.defaultApp) {
@@ -44,6 +52,7 @@ export class AppComponent implements OnInit {
           this.changeVersion(this.defaultApp ? this.defaultApp : this.versions[0]);
         },
         error => {
+          this.notificationService.error('An error occurred', error);
           // this.notificationService.error(AppError.is(error) ? error.getMessage() : error);
         });
   }
@@ -59,17 +68,17 @@ export class AppComponent implements OnInit {
         },
         error => {
           console.log(error);
-          // if (HttpAppError.is404(error)) {
-          //   this.cancel();
-          // }
-          // this.notificationService.error(AppError.is(error) ? error.getMessage() : error);
+          this.notificationService.error('An error occurred', error);
+          if (HttpError.is404(error)) {
+            this.back();
+          }
         }, () => {
           this.loading = false;
         });
   }
 
   changeVersion(app: App) {
-    if (this.selectedApp?.version === app.version) {
+    if (this.selectedApp?.version === app?.version) {
       return;
     }
     this.loading = true;

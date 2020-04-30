@@ -7,6 +7,8 @@ import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { KeyValueValidator } from '../../../shared/component/key-value/key-value.validator';
 import { TaskPropValidator } from '../task-prop.validator';
 import { Platform } from '../../../shared/model/platform.model';
+import { NotificationService } from '../../../shared/service/notification.service';
+import { HttpError } from '../../../shared/model/error.model';
 
 @Component({
   selector: 'app-launch',
@@ -23,6 +25,7 @@ export class LaunchComponent implements OnInit {
 
   constructor(private taskService: TaskService,
               private router: Router,
+              private notificationService: NotificationService,
               private route: ActivatedRoute) {
   }
 
@@ -80,6 +83,11 @@ export class LaunchComponent implements OnInit {
         });
         this.form.get('platform').setValue(platforms[0].name);
         this.loading = false;
+      }, (error) => {
+        this.notificationService.error('An error occurred', error);
+        if (HttpError.is404(error)) {
+          this.router.navigateByUrl('/tasks-jobs/tasks');
+        }
       });
   }
 
@@ -105,13 +113,13 @@ export class LaunchComponent implements OnInit {
       this.taskService.launch(params.name, params.args, params.props)
         .subscribe(
           data => {
-            // this.notificationService.success('Successfully launched task "' + name + '"');
+            this.notificationService.success('Launch task', 'Successfully launched task "' + this.task.name + '"');
             this.submitting = false;
             this.router.navigate(['/tasks-jobs/tasks']);
           },
           error => {
             this.submitting = false;
-            // this.notificationService.error(AppError.is(error) ? error.getMessage() : error);
+            this.notificationService.error('An error occurred', error);
           }
         );
     }

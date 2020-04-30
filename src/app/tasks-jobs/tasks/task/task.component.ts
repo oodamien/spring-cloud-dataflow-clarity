@@ -4,6 +4,8 @@ import { Task } from '../../../shared/model/task.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
 import { DestroyComponent } from '../destroy/destroy.component';
+import { NotificationService } from '../../../shared/service/notification.service';
+import { HttpError } from '../../../shared/model/error.model';
 
 @Component({
   selector: 'app-task',
@@ -16,6 +18,7 @@ export class TaskComponent implements OnInit {
 
   constructor(private taskService: TaskService,
               private router: Router,
+              private notificationService: NotificationService,
               private route: ActivatedRoute) {
   }
 
@@ -33,6 +36,11 @@ export class TaskComponent implements OnInit {
       .subscribe((task: Task) => {
         this.task = task;
         this.loading = false;
+      }, (error) => {
+        this.notificationService.error('An error occurred', error);
+        if (HttpError.is404(error)) {
+          this.back();
+        }
       });
   }
 

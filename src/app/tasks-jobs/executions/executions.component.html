@@ -6,7 +6,7 @@
       Cancel
     </button>
     <button type="button" [disabled]="selected?.length === 0" class="btn btn-sm btn-secondary"
-            (click)="cleanUpExecutions(selected)">
+              (click)="cleanup(selected)">
       Clean Up task execution(s)
     </button>
   </clr-dg-action-bar>
@@ -65,8 +65,10 @@
               [disabled]="!(execution.taskExecutionStatus !== 'COMPLETE' && execution.taskExecutionStatus !== 'ERROR')">
         Stop task
       </button>
+      <button class="action-item" (click)="cleanup([execution])">Clean up task execution</button>
     </clr-dg-action-overflow>
   </clr-dg-row>
+  <clr-dg-placeholder>We couldn't find any task executions!</clr-dg-placeholder>
   <clr-dg-footer>
     <clr-dg-pagination #pagination [clrDgTotalItems]="page?.total" [clrDgPageSize]="20">
       <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Task executions per page</clr-dg-page-size>
@@ -76,3 +78,4 @@
   </clr-dg-footer>
 </clr-datagrid>
 <app-execution-stop #stopModal (onStopped)="refresh(state)"></app-execution-stop>
+<app-execution-cleanup #cleanModal (onCleaned)="refresh(state)"></app-execution-cleanup>

@@ -51,7 +51,7 @@
   </clr-dg-column>
   <clr-dg-row *ngFor="let app of page?.items" [clrDgItem]="app">
     <clr-dg-cell><a routerLink="/manage/apps/{{app.type}}/{{app.name}}">{{app.name}}</a></clr-dg-cell>
-    <clr-dg-cell><span class="label label-{{app.typeColor}}">{{app.type}}</span></clr-dg-cell>
+    <clr-dg-cell><span class="label label-{{app.typeColor()}}">{{app.type}}</span></clr-dg-cell>
     <clr-dg-cell><span class="label">{{app.version}}</span></clr-dg-cell>
     <clr-dg-cell>{{app.uri}}</clr-dg-cell>
     <clr-dg-cell>{{app.metaDataUri}}</clr-dg-cell>
@@ -60,6 +60,7 @@
       <button class="action-item" (click)="unregistersApp([app])">Unregister</button>
     </clr-dg-action-overflow>
   </clr-dg-row>
+  <clr-dg-placeholder>We couldn't find any applications!</clr-dg-placeholder>
   <clr-dg-footer>
     <clr-dg-pagination #pagination [clrDgTotalItems]="page?.total" [clrDgPageSize]="20">
       <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Applications per page</clr-dg-page-size>

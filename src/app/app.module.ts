@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
@@ -12,6 +12,11 @@ import { AppService } from './shared/api/app.service';
 import { RecordService } from './shared/api/record.service';
 import { TaskService } from './shared/api/task.service';
 import { JobService } from './shared/api/job.service';
+import { LayoutModule } from './layout/layout.module';
+import { FormsModule } from '@angular/forms';
+import { AboutModule } from './about/about.module';
+import { AboutService } from './shared/api/about.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -24,16 +29,39 @@ import { JobService } from './shared/api/job.service';
     BrowserAnimationsModule,
     StreamsModule,
     TasksJobsModule,
+    SharedModule,
     ManageModule,
+    AboutModule,
     HttpClientModule,
+    FormsModule,
+    LayoutModule,
   ],
   providers: [
     AppService,
     RecordService,
     TaskService,
-    JobService
+    JobService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (aboutService: AboutService) => {
+        return () => {
+          return aboutService.load();
+          // return authService.loadSecurityInfo(true)
+          //   .pipe(
+          //     map(securityInfo => {
+          //       if (securityInfo.isAuthenticated || !securityInfo.isAuthenticationEnabled) {
+          //         sharedAboutService.loadAboutInfo();
+          //       }
+          //     })
+          //   ).toPromise();
+        };
+      },
+      deps: [AboutService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

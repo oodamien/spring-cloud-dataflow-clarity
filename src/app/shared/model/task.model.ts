@@ -6,7 +6,6 @@ export class Task {
   public dslText: string;
   public composed: boolean;
   public status: string;
-  public statusColor: string;
 
   static parse(input) {
     const task = new Task();
@@ -15,17 +14,19 @@ export class Task {
     task.composed = input.composed;
     task.status = input.status;
     task.description = input.description || '';
-    switch (task.status) {
-      case 'SUCCESS':
-        task.statusColor = 'success';
-        break;
-      case 'ERROR':
-        task.statusColor = 'danger';
-        break;
-      default:
-        task.statusColor = 'info';
-    }
+
     return task;
+  }
+
+  statusColor() {
+    switch (this.status) {
+      case 'SUCCESS':
+        return 'success';
+      case 'ERROR':
+        return 'danger';
+      default:
+        return 'info';
+    }
   }
 }
 

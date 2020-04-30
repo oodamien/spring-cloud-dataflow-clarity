@@ -12,7 +12,10 @@ import { TaskComponent } from './tasks/task/task.component';
 import { LaunchComponent } from './tasks/launch/launch.component';
 import { SharedModule } from '../shared/shared.module';
 import { ExecutionComponent } from './executions/execution/execution.component';
+import { ExecutionComponent as JobExecutionComponent } from './jobs/execution/execution.component';
 import { StopComponent } from './executions/stop/stop.component';
+import { CleanupComponent } from './executions/cleanup/cleanup.component';
+import { StepComponent } from './jobs/step/step.component';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { StopComponent } from './executions/stop/stop.component';
     TaskComponent,
     LaunchComponent,
     ExecutionComponent,
-    StopComponent
+    StopComponent,
+    CleanupComponent,
+    JobExecutionComponent,
+    StepComponent
   ],
   imports: [
     CommonModule,

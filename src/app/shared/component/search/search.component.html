@@ -1,0 +1,7 @@
+<form class="quick-search" [class.focus]="isFocus">
+  <label for="quick_search">
+    <clr-icon shape="search"></clr-icon>
+    <input (focus)="onInputFocus()" (blur)="onInputBlur()" id="quick_search" type="text"
+           placeholder="Search for keywords...">
+  </label>
+</form>

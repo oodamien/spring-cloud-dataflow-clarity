@@ -1,0 +1,46 @@
+:host {
+  position: relative;
+  padding-left: 1rem;
+  &:after {
+    display: inline-block;
+    position: absolute;
+    content: "";
+    background: #fafafa;
+    background: var(--clr-header-font-color, #fafafa);
+    opacity: var(--clr-header-divider-opacity, 0.15);
+    height: 2rem;
+    width: var(--clr-global-borderwidth, 0.05rem);
+    top: .5rem;
+    left: 0;
+  }
+  clr-icon {
+    position: absolute;
+    left: 29px;
+    top: 16px;
+    width: 24px;
+    height: 24px;
+  }
+  input {
+    background: var(--clr-header-6-bg-color, #00364d);
+    border: 1px solid var(--clr-header-6-bg-color, #00364d);
+    color: white;
+    margin: 0.5rem 0;
+    padding: .3rem .2rem .3rem 2rem;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: none;
+    width: 300px;
+    &:hover {
+      background: #14415a;
+    }
+  }
+  .focus {
+    input {
+      background: white;
+      color: var(--clr-header-6-bg-color, #00364d);
+    }
+    clr-icon {
+      color: var(--clr-header-6-bg-color, #00364d);
+    }
+  }
+}

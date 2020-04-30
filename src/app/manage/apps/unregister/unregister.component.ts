@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { App } from '../../../shared/model/app.model';
 import { AppService } from '../../../shared/api/app.service';
+import { NotificationService } from '../../../shared/service/notification.service';
 
 @Component({
   selector: 'app-unregister',
@@ -12,7 +13,8 @@ export class UnregisterComponent {
   isOpen = false;
   @Output() onUnregistered = new EventEmitter();
 
-  constructor(private appsService: AppService) {
+  constructor(private appsService: AppService,
+              private notificationService: NotificationService) {
   }
 
   open(apps: App[]) {
@@ -25,16 +27,16 @@ export class UnregisterComponent {
       .subscribe(
         data => {
           if (data.length === 1) {
-            // this.notificationService.success('Successfully removed app "'
-            //   + this.applications[0].name + '" of type "' + this.applications[0].type.toString() + '".');
+            this.notificationService.success('Unregister application', 'Successfully removed app "'
+              + this.apps[0].name + '" of type "' + this.apps[0].type.toString() + '".');
           } else {
-            // this.notificationService.success(`${data.length} app(s) unregistered.`);
+            this.notificationService.success('Unregister applications', `${data.length} app(s) unregistered.`);
           }
           this.onUnregistered.emit(data);
           this.isOpen = false;
           this.apps = null;
         }, error => {
-          // this.notificationService.error(AppError.is(error) ? error.getMessage() : error);
+          this.notificationService.error('An error occurred', error);
           this.isOpen = false;
           this.apps = null;
         });

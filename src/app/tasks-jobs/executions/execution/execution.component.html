@@ -1,1 +1,138 @@
-<h1>Execution!!</h1>
+<h1>Task execution - Execution ID: <strong *ngIf="execution">{{ execution?.executionId }}</strong></h1>
+
+<div *ngIf="!loading">
+  <div class="datagrid-action-bar">
+    <button type="button" class="btn btn-sm btn-secondary" (click)="task()">
+      Task Details
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="relaunch()">
+      Relaunch Task
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="stop()"
+            [disabled]="execution.taskExecutionStatus === 'ERROR' || execution.taskExecutionStatus === 'COMPLETE'">
+      Stop execution
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="cleanup()" *ngIf="!execution.parentExecutionId">
+      Clean up task execution
+    </button>
+  </div>
+
+  <table class="table" style="width: auto;">
+    <thead>
+    <tr>
+      <th class="left">Property</th>
+      <th class="left">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="left">Execution Id</td>
+      <td class="left">{{ execution.executionId }}</td>
+    </tr>
+    <tr>
+      <td class="left">Task Name</td>
+      <td class="left">
+        <a [routerLink]="'/tasks-jobs/tasks/' + execution.taskName">{{ execution.taskName }}</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="left">Arguments</td>
+      <td class="left">
+        <div *ngIf="execution.getArgumentsToArray().length > 0">
+          <div *ngFor="let arg of execution.getArgumentsToArray()">
+            {{ arg[0] }}:
+            <strong>{{ arg[1] }}</strong>
+          </div>
+        </div>
+        <div *ngIf="execution.getArgumentsToArray().length === 0">
+          N/A
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="left">External Execution Id</td>
+      <td class="left">{{ execution.externalExecutionId || 'N/A' }}</td>
+    </tr>
+    <tr>
+      <td class="left">Batch Job</td>
+      <td class="left">
+        <clr-icon *ngIf="execution.jobExecutionIds?.length > 0" shape="check"></clr-icon>
+        <clr-icon *ngIf="execution.jobExecutionIds?.length == 0" shape="times"></clr-icon>
+      </td>
+    </tr>
+    <tr>
+      <td class="left">Job Execution Ids</td>
+      <td class="left" *ngIf="execution.jobExecutionIds?.length > 0" id="jobExecutionIds">
+        <a [routerLink]="'/jobs/executions/' + jobExecutionId"
+           *ngFor="let jobExecutionId of execution.jobExecutionIds">
+          {{ jobExecutionId }}
+        </a>
+      </td>
+      <td class="left" *ngIf="execution.jobExecutionIds?.length == 0">
+        N/A
+      </td>
+    </tr>
+    <tr>
+      <td class="left">Start Time</td>
+      <td class="left">{{ execution.startTime | datetime }}</td>
+    </tr>
+    <tr>
+      <td class="left">End Time</td>
+      <td class="left">{{ execution.endTime | datetime }}</td>
+    </tr>
+    <tr>
+      <td class="left">Duration</td>
+      <td class="left">{{ execution.startTime | duration: execution.endTime }}</td>
+    </tr>
+    <tr>
+      <td class="left">Exit Code</td>
+      <td class="left">{{ execution.exitCode }}</td>
+    </tr>
+    <tr>
+      <td class="left">Exit Message</td>
+      <td class="left">{{ execution.exitMessage || 'N/A' }}</td>
+    </tr>
+    <tr>
+      <td class="left">Resource URL</td>
+      <td class="left">{{ execution.resourceUrl || 'N/A' }}</td>
+    </tr>
+    <tr>
+      <td class="left">Application Properties</td>
+      <td class="left">
+        <div *ngIf="execution.getAppPropertiesToArray().length > 0">
+          <div *ngFor="let arg of execution.getAppPropertiesToArray()">
+            {{ arg.key }}:
+            <strong>{{ arg.value }}</strong>
+          </div>
+        </div>
+        <div *ngIf="execution.getAppPropertiesToArray().length === 0">
+          N/A
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="left">Platform Properties</td>
+      <td class="left">
+        <div *ngIf="execution.getDeploymentPropertiesToArray().length > 0">
+          <div *ngFor="let arg of execution.getDeploymentPropertiesToArray()">
+            {{ arg.key }}:
+            <strong>{{ arg.value }}</strong>
+          </div>
+        </div>
+        <div *ngIf="execution.getDeploymentPropertiesToArray().length === 0">
+          N/A
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="logs">
+    <h3>Logs</h3>
+    <div class="clr-log">
+      <pre><code>{{ logs }}</code></pre>
+    </div>
+  </div>
+</div>
+<app-execution-stop #stopModal></app-execution-stop>
+<app-execution-cleanup #cleanModal (onCleaned)="back()"></app-execution-cleanup>

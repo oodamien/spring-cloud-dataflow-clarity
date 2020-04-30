@@ -12,8 +12,6 @@ export class Record {
   auditOperation: string;
   platformName: string;
 
-  auditActionColor: string;
-
   static parse(input) {
     const record = new Record();
     record.auditRecordId = input.auditRecordId;
@@ -24,17 +22,18 @@ export class Record {
     record.auditAction = input.auditAction;
     record.auditOperation = input.auditOperation;
     record.platformName = input.platformName;
-    switch (record.auditAction) {
-      case 'CREATE':
-        record.auditActionColor = 'success';
-        break;
-      case 'DELETE':
-        record.auditActionColor = 'danger';
-        break;
-      default:
-        record.auditActionColor = 'info';
-    }
     return record;
+  }
+
+  auditActionColor() {
+    switch (this.auditAction) {
+      case 'CREATE':
+        return 'success';
+      case 'DELETE':
+        return 'danger';
+      default:
+        return 'info';
+    }
   }
 }
 

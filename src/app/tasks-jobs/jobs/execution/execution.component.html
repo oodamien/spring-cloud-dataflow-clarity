@@ -1,0 +1,124 @@
+<h1>Job execution <strong *ngIf="!loading">{{execution.name}} ({{execution.jobExecutionId}})</strong></h1>
+
+
+<div *ngIf="!loading">
+
+  <div class="datagrid-action-bar">
+    <button type="button" class="btn btn-sm btn-secondary" (click)="restart()"
+            [disabled]="execution.status !== 'FAILED' && execution.status !== 'ERROR'">
+      Restart the job
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="stop()"
+            [disabled]="execution.status === 'FAILED' || execution.status === 'ERROR' || execution.status === 'COMPLETED'">
+      Stop the job
+    </button>
+  </div>
+
+  <table id="execution" class="table" style="width: auto;">
+    <thead>
+    <tr>
+      <th class="left">Property</th>
+      <th class="left">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="left"><strong>Id</strong></td>
+      <td class="left">{{execution.jobExecutionId}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Job Name</strong></td>
+      <td class="left">{{execution.name}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Job Instance</strong></td>
+      <td class="left">{{execution.jobInstanceId}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Task Execution Id</strong></td>
+      <td class="left">
+        <a routerLink="/tasks-jobs/task-executions/{{execution.taskExecutionId}}">{{execution.taskExecutionId}}</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Job Parameters</strong></td>
+      <td class="left">{{execution.jobParametersString}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Start Time</strong></td>
+      <td class="left">{{execution.startTime | datetime}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>End Time</strong></td>
+      <td class="left">{{execution.endTime | datetime}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Duration</strong></td>
+      <td class="left">{{execution.startTime | duration: execution.endTime}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Status</strong></td>
+      <td class="left">
+        <span class="label label-{{execution.statusColor()}}">{{execution.status}}</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Exit Code</strong></td>
+      <td class="left">
+        <span class="label label-{{execution.exitCodeColor()}}">{{execution.exitCode}}</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Exit Message</strong></td>
+      <td class="left">{{execution.exitMessage}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Step Execution Count</strong></td>
+      <td class="left">{{execution.stepExecutionCount}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>Steps</h3>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th class="left">Step Id</th>
+      <th class="left">Step Name</th>
+      <th class="left">Reads</th>
+      <th class="left">Writes</th>
+      <th class="left">Commits</th>
+      <th class="left">Rollbacks</th>
+      <th class="left">Duration</th>
+      <th class="left">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let step of execution.stepExecutions">
+      <td class="left"><a routerLink="/tasks-jobs/job-executions/{{execution.jobInstanceId}}/{{step.id}}">{{step.id}}</a></td>
+      <td class="left"><a routerLink="/tasks-jobs/job-executions/{{execution.jobInstanceId}}/{{step.id}}">{{step.name}}</a></td>
+      <td class="left">{{step.readCount}}</td>
+      <td class="left">{{step.writeCount}}</td>
+      <td class="left">{{step.commitCount}}</td>
+      <td class="left">{{step.rollbackCount}}</td>
+      <td class="left">{{step.startTime | duration: step.endTime}}</td>
+      <td class="left">
+        <span class="label label-{{step.statusColor()}}">{{step.status}}</span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-confirm #restartModal (onConfirmed)="restartJob()" title="Confirm restart the job execution" yes="Restart">
+  This action will restart the steps failed of the job execution <strong>{{execution?.name}}
+  ({{execution?.jobExecutionId}})</strong>.<br/>
+  Are you sure?
+</app-confirm>
+
+<app-confirm #stopModal (onConfirmed)="stopJob()" title="Confirm stop the job execution" yes="Stop">
+  This action will stop the job execution <strong>{{execution?.name}}
+  ({{execution?.jobExecutionId}})</strong>.<br/>
+  Are you sure?
+</app-confirm>

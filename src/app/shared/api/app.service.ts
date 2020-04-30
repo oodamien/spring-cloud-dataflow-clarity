@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpUtils } from '../support/http.utils';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { App, ApplicationType, AppPage } from '../model/app.model';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { DetailedApp } from '../model/detailed-app.model';
+import { ErrorUtils } from '../support/error.utils';
+import { HttpError } from '../model/error.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +32,7 @@ export class AppService {
       .get('/apps', { headers, params })
       .pipe(
         map(AppPage.parse),
-        // catchError(this.errorHandler.handleError)
+        catchError(ErrorUtils.catchError)
       );
   }
 
@@ -43,17 +45,19 @@ export class AppService {
     return this.httpClient.get(url, { headers: httpHeaders })
       .pipe(
         map(DetailedApp.parse),
-        // catchError(this.errorHandler.handleError)
+        catchError(ErrorUtils.catchError)
       );
   }
 
   getAppVersions(name: string, type: ApplicationType): Observable<App[]> {
     return this.getApps(0, 10000, name, type)
-      .pipe(map((app: AppPage): App[] => {
-        return app.items
-          .filter((a) => (a.name === name && a.type === type))
-          .sort((a, b) => a.version < b.version ? -1 : 1);
-      }));
+      .pipe(
+        map((app: AppPage): App[] => {
+          return app.items
+            .filter((a) => (a.name === name && a.type === type))
+            .sort((a, b) => a.version < b.version ? -1 : 1);
+        })
+      );
   }
 
   unregisterApp(app: App): Observable<any> {
@@ -63,7 +67,10 @@ export class AppService {
       url = `${url}/${app.version}`;
     }
     return this.httpClient
-      .delete(url, { headers: httpHeaders });
+      .delete(url, { headers: httpHeaders })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
   }
 
   unregisterApps(apps: App[]): Observable<any[]> {

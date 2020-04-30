@@ -24,11 +24,11 @@ export class TaskExecution {
     execution.executionId = input?.executionId;
     execution.exitCode = input?.exitCode;
     execution.taskName = input?.taskName;
-    execution.startTime = input?.startTime;
-    execution.endTime = input?.endTime;
+    execution.startTime = input?.startTime ? DateTime.fromISO(input.startTime) : null;
+    execution.endTime = input?.endTime ? DateTime.fromISO(input.endTime) : null;
     execution.exitMessage = input?.exitMessage;
-    execution.arguments = input?.args;
-    execution.jobExecutionIds = input?.jobExecutionIds;
+    execution.arguments = input?.arguments || [];
+    execution.jobExecutionIds = input?.jobExecutionIds || [];
     execution.errorMessage = input?.errorMessage;
     execution.taskExecutionStatus = input?.taskExecutionStatus;
     execution.externalExecutionId = input?.externalExecutionId;
@@ -37,6 +37,34 @@ export class TaskExecution {
     execution.appProperties = input?.appProperties;
     execution.deploymentProperties = input?.deploymentProperties;
     return execution;
+  }
+
+  getArgumentsToArray(): Array<any> {
+    return (this.arguments || []).map((arg) => arg.split('='));
+  }
+
+  getAppPropertiesToArray(): Array<any> {
+    if (this.appProperties && Object.keys(this.appProperties).length > 0) {
+      return Object.keys(this.appProperties).map((key) => {
+        return {
+          key,
+          value: this.appProperties[key]
+        };
+      });
+    }
+    return [];
+  }
+
+  getDeploymentPropertiesToArray(): Array<any> {
+    if (this.deploymentProperties && Object.keys(this.deploymentProperties).length > 0) {
+      return Object.keys(this.deploymentProperties).map((key) => {
+        return {
+          key,
+          value: this.deploymentProperties[key]
+        };
+      });
+    }
+    return [];
   }
 }
 
