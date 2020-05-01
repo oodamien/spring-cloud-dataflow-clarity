@@ -25,7 +25,7 @@ export class Stream {
     switch (this.status) {
       case 'UNDEPLOYED':
         return '';
-      case 'COMPLETED':
+      case 'DEPLOYED':
         return 'success';
       case 'DEPLOYING':
         return 'warning';

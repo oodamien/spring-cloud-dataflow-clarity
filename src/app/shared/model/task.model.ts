@@ -20,6 +20,7 @@ export class Task {
 
   statusColor() {
     switch (this.status) {
+      case 'COMPLETE':
       case 'SUCCESS':
         return 'success';
       case 'ERROR':

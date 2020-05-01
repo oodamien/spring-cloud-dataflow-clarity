@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ClarityModule } from '@clr/angular';
 import { KeyValueComponent } from './component/key-value/key-value.component';
 import { DatetimePipe } from './pipe/datetime.pipe';
@@ -10,6 +9,8 @@ import { ConfirmComponent } from './component/confirm/confirm.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ToastComponent } from './component/toast/toast.component';
 import { SearchComponent } from './component/search/search.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   entryComponents: [
@@ -23,11 +24,12 @@ import { SearchComponent } from './component/search/search.component';
     ConfirmComponent,
     ToastComponent,
     ToastComponent,
-    SearchComponent
+    SearchComponent,
   ],
   imports: [
-    CommonModule,
+    RouterModule,
     ClarityModule,
+    BrowserModule,
     ReactiveFormsModule,
     FormsModule,
     ToastrModule.forRoot({

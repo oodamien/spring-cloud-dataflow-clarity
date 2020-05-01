@@ -1,6 +1,7 @@
 :host {
   position: relative;
   padding-left: 1rem;
+
   &:after {
     display: inline-block;
     position: absolute;
@@ -13,34 +14,97 @@
     top: .5rem;
     left: 0;
   }
-  clr-icon {
+
+  .icon-search {
     position: absolute;
     left: 29px;
     top: 16px;
     width: 24px;
     height: 24px;
   }
+
+  .icon-clear {
+    position: absolute;
+    top: 21px;
+    right: 10px;
+    color: var(--clr-header-6-bg-color, #00364d);
+    opacity: .5;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   input {
     background: var(--clr-header-6-bg-color, #00364d);
     border: 1px solid var(--clr-header-6-bg-color, #00364d);
     color: white;
     margin: 0.5rem 0;
-    padding: .3rem .2rem .3rem 2rem;
+    padding: .3rem 2rem .3rem 2rem;
     border-radius: 3px;
     outline: none;
     box-shadow: none;
-    width: 300px;
+    width: 500px;
+
     &:hover {
       background: #14415a;
     }
   }
+
   .focus {
     input {
       background: white;
-      color: var(--clr-header-6-bg-color, #00364d);
+      color: var(--clr-h6-color, #333);
     }
-    clr-icon {
-      color: var(--clr-header-6-bg-color, #00364d);
+
+    .icon-search {
+      color: var(--clr-h6-color, #333)
     }
+  }
+
+  .result {
+    background: white;
+    position: fixed;
+    padding: .4rem 0;
+    top: 60px;
+    width: 500px;
+    z-index: 1001;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+
+    h4 {
+      margin: 0;
+      padding: .3rem 1rem;
+    }
+
+    ul li {
+      list-style: none;
+      a {
+        display: block;
+        padding: .3rem 1rem;
+        color: var(--clr-h6-color, #333);
+        text-decoration: none;
+        &:hover {
+          background: hsl(198, 0%, 91%);
+        }
+      }
+    }
+    div {
+      padding: .5rem 0;
+    }
+    div+div {
+      border-top: 1px solid var(--clr-global-selection-color);
+    }
+  }
+
+  .backdrop {
+    position: fixed;
+    background: rgba(#000, .2);
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
   }
 }
