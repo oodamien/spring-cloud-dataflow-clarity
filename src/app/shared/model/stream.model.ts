@@ -13,7 +13,7 @@ export class Stream {
     stream.name = input?.name;
     stream.dslText = input?.dslText;
     stream.originalDslText = input?.originalDslText;
-    stream.description = input?.escription ? input?.description : '';
+    stream.description = input?.description || '';
     stream.status = input?.status?.toUpperCase();
     if (input.deploymentProperties && input.deploymentProperties.length > 0) {
       stream.deploymentProperties = JSON.parse(input.deploymentProperties);

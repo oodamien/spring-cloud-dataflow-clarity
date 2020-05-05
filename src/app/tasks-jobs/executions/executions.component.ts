@@ -1,47 +1,44 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TaskService } from '../../shared/api/task.service';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { Router } from '@angular/router';
 import { TaskExecution, TaskExecutionPage } from '../../shared/model/task-execution.model';
 import { StopComponent } from './stop/stop.component';
 import { CleanupComponent } from './cleanup/cleanup.component';
+import { DatagridComponent } from '../../shared/component/datagrid/datagrid.component';
+import { ContextService } from '../../shared/service/context.service';
 
 @Component({
   selector: 'app-executions',
   templateUrl: './executions.component.html',
 })
-export class ExecutionsComponent {
+export class ExecutionsComponent extends DatagridComponent {
 
-  loading = true;
   page: TaskExecutionPage;
-  selected = [];
-  grouped = false;
   state: ClrDatagridStateInterface;
   @ViewChild('stopModal', { static: true }) stopModal: StopComponent;
   @ViewChild('cleanModal', { static: true }) cleanModal: CleanupComponent;
 
   constructor(private taskService: TaskService,
+              protected contextService: ContextService,
               private router: Router) {
+    super(contextService, 'executions');
   }
 
   refresh(state: ClrDatagridStateInterface) {
-    this.state = state;
-    this.loading = true;
-    this.grouped = false;
-    const filters: { [prop: string]: any } = {};
-    if (this.state.filters) {
-      for (const filter of this.state.filters) {
-        const { property, value } = filter;
-        filters[property] = value;
-      }
+    if (this.isReady()) {
+      super.refresh(state);
+      const params = this.getParams(state, { name: '', type: '' });
+      this.taskService.getExecutions(params.current - 1, params.size, params?.taskName || '',
+        `${params?.by || ''}`, `${params?.reverse ? 'DESC' : 'ASC'}`)
+        .subscribe((page: TaskExecutionPage) => {
+          this.attachColumns();
+          this.page = page;
+          this.updateGroupContext(params);
+          this.selected = [];
+          this.loading = false;
+        });
     }
-    this.taskService.getExecutions(this.state.page.current - 1, this.state.page.size, filters?.taskName || '',
-      `${this.state?.sort?.by || ''}`, `${this.state?.sort?.reverse ? 'DESC' : 'ASC'}`)
-      .subscribe((page: TaskExecutionPage) => {
-        this.page = page;
-        this.selected = [];
-        this.loading = false;
-      });
   }
 
   details(execution: TaskExecution) {
@@ -58,11 +55,6 @@ export class ExecutionsComponent {
 
   stop(execution: TaskExecution) {
     this.stopModal.open(execution);
-  }
-
-  setMode(grouped: boolean) {
-    this.grouped = grouped;
-    this.selected = [];
   }
 
   cleanup(executions: TaskExecution[]) {

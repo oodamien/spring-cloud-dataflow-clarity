@@ -1,47 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RecordService } from '../../shared/api/record.service';
-import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { ClrDatagridStateInterface } from '@clr/angular';
 import { RecordPage } from '../../shared/model/record.model';
+import { DatagridComponent } from '../../shared/component/datagrid/datagrid.component';
+import { ContextService } from '../../shared/service/context.service';
 
 @Component({
   selector: 'app-records-list',
   templateUrl: './records.component.html',
 })
-export class RecordsComponent implements OnInit {
-
-  loading = true;
-
+export class RecordsComponent extends DatagridComponent {
   page: RecordPage;
 
-  state: ClrDatagridStateInterface;
-
-  constructor(private recordService: RecordService) {
-  }
-
-  ngOnInit(): void {
+  constructor(private recordService: RecordService,
+              protected contextService: ContextService) {
+    super(contextService, 'records');
   }
 
   refresh(state: ClrDatagridStateInterface) {
-    this.state = state;
-    this.loading = true;
-    const filters: { [prop: string]: any } = {};
-    if (this.state.filters) {
-      for (const filter of this.state.filters) {
-        const { property, value } = filter;
-        filters[property] = value;
-      }
+    if (this.isReady()) {
+      super.refresh(state);
+      const params = this.getParams(state, { actionType: '', operationType: '', dates: [null, null] });
+      this.recordService.getRecords(params.current - 1, params.size, params.search || '', params.actionType || '',
+        params.operationType, params.dates[0], params.dates[1], `${params?.by || ''}`, `${params?.reverse ? 'DESC' : 'ASC'}`)
+        .subscribe((page: RecordPage) => {
+          this.attachColumns();
+          this.page = page;
+          this.updateGroupContext(params);
+          this.loading = false;
+        });
     }
-    if (!filters?.dates) {
-      filters.dates = [null, null];
-    }
-    this.recordService.getRecords(this.state.page.current - 1, this.state.page.size, filters?.search || '', filters?.actionType || '',
-      filters?.operationType, filters?.dates[0], filters?.dates[1], `${this.state?.sort?.by || ''}`,
-      `${this.state?.sort?.reverse ? 'DESC' : 'ASC'}`)
-      .subscribe((page: RecordPage) => {
-        this.page = page;
-        this.loading = false;
-      });
   }
-
-
 }

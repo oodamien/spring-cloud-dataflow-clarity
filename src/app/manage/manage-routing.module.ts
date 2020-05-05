@@ -4,6 +4,7 @@ import { AppsComponent } from './apps/apps.component';
 import { ImportExportComponent } from './import-export/import-export.component';
 import { RecordsComponent } from './records/records.component';
 import { AppComponent } from './apps/app/app.component';
+import { AddComponent } from './apps/add/add.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'manage/apps/:appType/:appName',
     component: AppComponent,
+  },
+  {
+    path: 'manage/apps/add',
+    component: AddComponent,
   },
   {
     path: 'manage/import-export',

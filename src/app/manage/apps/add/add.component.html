@@ -1,0 +1,48 @@
+<h1>Add applicaiton(s)</h1>
+<clr-accordion>
+  <clr-accordion-panel>
+    <clr-accordion-title>Register one or more applications</clr-accordion-title>
+    <clr-accordion-content *clrIfExpanded>Content 1</clr-accordion-content>
+  </clr-accordion-panel>
+
+  <clr-accordion-panel>
+    <clr-accordion-title>Import application coordinates from an HTTP URI location</clr-accordion-title>
+    <clr-accordion-content *clrIfExpanded>Content 3</clr-accordion-content>
+  </clr-accordion-panel>
+
+  <clr-accordion-panel>
+    <clr-accordion-title>Import application coordinates from a properties file</clr-accordion-title>
+    <clr-accordion-content *clrIfExpanded>Content 3</clr-accordion-content>
+  </clr-accordion-panel>
+
+  <clr-accordion-panel [clrAccordionPanelOpen]="true">
+    <clr-accordion-title>Import application starters from dataflow.spring.io.</clr-accordion-title>
+    <clr-accordion-content *clrIfExpanded>
+
+      <clr-radio-wrapper>
+        <input type="radio" clrRadio value="option1" name="options" />
+        <label>Stream application starters for Kafka/Maven</label>
+      </clr-radio-wrapper>
+      <clr-radio-wrapper>
+        <input type="radio" clrRadio value="option1" name="options" />
+        <label>Stream application starters for Kafka/Docker</label>
+      </clr-radio-wrapper>
+      <clr-radio-wrapper>
+        <input type="radio" clrRadio value="option1" name="options" />
+        <label>Stream application starters for RabbitMQ/Maven</label>
+      </clr-radio-wrapper>
+      <clr-radio-wrapper>
+        <input type="radio" clrRadio value="option1" name="options" />
+        <label>Stream application starters for RabbitMQ/Docker</label>
+      </clr-radio-wrapper>
+      <clr-radio-wrapper>
+        <input type="radio" clrRadio value="option1" name="options" />
+        <label>Task application starters for Maven</label>
+      </clr-radio-wrapper>
+      <clr-radio-wrapper>
+        <input type="radio" clrRadio value="option1" name="options" />
+        <label>Task application starters for Docker</label>
+      </clr-radio-wrapper>
+    </clr-accordion-content>
+  </clr-accordion-panel>
+</clr-accordion>

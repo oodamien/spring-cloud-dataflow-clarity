@@ -1,65 +1,97 @@
 <h1>Streams</h1>
 
 <clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" [(clrDgSelected)]="!grouped ? null : selected"
-              *ngIf="true">
+              *ngIf="isInit">
   <clr-dg-action-bar *ngIf="grouped">
     <button type="button" class="btn btn-sm btn-outline-danger" (click)="setMode(false)">
       Cancel
     </button>
-<!--    <button type="button" [disabled]="selected?.length === 0" class="btn btn-sm btn-secondary"-->
-<!--            (click)="unregistersApp(selected)">-->
-<!--      Unregister application(s)-->
-<!--    </button>-->
+    <button type="button" class="btn btn-sm btn-secondary" [disabled]="selected?.length == 0"
+            (click)="destroy(selected)">
+      Destroy stream(s)
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" [disabled]="selected?.length == 0"
+            (click)="deploy(selected)">
+      Deploy stream(s)
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" [disabled]="selected?.length == 0"
+            (click)="undeploy(selected)">
+      Undeploy stream(s)
+    </button>
   </clr-dg-action-bar>
   <clr-dg-action-bar *ngIf="!grouped">
     <button type="button" class="btn btn-sm btn-secondary" (click)="setMode(true)">
       Group Actions
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="create()">
+      Create stream(s)
     </button>
     <button type="button" class="btn btn-sm btn-secondary" (click)="refresh(state)">
       <clr-icon shape="refresh"></clr-icon>
       Refresh
     </button>
   </clr-dg-action-bar>
-  <clr-dg-column [clrDgField]="'name'" [clrDgSortOrder]="1">
-    <ng-container *clrDgHideableColumn="{hidden: false}">
+  <clr-dg-column [clrDgField]="'name'"
+                 [clrDgSortOrder]="(context.by === 'name') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeName', $event)"
+                 [style.width.px]="context.sizeName || 'auto'"
+                 [clrFilterValue]="context.name">
+    <ng-container *clrDgHideableColumn="{hidden: !(context?.cols[0])}">
       Name
     </ng-container>
   </clr-dg-column>
-  <clr-dg-column>
-    <ng-container *clrDgHideableColumn="{hidden: false}">
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeDescription', $event)"
+                 [style.width.px]="context.sizeDescription || 'auto'">
+    <ng-container *clrDgHideableColumn="{hidden: !(context?.cols[1])}">
       Description
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column [clrDgField]="'dslText'">
-    <ng-container *clrDgHideableColumn="{hidden: false}">
-      Definitions
+  <clr-dg-column [clrDgField]="'dslText'"
+                 [clrDgSortOrder]="(context.by === 'dslText') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeDslText', $event)"
+                 [style.width.px]="context.sizeDslText || 'auto'">
+    <ng-container *clrDgHideableColumn="{hidden: !(context?.cols[2])}">
+      Definition
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column>
-    <ng-container *clrDgHideableColumn="{hidden: false}">
-      status
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeStatus', $event)"
+                 [style.width.px]="context.sizeStatus || 'auto'">
+    <ng-container *clrDgHideableColumn="{hidden: !(context?.cols[3])}">
+      Status
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-row *ngFor="let stream of page?.items" [clrDgItem]="stream">
-    <clr-dg-cell><a routerLink="/streams/list/{{stream.name}}">{{stream.name}}</a></clr-dg-cell>
-    <clr-dg-cell>{{stream.description}}</clr-dg-cell>
-    <clr-dg-cell><span class="dsl-text">{{stream.originalDslText}}</span></clr-dg-cell>
+  <clr-dg-row *ngFor="let stream of page?.items; let i = index" [clrDgItem]="stream">
+    <clr-dg-cell><a class="text-truncate" routerLink="/streams/list/{{stream.name}}">{{stream.name}}</a></clr-dg-cell>
+    <clr-dg-cell><span class="text-truncate">{{stream.description}}</span></clr-dg-cell>
+    <clr-dg-cell><span class="dsl-text dsl-truncate">{{stream.originalDslText}}</span></clr-dg-cell>
     <clr-dg-cell><span class="label label-{{stream.statusColor()}}">{{stream.status}}</span></clr-dg-cell>
     <clr-dg-action-overflow *ngIf="!grouped">
       <button class="action-item" (click)="details(stream)">Details</button>
-<!--      <button class="action-item" (click)="unregistersApp([app])">Unregister</button>-->
+      <button class="action-item" (click)="deploy([stream])">Deploy</button>
+      <button class="action-item" (click)="undeploy([stream])"
+              [disabled]="stream.status === 'UNDEPLOYED'">Undeploy
+      </button>
+      <button class="action-item" (click)="destroy([stream])">Destroy</button>
     </clr-dg-action-overflow>
-    <clr-dg-row-detail *clrIfExpanded>
-      Lorem ipsum...
-    </clr-dg-row-detail>
+    <ng-template [(clrIfExpanded)]="expended[stream.name]"
+                 ngProjectAs="clr-dg-row-detail">
+      <clr-dg-row-detail>
+        <div class="clr-detail-flo">
+          <app-stream-flo-view id="{{stream.name}}" dsl="{{stream.dslText}}"></app-stream-flo-view>
+        </div>
+      </clr-dg-row-detail>
+    </ng-template>
     <div>Test</div>
   </clr-dg-row>
   <clr-dg-placeholder>We couldn't find any streams!</clr-dg-placeholder>
   <clr-dg-footer>
-    <clr-dg-pagination #pagination [clrDgTotalItems]="page?.total" [clrDgPageSize]="20">
+    <clr-dg-pagination #pagination
+                       [clrDgTotalItems]="page?.total"
+                       [clrDgPageSize]="context.size"
+                       [clrDgPage]="context.current">
       <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Streams per page</clr-dg-page-size>
       {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
       of {{page?.total}} streams
@@ -67,5 +99,5 @@
   </clr-dg-footer>
 </clr-datagrid>
 
-<!--<app-unregister #unregisterModal (onUnregistered)="refresh(state)"></app-unregister>-->
-
+<app-stream-destroy #destroyModal (onDestroyed)="refresh(state)"></app-stream-destroy>
+<app-stream-undeploy #undeployModal (onUndeployed)="refresh(state)"></app-stream-undeploy>

@@ -1,47 +1,54 @@
 <h1>Jobs</h1>
-<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
+<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" *ngIf="isInit">
   <clr-dg-action-bar>
     <button type="button" class="btn btn-sm btn-secondary" (click)="refresh(state)">
       <clr-icon shape="refresh"></clr-icon>
       Refresh
     </button>
   </clr-dg-action-bar>
-  <clr-dg-column>
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeId', $event)"
+                 [style.width.px]="context.sizeId || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Execution Id
     </ng-container>
   </clr-dg-column>
-  <clr-dg-column>
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeName', $event)"
+                 [style.width.px]="context.sizeName || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Name
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column>
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeTaskId', $event)"
+                 [style.width.px]="context.sizeTaskId || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Task Id
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column>
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeInstanceId', $event)"
+                 [style.width.px]="context.sizeInstanceId || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Instance Id
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column>
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeStart', $event)"
+                 [style.width.px]="context.sizeStart || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Job Start Time
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column>
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeStepCount', $event)"
+                 [style.width.px]="context.sizeStepCount || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Step Execution Count
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column>
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeStatus', $event)"
+                 [style.width.px]="context.sizeStatus || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Status
     </ng-container>
@@ -73,7 +80,10 @@
   </clr-dg-row>
   <clr-dg-placeholder>We couldn't find any job executions!</clr-dg-placeholder>
   <clr-dg-footer>
-    <clr-dg-pagination #pagination [clrDgTotalItems]="page?.total" [clrDgPageSize]="20">
+    <clr-dg-pagination #pagination
+                       [clrDgTotalItems]="page?.total"
+                       [clrDgPageSize]="context.size"
+                       [clrDgPage]="context.current">
       <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Job executions per page</clr-dg-page-size>
       {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
       of {{page?.total}} job executions

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, map } from 'rxjs/operators';
 import { AppPage } from '../../model/app.model';
@@ -18,8 +18,12 @@ import { timer } from 'rxjs';
 export class SearchComponent implements OnInit {
 
   isFocus = false;
-
+  isFocusPersist = false;
+  selected = 0;
+  timer;
   search = new FormControl('');
+
+  @ViewChild('inputQuickSearch', { static: true }) inputQuickSearch: ElementRef;
 
   searching = {
     apps: false,
@@ -74,6 +78,7 @@ export class SearchComponent implements OnInit {
         if (this.subscriptions.tasks) {
           this.subscriptions.tasks.unsubscribe();
         }
+        this.selected = 0;
         if (this.isSearch()) {
           this.subscriptions.apps = this.appService
             .getApps(0, 5, `${value}`, null, 'name', 'ASC')
@@ -126,12 +131,86 @@ export class SearchComponent implements OnInit {
 
   onInputFocus() {
     this.isFocus = true;
+    this.isFocusPersist = false;
+  }
+
+  clear() {
+    if (this.timer) {
+      this.timer.unsubscribe();
+    }
+    this.inputQuickSearch.nativeElement.focus();
+    this.search.setValue('');
+    this.results = {
+      apps: null,
+      streams: null,
+      tasks: null
+    };
+    this.searching.apps = false;
+    this.searching.streams = false;
+    this.searching.tasks = false;
   }
 
   onInputBlur() {
-    timer(200).subscribe(() => {
+    this.timer = timer(200).subscribe(() => {
       this.isFocus = false;
+      this.search.setValue('');
+      this.results = {
+        apps: null,
+        streams: null,
+        tasks: null
+      };
+      this.searching.apps = false;
+      this.searching.streams = false;
+      this.searching.tasks = false;
+      this.timer.unsubscribe();
     });
   }
+
+  onKeyDown(event) {
+    if (this.isSearching() || !this.isSearch()) {
+      return;
+    }
+    switch (event.keyCode) {
+      case 40: // Down
+        event.preventDefault();
+        const max = this.results.apps.items.length + this.results.streams.items.length + this.results.tasks.items.length;
+        this.selected = Math.min(this.selected + 1, max - 1);
+        break;
+      case 38: // Up
+        event.preventDefault();
+        this.selected = Math.max(this.selected - 1, 0);
+        break;
+      case 13: // Enter
+        event.preventDefault();
+        let item;
+        if (this.selected < (this.results.apps.items.length)) {
+          item = this.results.apps.items[this.selected];
+          this.navigate(`/manage/apps/${item.type}/${item.name}`);
+        } else if (this.selected < ((this.results.apps.items.length) + (this.results.streams.items.length))) {
+          item = this.results.streams.items[this.selected - this.results.apps.items.length];
+          this.navigate(`/streams/list/${item.name}`);
+        } else {
+          item = this.results.tasks.items[this.selected - this.results.apps.items.length - this.results.streams.items.length];
+          this.navigate(`/tasks-jobs/tasks/${item.name}`);
+        }
+        this.inputQuickSearch.nativeElement.blur();
+        break;
+      case 27: // Escape
+        event.preventDefault();
+        // onClose()
+        this.inputQuickSearch.nativeElement.blur();
+        break;
+      case 39: // Right
+      case 37: // Left
+        break;
+      case 9: // Tab
+        event.preventDefault();
+        break;
+      case 91: // Command
+      case 93: // Command
+        this.selected = 0;
+    }
+  }
+
 
 }

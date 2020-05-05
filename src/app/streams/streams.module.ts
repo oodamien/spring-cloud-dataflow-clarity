@@ -1,27 +1,38 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { StreamsRoutingModule } from './streams-routing.module';
 import { RuntimeComponent } from './runtime/runtime.component';
 import { StreamsComponent } from './streams/streams.component';
 import { ClarityModule } from '@clr/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { StreamComponent } from './streams/stream/stream.component';
+import { DeployComponent } from './streams/deploy/deploy.component';
+import { UndeployComponent } from './streams/undeploy/undeploy.component';
+import { DestroyComponent } from './streams/destroy/destroy.component';
 import { DetailsComponent } from './runtime/details/details.component';
-
+import { StreamFloModule } from '../flo/stream-flo.module';
+import { CreateComponent } from './streams/create/create.component';
 
 @NgModule({
   declarations: [
     RuntimeComponent,
+    DetailsComponent,
     StreamsComponent,
-    DetailsComponent
+    StreamComponent,
+    DeployComponent,
+    UndeployComponent,
+    DestroyComponent,
+    CreateComponent,
   ],
   imports: [
     CommonModule,
     ClarityModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedModule,
-    StreamsRoutingModule
+    StreamsRoutingModule,
+    StreamFloModule
   ]
 })
 export class StreamsModule { }

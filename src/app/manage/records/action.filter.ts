@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { App } from '../../shared/model/app.model';
+import { App, ApplicationType } from '../../shared/model/app.model';
 import { RecordService } from '../../shared/api/record.service';
 import { RecordActionType } from '../../shared/model/record.model';
 
@@ -23,7 +23,7 @@ export class ActionFilterComponent implements OnInit {
 
   private pchanges = new Subject<any>();
   property = 'actionType';
-  value = null;
+  @Input() value = null;
   val = 'all';
   actionTypes: RecordActionType[];
 
@@ -31,9 +31,16 @@ export class ActionFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.recordService.getActionTypes().subscribe((actionTypes) => {
-      this.actionTypes = actionTypes;
-    });
+    this.recordService.getActionTypes()
+      .subscribe((actionTypes) => {
+        this.actionTypes = actionTypes;
+      });
+    if (this.value === 'all' || this.value === '' || !this.value) {
+      this.value = null;
+    } else {
+      this.val = this.value;
+      this.pchanges.next(true);
+    }
   }
 
   public get changes(): Observable<any> {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { App, ApplicationType } from '../../shared/model/app.model';
 
@@ -28,20 +28,30 @@ import { App, ApplicationType } from '../../shared/model/app.model';
       </clr-radio-wrapper>
     </div>`,
 })
-export class TypeFilterComponent {
+export class TypeFilterComponent implements OnInit {
 
   property = 'type';
-  value = null;
-  val = 'all'
+  @Input() value = null;
+  val = 'all';
 
   private pchanges = new Subject<any>();
+
+  ngOnInit(): void {
+    if (this.value === 'all' || this.value === '' || !this.value) {
+      this.value = null;
+    } else {
+      this.val = this.value;
+      this.value = (this.value as any) as ApplicationType
+      this.pchanges.next(true);
+    }
+  }
 
   public get changes(): Observable<any> {
     return this.pchanges.asObservable();
   }
 
   change() {
-    if (this.val === 'all') {
+    if (this.val === 'all' || this.val === '') {
       this.value = null;
     } else {
       this.value = (this.val as any) as ApplicationType;
@@ -54,6 +64,6 @@ export class TypeFilterComponent {
   }
 
   isActive(): boolean {
-    return this.value !== null;
+    return this.value !== null && this.value !== 'all' && this.value !== '';
   }
 }

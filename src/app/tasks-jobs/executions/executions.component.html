@@ -1,6 +1,7 @@
 <h1>Task executions</h1>
 
-<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" [(clrDgSelected)]="!grouped ? null : selected">
+<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" [(clrDgSelected)]="!grouped ? null : selected"
+              *ngIf="isInit">
   <clr-dg-action-bar *ngIf="grouped">
     <button type="button" class="btn btn-sm btn-outline-danger" (click)="setMode(false)">
       Cancel
@@ -19,31 +20,46 @@
       Refresh
     </button>
   </clr-dg-action-bar>
-  <clr-dg-column [clrDgField]="'TASK_EXECUTION_ID'" [clrDgSortOrder]="-1">
+  <clr-dg-column [clrDgField]="'TASK_EXECUTION_ID'"
+                 [clrDgSortOrder]="(context.by === 'TASK_EXECUTION_ID') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeId', $event)"
+                 [style.width.px]="context.sizeId || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Execution ID
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column [clrDgField]="'TASK_NAME'">
+  <clr-dg-column [clrDgField]="'TASK_NAME'"
+                 [clrDgSortOrder]="(context.by === 'TASK_NAME') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeName', $event)"
+                 [style.width.px]="context.sizeName || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Task name
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column [clrDgField]="'START_TIME'">
+  <clr-dg-column [clrDgField]="'START_TIME'"
+                 [clrDgSortOrder]="(context.by === 'START_TIME') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeStart', $event)"
+                 [style.width.px]="context.sizeStart || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Start Date
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column [clrDgField]="'END_TIME'">
+  <clr-dg-column [clrDgField]="'END_TIME'"
+                 [clrDgSortOrder]="(context.by === 'END_TIME') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeEnd', $event)"
+                 [style.width.px]="context.sizeEnd || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       End Date
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column [clrDgField]="'EXIT_CODE'">
+  <clr-dg-column [clrDgField]="'EXIT_CODE'"
+                 [clrDgSortOrder]="(context.by === 'EXIT_CODE') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeExit', $event)"
+                 [style.width.px]="context.sizeExit || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Exit Code
     </ng-container>

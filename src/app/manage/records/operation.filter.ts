@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { App, ApplicationType } from '../../shared/model/app.model';
+import { App } from '../../shared/model/app.model';
 import { RecordService } from '../../shared/api/record.service';
-import { RecordActionType, RecordOperationType } from '../../shared/model/record.model';
+import { RecordOperationType } from '../../shared/model/record.model';
 
 @Component({
   selector: 'app-clr-datagrid-operation-filter',
@@ -22,7 +22,7 @@ export class OperationFilterComponent implements OnInit {
 
   private pchanges = new Subject<any>();
   property = 'operationType';
-  value = null;
+  @Input() value = null;
   val = 'all';
   operationTypes: RecordOperationType[];
 
@@ -30,9 +30,16 @@ export class OperationFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.recordService.getOperationTypes().subscribe((operationTypes) => {
-      this.operationTypes = operationTypes;
-    });
+    this.recordService.getOperationTypes()
+      .subscribe((operationTypes) => {
+        this.operationTypes = operationTypes;
+      });
+    if (this.value === 'all' || this.value === '' || !this.value) {
+      this.value = null;
+    } else {
+      this.val = this.value;
+      this.pchanges.next(true);
+    }
   }
 
   public get changes(): Observable<any> {
@@ -43,7 +50,7 @@ export class OperationFilterComponent implements OnInit {
     if (this.val === 'all') {
       this.value = null;
     } else {
-      this.value = (this.val as any) as RecordActionType;
+      this.value = (this.val as any) as RecordOperationType;
     }
     this.pchanges.next(true);
   }

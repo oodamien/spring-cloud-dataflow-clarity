@@ -1,0 +1,45 @@
+<h1>
+  Stream <strong>{{stream?.name}}</strong>&nbsp;
+  <span *ngIf="stream?.status" class="label label-{{stream.statusColor()}}">{{stream.status}}</span>
+</h1>
+<div *ngIf="!loading">
+  <div class="datagrid-action-bar">
+    <button *ngIf="stream.status === 'UNDEPLOYED'" type="button" class="btn btn-sm btn-secondary" (click)="deploy()">
+      Deploy stream
+    </button>
+    <button *ngIf="stream.status === 'DEPLOYED'" type="button" class="btn btn-sm btn-secondary" (click)="deploy()">
+      Update stream
+    </button>
+    <button *ngIf="stream.status === 'DEPLOYED'" type="button" class="btn btn-sm btn-secondary" (click)="undeploy()">
+      Undeploy stream
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary" (click)="destroy()">
+      Destroy stream
+    </button>
+  </div>
+  <table class="table" style="width: auto;">
+    <thead>
+    <tr>
+      <th class="left">Property</th>
+      <th class="left">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="stream.description">
+      <td class="left"><strong>Description</strong></td>
+      <td class="left">{{stream.description}}</td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Definition</strong></td>
+      <td class="left"><span class="dsl-text">{{stream.dslText}}</span></td>
+    </tr>
+    <tr>
+      <td class="left"><strong>Status</strong></td>
+      <td class="left"><span class="label label-{{stream.statusColor()}}">{{stream.status}}</span></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-stream-destroy #destroyModal (onDestroyed)="back()"></app-stream-destroy>
+<app-stream-undeploy #undeployModal (onUndeployed)="refresh()"></app-stream-undeploy>

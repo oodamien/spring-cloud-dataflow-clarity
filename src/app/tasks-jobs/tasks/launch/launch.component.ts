@@ -86,7 +86,7 @@ export class LaunchComponent implements OnInit {
       }, (error) => {
         this.notificationService.error('An error occurred', error);
         if (HttpError.is404(error)) {
-          this.router.navigateByUrl('/tasks-jobs/tasks');
+          this.back();
         }
       });
   }
@@ -115,7 +115,7 @@ export class LaunchComponent implements OnInit {
           data => {
             this.notificationService.success('Launch task', 'Successfully launched task "' + this.task.name + '"');
             this.submitting = false;
-            this.router.navigate(['/tasks-jobs/tasks']);
+            this.back();
           },
           error => {
             this.submitting = false;
@@ -123,5 +123,9 @@ export class LaunchComponent implements OnInit {
           }
         );
     }
+  }
+
+  back() {
+    this.router.navigate(['/tasks-jobs/tasks']);
   }
 }

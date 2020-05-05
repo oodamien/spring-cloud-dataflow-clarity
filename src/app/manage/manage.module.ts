@@ -14,6 +14,7 @@ import { ActionFilterComponent } from './records/action.filter';
 import { OperationFilterComponent } from './records/operation.filter';
 import { DateFilterComponent } from './records/date.filter';
 import { SharedModule } from '../shared/shared.module';
+import { AddComponent } from './apps/add/add.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SharedModule } from '../shared/shared.module';
     UnregisterComponent,
     ActionFilterComponent,
     OperationFilterComponent,
-    DateFilterComponent
+    DateFilterComponent,
+    AddComponent,
   ],
   imports: [
     CommonModule,

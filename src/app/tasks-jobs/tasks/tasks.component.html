@@ -1,6 +1,7 @@
 <h1>Tasks</h1>
 
-<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" [(clrDgSelected)]="!grouped ? null : selected">
+<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" [(clrDgSelected)]="!grouped ? null : selected"
+              *ngIf="isInit">
   <clr-dg-action-bar *ngIf="grouped">
     <button type="button" class="btn btn-sm btn-outline-danger" (click)="setMode(false)">
       Cancel
@@ -19,25 +20,34 @@
       Refresh
     </button>
   </clr-dg-action-bar>
-  <clr-dg-column [clrDgField]="'taskName'" [clrDgSortOrder]="1">
-    <ng-container *clrDgHideableColumn="{hidden: false}">
+  <clr-dg-column [clrDgField]="'taskName'"
+                 [clrDgSortOrder]="(context.by === 'taskName') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeName', $event)"
+                 [style.width.px]="context.sizeName || 'auto'"
+                 [clrFilterValue]="context.taskName">
+    <ng-container *clrDgHideableColumn="{hidden: !(context?.cols[0])}">
       Name
     </ng-container>
   </clr-dg-column>
-  <clr-dg-column>
-    <ng-container *clrDgHideableColumn="{hidden: false}">
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeDescription', $event)"
+                 [style.width.px]="context.sizeDescription || 'auto'">
+    <ng-container *clrDgHideableColumn="{hidden: !(context?.cols[1])}">
       Description
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column [clrDgField]="'dslTexxt'">
-    <ng-container *clrDgHideableColumn="{hidden: false}">
+  <clr-dg-column [clrDgField]="'dslText'"
+                 [clrDgSortOrder]="(context.by === 'dslText') ? context.reverse ? -1 : 1 : 0"
+                 (clrDgColumnResize)="updateContext('sizeDsl', $event)"
+                 [style.width.px]="context.sizeDsl || 'auto'">
+    <ng-container *clrDgHideableColumn="{hidden: !(context?.cols[2])}">
       Definition
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
-  <clr-dg-column>
-    <ng-container *clrDgHideableColumn="{hidden: false}">
+  <clr-dg-column (clrDgColumnResize)="updateContext('sizeStatus', $event)"
+                 [style.width.px]="context.sizeStatus || 'auto'">
+    <ng-container *clrDgHideableColumn="{hidden: !(context?.cols[3])}">
       Status
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
@@ -55,7 +65,8 @@
   </clr-dg-row>
   <clr-dg-placeholder>We couldn't find any tasks!</clr-dg-placeholder>
   <clr-dg-footer>
-    <clr-dg-pagination #pagination [clrDgTotalItems]="page?.total" [clrDgPageSize]="20">
+    <clr-dg-pagination #pagination [clrDgTotalItems]="page?.total"
+                       [clrDgPageSize]="context.size" [clrDgPage]="context.current">
       <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Tasks per page</clr-dg-page-size>
       {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
       of {{page?.total}} tasks
