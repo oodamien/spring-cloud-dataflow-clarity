@@ -6,6 +6,7 @@ import { Stream, StreamPage } from '../model/stream.model';
 import { forkJoin, Observable, timer } from 'rxjs';
 import { ErrorUtils } from '../support/error.utils';
 import { DataflowEncoder } from '../support/encoder.utils';
+import { Platform, PlatformList } from '../model/platform.model';
 
 @Injectable({
   providedIn: 'root'
@@ -94,5 +95,48 @@ export class StreamService {
 
   undeployStreams(streams: Stream[]): Observable<HttpResponse<any>[]> {
     return forkJoin(streams.map(stream => this.undeployStream(stream)));
+  }
+
+  getDeploymentInfo(name: string): Observable<Stream> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    return this.httpClient
+      .get<any>(`/streams/deployments/${name}`, { headers })
+      .pipe(
+        map(Stream.parse),
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  updateStream(name: string, propertiesAsMap: any = {}): Observable<HttpResponse<any>> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    return this.httpClient
+      .post(`/streams/deployments/update/${name}`, {
+        releaseName: name,
+        packageIdentifier: { packageName: name, packageVersion: null },
+        updateProperties: propertiesAsMap
+      }, { headers, observe: 'response' })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  deployStream(name: string, propertiesAsMap: any = {}): Observable<HttpResponse<any>> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    return this.httpClient
+      .post<any>(`/streams/deployments/${name}`, propertiesAsMap, { headers, observe: 'response' })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  getPlatforms(): Observable<Platform[]> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    const params = HttpUtils.getPaginationParams(0, 1000);
+    return this.httpClient
+      .get<any>(`/streams/deployments/platform/list`, { params, headers })
+      .pipe(
+        map(PlatformList.parse),
+        catchError(ErrorUtils.catchError)
+      );
   }
 }

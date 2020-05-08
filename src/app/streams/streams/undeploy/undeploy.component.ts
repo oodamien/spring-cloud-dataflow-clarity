@@ -12,6 +12,7 @@ export class UndeployComponent {
 
   streams: Stream[];
   isOpen = false;
+  isRunning = false;
   @Output() onUndeployed = new EventEmitter();
 
   constructor(private streamService: StreamService,
@@ -24,6 +25,7 @@ export class UndeployComponent {
   }
 
   unregister() {
+    this.isRunning = true;
     this.streamService.undeployStreams(this.streams)
       .subscribe(
         data => {
@@ -35,11 +37,13 @@ export class UndeployComponent {
           }
           this.onUndeployed.emit(data);
           this.isOpen = false;
+          this.isRunning = false;
           this.streams = null;
         }, error => {
           this.notificationService.error('An error occurred', 'An error occurred while undeploying Streams. ' +
             'Please check the server logs for more details.');
           this.isOpen = false;
+          this.isRunning = false;
           this.streams = null;
         });
   }

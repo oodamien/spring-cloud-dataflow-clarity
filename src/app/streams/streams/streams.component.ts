@@ -60,6 +60,11 @@ export class StreamsComponent extends DatagridComponent implements OnDestroy, On
   }
 
   deploy(streams: Stream[]) {
+    if (streams.length === 1) {
+      this.router.navigateByUrl(`streams/list/${streams[0].name}/deploy`);
+    } else {
+      // TODO
+    }
     // this.router.navigateByUrl(`streams/list/${stream.name}`);
   }
 

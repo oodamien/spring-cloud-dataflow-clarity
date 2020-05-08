@@ -23,7 +23,7 @@ const ERROR_MARKER_SIZE = { width: 20, height: 20 };
 const TYPE_ICON_SIZE = { width: 24, height: 24 };
 
 export const TYPE_ICON_PADDING_PALETTE = 7;
-export const TYPE_ICON_SIZE_PALETTE = { width: 16, height: 16 };
+export const TYPE_ICON_SIZE_PALETTE = { width: 0, height: 0 };
 
 joint.shapes.flo.DataFlowApp = joint.shapes.basic.Generic.extend({
   defaults: joint.util.deepSupplement({
@@ -54,7 +54,7 @@ joint.shapes.flo.DataFlowApp = joint.shapes.basic.Generic.extend({
         'font-size': 14
       },
       '.palette-entry-name-label': {
-        refX: 10 + TYPE_ICON_SIZE_PALETTE.width + TYPE_ICON_PADDING_PALETTE, // jointjs specific: relative position to ref'd element
+        refX: 10, // jointjs specific: relative position to ref'd element
         refY: 0.5,
         'y-alignment': 'middle',
         ref: '.box', // jointjs specific: element for ref-x, ref-y
@@ -62,7 +62,7 @@ joint.shapes.flo.DataFlowApp = joint.shapes.basic.Generic.extend({
         'font-size': 14
       },
       '.name-label': {
-        refX: 10 + TYPE_ICON_SIZE.width + 10, // jointjs specific: relative position to ref'd element
+        refX: 10 + 6, // jointjs specific: relative position to ref'd element
         refY: 0.5,
         refY2: -4,
         'y-alignment': 'bottom',
@@ -71,7 +71,7 @@ joint.shapes.flo.DataFlowApp = joint.shapes.basic.Generic.extend({
         'font-size': 14
       },
       '.type-label': {
-        refX: 10 + TYPE_ICON_SIZE.width + 16,
+        refX: 20 + 6,
         refY: 0.5,
         refY2: 2,
         'y-alignment': 'top',

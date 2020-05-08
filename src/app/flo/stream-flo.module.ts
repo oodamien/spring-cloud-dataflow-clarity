@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { GraphViewComponent } from './shared/graph-view/graph-view.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { DocService } from './shared/service/doc.service';
 import { MessageRateComponent } from './stream/message-rate/message-rate.component';
-import { PropertiesDialogComponent } from './shared/properties/properties-dialog.component';
-import { PropertiesGroupsDialogComponent } from './shared/properties-groups/properties-groups-dialog.component';
 import { InstanceDotComponent } from './stream/instance-dot/instance-dot.component';
 import { StreamNodeComponent } from './stream/node/stream-node.component';
 import { StreamPropertiesDialogComponent } from './stream/properties/stream-properties-dialog.component';
@@ -20,27 +17,26 @@ import { ParserService } from './shared/service/parser.service';
 import { StreamFloCreateComponent } from './stream/component/create.component';
 import { ContentAssistService } from './stream/content-assist.service';
 import { ClarityModule } from '@clr/angular';
+import { SharedFloModule } from './shared-flo.module';
 
 @NgModule({
   declarations: [
     GraphViewComponent,
-    PropertiesDialogComponent,
-    PropertiesGroupsDialogComponent,
     MessageRateComponent,
     InstanceDotComponent,
     StreamNodeComponent,
     StreamPropertiesDialogComponent,
     StreamFloViewComponent,
-    StreamFloCreateComponent
+    StreamFloCreateComponent,
   ],
   imports: [
     CommonModule,
-    BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     ClarityModule,
     FloModule,
+    SharedFloModule,
   ],
   providers: [
     DocService,

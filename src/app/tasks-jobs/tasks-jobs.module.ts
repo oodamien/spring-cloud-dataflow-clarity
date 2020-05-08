@@ -16,6 +16,8 @@ import { ExecutionComponent as JobExecutionComponent } from './jobs/execution/ex
 import { StopComponent } from './executions/stop/stop.component';
 import { CleanupComponent } from './executions/cleanup/cleanup.component';
 import { StepComponent } from './jobs/step/step.component';
+import { CreateComponent } from './tasks/create/create.component';
+import { TaskFloModule } from '../flo/task-flo.module';
 
 
 @NgModule({
@@ -30,15 +32,17 @@ import { StepComponent } from './jobs/step/step.component';
     StopComponent,
     CleanupComponent,
     JobExecutionComponent,
-    StepComponent
+    StepComponent,
+    CreateComponent
   ],
   imports: [
     CommonModule,
-    TasksJobsRoutingModule,
-    FormsModule,
+    ClarityModule,
     ReactiveFormsModule,
     SharedModule,
-    ClarityModule
+    TasksJobsRoutingModule,
+    FormsModule,
+    TaskFloModule,
   ]
 })
 export class TasksJobsModule { }

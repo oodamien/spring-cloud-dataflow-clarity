@@ -1,13 +1,13 @@
-<clr-modal [(clrModalOpen)]="isOpen" *ngIf="apps">
+<clr-modal [(clrModalOpen)]="isOpen" *ngIf="apps" [clrModalClosable]="!isRunning">
   <h3 *ngIf="apps?.length == 1" class="modal-title">Confirm Unregister Application</h3>
   <h3 *ngIf="apps?.length > 1" class="modal-title">Confirm Unregister Applications</h3>
-  <div class="modal-body" *ngIf="apps.length == 1">
+  <div class="modal-body" *ngIf="apps.length == 1 && !isRunning">
     This action will unregister and delete application
     <u><strong>{{ apps[0].name }}</strong></u>
     of type <span class="label label-{{ apps[0].typeColor() }}">{{apps[0].type}}</span>.
     Are you sure?
   </div>
-  <div class="modal-body" *ngIf="apps?.length > 1">
+  <div class="modal-body" *ngIf="apps?.length > 1 && !isRunning">
     This action will unregister and delete the <u><strong>{{ apps.length }}
     application{{ apps?.length > 1 ? 's' : '' }}</strong></u> listed below.<br/>Are you sure?
     <br/>
@@ -28,9 +28,13 @@
       </tbody>
     </table>
   </div>
+  <div class="modal-body" *ngIf="isRunning">
+    <clr-spinner clrInline clrSmall></clr-spinner>
+    Unregistering application(s) ...
+  </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline" (click)="isOpen = false">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="unregister()">
+    <button type="button" class="btn btn-outline" [disabled]="isRunning" (click)="isOpen = false">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="unregister()" [disabled]="isRunning">
       <span *ngIf="apps.length == 1">Unregister the application</span>
       <span *ngIf="apps.length > 1">Unregister the applications</span>
     </button>

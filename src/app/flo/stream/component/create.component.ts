@@ -15,6 +15,8 @@ import { arrangeAll } from '../support/layout';
 import { map, takeUntil } from 'rxjs/operators';
 import * as CodeMirror from 'codemirror';
 import { RenderService } from '../render.service';
+import { StreamGraphPropertiesSource } from '../properties/stream-properties-source';
+import { PropertiesDialogComponent } from '../../shared/properties/properties-dialog.component';
 
 @Component({
   selector: 'app-stream-flo-create',
@@ -32,8 +34,8 @@ import { RenderService } from '../render.service';
                   [paletteEntryPadding]="{width: 1.5, height: 1.5}"
                   [(dsl)]="dsl" [paperPadding]="55"
                   (contentValidated)="contentValidated=$event"
+                  (onProperties)="handleLinkEvent($event)"
                   (validationMarkers)="validationMarkers = $event"
-                  (onProperties)="renderService.handleLinkEvent(editorContext, 'options', $event)"
                   searchFilterPlaceHolder="Search for applications...">
 
         <div header class="flow-definition-container">
@@ -70,9 +72,11 @@ import { RenderService } from '../render.service';
       </div>
       <div class="overlay-loader" *ngIf="!isReady">
         <div style="padding: 10px 0;">
-          <!--          <app-loader></app-loader>-->
+          <clr-spinner clrSmall clrInline></clr-spinner>&nbsp;
+          Loading editor...
         </div>
       </div>
+      <app-properties-dialog-content #propertiesDialog></app-properties-dialog-content>
     </div>
   `,
   encapsulation: ViewEncapsulation.None
@@ -92,6 +96,7 @@ export class StreamFloCreateComponent implements OnInit, OnDestroy {
   isReady = false;
 
   @ViewChild(EditorComponent, { static: true }) flo;
+  @ViewChild(PropertiesDialogComponent, { static: true }) propertiesDialog;
 
   constructor(public metamodelService: MetamodelService,
               public editorService: EditorService,
@@ -148,9 +153,9 @@ export class StreamFloCreateComponent implements OnInit, OnDestroy {
   resizeFloGraph(height?: number) {
     const viewEditor = this.flo.element.nativeElement.children[1];
     if (height) {
-      height = height - 350;
+      height = height - 360;
     } else {
-      height = document.documentElement.clientHeight - 350;
+      height = document.documentElement.clientHeight - 360;
     }
     this.renderer.setStyle(viewEditor, 'height', `${Math.max(height, 350)}px`);
   }
@@ -195,6 +200,14 @@ export class StreamFloCreateComponent implements OnInit, OnDestroy {
         this.editorContext.zoomPercent = this.zoomValues[Math.min(index, 5)];
       }
     }
+  }
+
+  handleLinkEvent(link) {
+    const name = (link.attr('metadata/name'));
+    const version = (link.attr('metadata/version'));
+    const type = (link.attr('metadata/group'));
+    const props = new StreamGraphPropertiesSource(link, null);
+    this.propertiesDialog.open(name, type, version, props);
   }
 
   arrangeAll() {

@@ -9,8 +9,10 @@ import { ConfirmComponent } from './component/confirm/confirm.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ToastComponent } from './component/toast/toast.component';
 import { SearchComponent } from './component/search/search.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { FocusDirective } from './directive/focus.directive';
+import { AutoResizeDirective } from './directive/auto-resize.directive';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   entryComponents: [
@@ -25,11 +27,13 @@ import { RouterModule } from '@angular/router';
     ToastComponent,
     ToastComponent,
     SearchComponent,
+    FocusDirective,
+    AutoResizeDirective
   ],
   imports: [
+    CommonModule,
     RouterModule,
     ClarityModule,
-    BrowserModule,
     ReactiveFormsModule,
     FormsModule,
     ToastrModule.forRoot({
@@ -48,7 +52,9 @@ import { RouterModule } from '@angular/router';
     DatetimePipe,
     OrderByPipe,
     DurationPipe,
-    SearchComponent
+    SearchComponent,
+    FocusDirective,
+    AutoResizeDirective
   ]
 })
 export class SharedModule {

@@ -13,8 +13,18 @@ import { DestroyComponent } from './streams/destroy/destroy.component';
 import { DetailsComponent } from './runtime/details/details.component';
 import { StreamFloModule } from '../flo/stream-flo.module';
 import { CreateComponent } from './streams/create/create.component';
+import { DeployFreeTextComponent } from './streams/deploy/free-text/free-text.component';
 
 @NgModule({
+  imports: [
+    CommonModule,
+    ClarityModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    StreamsRoutingModule,
+    StreamFloModule
+  ],
   declarations: [
     RuntimeComponent,
     DetailsComponent,
@@ -24,15 +34,7 @@ import { CreateComponent } from './streams/create/create.component';
     UndeployComponent,
     DestroyComponent,
     CreateComponent,
+    DeployFreeTextComponent,
   ],
-  imports: [
-    CommonModule,
-    ClarityModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule,
-    StreamsRoutingModule,
-    StreamFloModule
-  ]
 })
 export class StreamsModule { }

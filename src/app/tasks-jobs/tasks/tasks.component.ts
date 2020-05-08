@@ -42,6 +42,10 @@ export class TasksComponent extends DatagridComponent {
     this.router.navigateByUrl(`tasks-jobs/tasks/${task.name}`);
   }
 
+  createTask() {
+    this.router.navigateByUrl(`tasks-jobs/tasks/create`);
+  }
+
   launch(task: Task) {
     this.router.navigateByUrl(`tasks-jobs/tasks/${task.name}/launch`);
   }

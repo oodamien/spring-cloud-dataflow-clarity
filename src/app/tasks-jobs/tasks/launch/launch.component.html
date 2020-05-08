@@ -49,3 +49,14 @@ deployer.myparam2=value2</code></pre>
     </clr-control-container>
   </form>
 </div>
+
+<clr-modal [(clrModalOpen)]="submitting" *ngIf="task" [clrModalClosable]="false">
+  <h3 class="modal-title">Launch task</h3>
+  <div class="modal-body">
+    <clr-spinner clrInline clrSmall></clr-spinner>
+    Launching task ...
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" [disabled]="true">Cancel</button>
+  </div>
+</clr-modal>

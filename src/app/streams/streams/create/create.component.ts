@@ -189,7 +189,6 @@ export class CreateComponent implements OnInit {
   submit = function() {
     // this.form.mark
     if (this.canSubmit()) {
-      console.log('ici');
       // Find index of the first not yet created stream
       // Can't use Array#findIndex(...) because not all browsers support it
       let index = 0;

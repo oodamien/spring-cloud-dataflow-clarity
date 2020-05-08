@@ -16,7 +16,7 @@
     div.numbers {
       width: 50px;
       min-height: $h;
-      background: #f5f6f7;
+      background: var(--clr-global-app-background, #fafafa);
       flex: 0 0 40px;
       font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
       font-size: 15px;
@@ -55,6 +55,7 @@
       width: 100%;
       min-width: 500px;
       color: var(--clr-forms-text-color, #000);
+      background: var(--clr-forms-textarea-background-color, #fff);
 
       &:focus {
         box-shadow: none;

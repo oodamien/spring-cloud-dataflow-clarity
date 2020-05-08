@@ -56,6 +56,7 @@ export class StreamComponent implements OnInit {
   }
 
   deploy() {
+    this.router.navigateByUrl(`streams/list/${this.stream.name}/deploy`);
   }
 
   undeploy() {

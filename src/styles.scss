@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import '../node_modules/spring-flo/dist/flo.css';
+@import 'app/flo/shared/flo.scss';
+
 h1 {
   margin-top: 0;
 }
@@ -7,6 +10,7 @@ h1 {
 .datagrid-action-bar {
   margin-top: .6rem;
 }
+
 .key-value-wrapper {
   .clr-input-wrapper, .key-value-wrapper .clr-input {
     max-height: none;
@@ -161,8 +165,8 @@ a:link, a:visited {
 }
 
 .dsl-text {
-  background: hsl(198, 83%, 94%);
-  color: hsl(198, 100%, 24%);
+  background: var(--clr-label-info-bg-color, #e3f5fc);
+  color: var(--clr-label-info-font-color, #00567a);
   padding: .3rem .5rem;
   border-radius: 3px;
   display: inline-block;
@@ -191,5 +195,47 @@ a:link, a:visited {
   display: inline-block;
 }
 
+.datagrid-scrolling-cells {
+  height: 42px;
+}
 
+.clr-accordion-content {
+  background-color: var(--clr-global-app-background, #fafafa);
+  border-color: var(--clr-accordion-border-color, #cccccc);
+}
 
+.modal-fixed {
+  .modal {
+    justify-content: start;
+  }
+}
+
+// App Labels
+.label-app {
+
+  &.source {
+    background: var(--clr-custom-app-label-source-bg, hsl(198, 80%, 46%));
+    border-color: var(--clr-custom-app-label-source-bg, hsl(198, 80%, 46%));
+    color: var(--clr-custom-app-label-source-text, white);
+  }
+  &.sink {
+    background: var(--clr-custom-app-label-sink-bg, hsl(46, 100%, 45%));
+    border-color: var(--clr-custom-app-label-sink-bg, hsl(46, 100%, 45%));
+    color: var(--clr-custom-app-label-sink-text, white);
+  }
+  &.processor {
+    background: var(--clr-custom-app-label-processor-bg, hsl(93, 67%, 38%));
+    border-color: var(--clr-custom-app-label-processor-bg, hsl(93, 67%, 38%));
+    color: var(--clr-custom-app-label-processor-text, white);
+  }
+  &.app {
+    background: var(--clr-custom-app-label-app-bg, hsl(282, 43%, 54%));
+    border-color: var(--clr-custom-app-label-app-bg, hsl(282, 43%, 54%));
+    color: var(--clr-custom-app-label-app-text, white);
+  }
+  &.task {
+    background: var(--clr-custom-app-label-task-bg, #dc5a4f);
+    border-color: var(--clr-custom-app-label-task-bg, #dc5a4f);
+    color: var(--clr-custom-app-label-task-text, white);
+  }
+}

@@ -29,16 +29,16 @@ export class App {
   typeColor() {
     switch (this.type.toString()) {
       case 'source':
-        return 'info';
+        return 'app source';
       case 'sink':
-        return 'success';
+        return 'app sink';
       case 'processor':
-        return 'danger';
+        return 'app processor';
       case 'task':
-        return 'warning';
+        return 'app task';
       default:
       case 'app':
-        return 'purple';
+        return 'app app';
     }
   }
 }

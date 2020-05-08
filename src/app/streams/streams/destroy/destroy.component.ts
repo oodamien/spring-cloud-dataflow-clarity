@@ -11,6 +11,7 @@ import { StreamService } from '../../../shared/api/stream.service';
 export class DestroyComponent {
   streams: Stream[];
   isOpen = false;
+  isRunning = false;
   @Output() onDestroyed = new EventEmitter();
 
   constructor(private streamService: StreamService,
@@ -23,6 +24,7 @@ export class DestroyComponent {
   }
 
   unregister() {
+    this.isRunning = true;
     this.streamService.destroyStreams(this.streams)
       .subscribe(
         data => {
@@ -32,10 +34,12 @@ export class DestroyComponent {
           } else {
             this.notificationService.success('Destroy streams', `${data.length} stream(s) destroyed.`);
           }
+          this.isRunning = false;
           this.onDestroyed.emit(data);
           this.isOpen = false;
           this.streams = null;
         }, error => {
+          this.isRunning = false;
           this.notificationService.error('An error occurred', 'An error occurred while bulk deleting Streams. ' +
             'Please check the server logs for more details.');
           this.isOpen = false;

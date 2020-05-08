@@ -5,9 +5,6 @@ import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { StreamsModule } from './streams/streams.module';
-import { TasksJobsModule } from './tasks-jobs/tasks-jobs.module';
-import { ManageModule } from './manage/manage.module';
 import { AppService } from './shared/api/app.service';
 import { RecordService } from './shared/api/record.service';
 import { TaskService } from './shared/api/task.service';
@@ -17,30 +14,35 @@ import { FormsModule } from '@angular/forms';
 import { AboutModule } from './about/about.module';
 import { AboutService } from './shared/api/about.service';
 import { SharedModule } from './shared/shared.module';
+import { ThemeService } from './layout/theme/theme.service';
+import { StreamsModule } from './streams/streams.module';
+import { TasksJobsModule } from './tasks-jobs/tasks-jobs.module';
+import { ManageModule } from './manage/manage.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ClarityModule,
     BrowserAnimationsModule,
-    StreamsModule,
-    TasksJobsModule,
     SharedModule,
-    ManageModule,
     AboutModule,
     HttpClientModule,
     FormsModule,
     LayoutModule,
+    StreamsModule,
+    TasksJobsModule,
+    ManageModule
   ],
   providers: [
     AppService,
     RecordService,
     TaskService,
     JobService,
+    ThemeService,
     {
       provide: APP_INITIALIZER,
       useFactory: (aboutService: AboutService) => {

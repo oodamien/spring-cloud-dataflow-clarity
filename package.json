@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "toto": "angular-http-server --path ./dist/scdf-ui-clarity/"
   },
   "private": true,
   "dependencies": {
@@ -21,9 +22,11 @@
     "@angular/platform-browser-dynamic": "~9.0.7",
     "@angular/router": "~9.0.7",
     "@clr/angular": "^3.1.1",
+    "@clr/core": "^3.1.1",
     "@clr/icons": "^3.0.0",
     "@clr/ui": "^3.0.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",
+    "angular-http-server": "^1.9.0",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
     "luxon": "^1.23.0",

@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { TaskExecution, TaskExecutionPage } from '../model/task-execution.model';
 import { Platform, PlatformTaskList } from '../model/platform.model';
 import { ErrorUtils } from '../support/error.utils';
+import { DataflowEncoder } from '../support/encoder.utils';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,19 @@ export class TaskService {
       .get<any>(`/tasks/definitions/${name}`, { headers })
       .pipe(
         map(Task.parse),
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  createTask(name: string, definition: string, description: string) {
+    const params = new HttpParams({ encoder: new DataflowEncoder() })
+      .append('definition', definition)
+      .append('name', name)
+      .append('description', description);
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    return this.httpClient
+      .post('/tasks/definitions', {}, { headers, params })
+      .pipe(
         catchError(ErrorUtils.catchError)
       );
   }

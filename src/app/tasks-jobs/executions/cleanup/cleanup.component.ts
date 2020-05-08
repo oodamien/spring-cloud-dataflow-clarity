@@ -9,6 +9,7 @@ import { NotificationService } from '../../../shared/service/notification.servic
 })
 export class CleanupComponent {
   isOpen = false;
+  isRunning = false;
   executions: TaskExecution[];
   @Output() onCleaned = new EventEmitter();
 
@@ -22,6 +23,7 @@ export class CleanupComponent {
   }
 
   clean() {
+    this.isRunning = true;
     this.taskService.executionsClean(this.executions)
       .subscribe(
         data => {

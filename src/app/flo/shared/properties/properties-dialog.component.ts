@@ -2,9 +2,9 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { PropertiesGroupModel, SearchTextFilter } from '../support/properties-group-model';
-import { Properties } from 'spring-flo';
-import PropertiesSource = Properties.PropertiesSource;
 import { debounceTime } from 'rxjs/operators';
+import { App, ApplicationType } from '../../../shared/model/app.model';
+import { GraphNodePropertiesSource } from '../support/graph-node-properties-source';
 
 /**
  * Component for displaying application properties and capturing their values.
@@ -20,11 +20,9 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class PropertiesDialogComponent implements OnInit {
 
-  public name: string;
+  isOpen = false;
 
-  public version: string;
-
-  public type: string;
+  app: App;
 
   propertiesGroupModel: PropertiesGroupModel;
 
@@ -45,11 +43,14 @@ export class PropertiesDialogComponent implements OnInit {
 
   handleOk() {
     this.propertiesGroupModel.applyChanges();
-    // this.bsModalRef.hide();
+    this.isOpen = false;
+    this.app = null;
+    this.propertiesGroupModel = null;
   }
 
   handleCancel() {
     // this.bsModalRef.hide();
+    this.isOpen = false;
   }
 
   get okDisabled() {
@@ -63,30 +64,24 @@ export class PropertiesDialogComponent implements OnInit {
     this._searchFilterTextSubject.pipe(debounceTime(500)).subscribe(text => this.propertiesFilter.textFilter = text);
   }
 
+
+  open(name: string, type: string, version: string, propertiesSource: GraphNodePropertiesSource) {
+    this.app = new App();
+    this.app.name = name;
+    this.app.type = (type as any) as ApplicationType;
+    this.app.version = version;
+    this.propertiesGroupModel = new PropertiesGroupModel(propertiesSource);
+    this.propertiesGroupModel.load();
+    this.propertiesGroupModel.loadedSubject.subscribe();
+    this.isOpen = true;
+  }
+
+  /*
   setData(propertiesSource: PropertiesSource) {
     this.propertiesGroupModel = new PropertiesGroupModel(propertiesSource);
     this.propertiesGroupModel.load();
     this.propertiesGroupModel.loadedSubject.subscribe();
-  }
-
-  /**
-   * Define label and css class
-   */
-  getTypeClass() {
-    switch (this.type) {
-      case 'APP':
-        return 'app';
-      case 'TASK':
-        return 'danger';
-      case 'SINK':
-        return 'warning';
-      case 'PROCESSOR':
-        return 'success';
-      default:
-      case 'SOURCE':
-        return 'info';
-    }
-  }
+  }*/
 
   get searchFilterText() {
     return this._searchFilterText;

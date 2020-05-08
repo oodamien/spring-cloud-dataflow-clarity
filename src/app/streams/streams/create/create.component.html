@@ -3,13 +3,11 @@
 <app-stream-flo-create #flo></app-stream-flo-create>
 
 <button class="btn btn-secondary" type="button" (click)="back()">Cancel</button>
-<button class="btn btn-primary" type="button"
-        (click)="createStream()"
-        [disabled]="flo.isCreateStreamsDisabled">
+<button class="btn btn-primary" type="button" (click)="createStream()">
   Create stream(s)
 </button>
 
-<clr-modal [(clrModalOpen)]="isOpen" *ngIf="isOpen" [clrModalClosable]="!progressData">
+<clr-modal [(clrModalOpen)]="isOpen" *ngIf="isOpen" [clrModalClosable]="!progressData" clrModalSize="lg">
   <h3 class="modal-title" *ngIf="!progressData">Create Stream(s)</h3>
   <h3 class="modal-title" *ngIf="progressData">Creating Stream(s)...</h3>
   <div *ngIf="progressData" class="modal-body">
@@ -82,7 +80,7 @@
               (ngModelChange)="changeStreamDescription(def.index, $event)"
               placeholder="Stream Description"
               maxlength="255"
-              style="width: 360px"
+              style="width: 560px"
             >
             <clr-control-error *clrIfError="'maxlength'">Stream description must be less than 255 characters long!
             </clr-control-error>
@@ -93,12 +91,15 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" (click)="cancel()" [disabled]="progressData">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="progressData">
-      <span *ngIf="getStreams().length === 1">
-        Create the stream
+    <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="progressData || !canSubmit()">
+      <span *ngIf="getStreams().length === 1 && !progressData">
+        Create the stream(s)
       </span>
-      <span *ngIf="getStreams().length > 1">
+      <span *ngIf="getStreams().length > 1 && !progressData">
         Create the {{ getStreams().length }} streams
+      </span>
+      <span *ngIf="progressData">
+        Create stream(s)
       </span>
     </button>
   </div>

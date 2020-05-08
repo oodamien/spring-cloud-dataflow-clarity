@@ -1,10 +1,10 @@
-<clr-modal [(clrModalOpen)]="isOpen" *ngIf="executions">
+<clr-modal [(clrModalOpen)]="isOpen" *ngIf="executions" [clrModalClosable]="!isRunning">
   <h3 class="modal-title">Confirm Clean Up Task Execution(s)</h3>
-  <div class="modal-body" *ngIf="executions.length === 1">
-    <p>This action will stop the task execution <strong>{{ executions[0].executionId }}</strong> (task
+  <div class="modal-body" *ngIf="executions.length === 1 && !isRunning">
+    <p>This action will remove the data of the task execution <strong>{{ executions[0].executionId }}</strong> (task
       <strong>{{ executions[0].taskName }}</strong>). Are you sure?</p>
   </div>
-  <div class="modal-body" *ngIf="executions.length > 1">
+  <div class="modal-body" *ngIf="executions.length > 1 && !isRunning">
     <p>
       This action will remove the data of the <strong>{{ executions.length }} task executions</strong> listed below.
       Are you sure?
@@ -24,9 +24,13 @@
       </tbody>
     </table>
   </div>
+  <div class="modal-body" *ngIf="isRunning">
+    <clr-spinner clrInline clrSmall></clr-spinner>
+    Removing data...
+  </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline" (click)="isOpen = false">Cancel</button>
-    <button id="btn-stop" type="button" class="btn btn-primary" (click)="clean()">
+    <button type="button" class="btn btn-outline" (click)="isOpen = false"  [disabled]="isRunning">Cancel</button>
+    <button id="btn-stop" type="button" class="btn btn-primary" (click)="clean()"  [disabled]="isRunning">
       <span *ngIf="executions.length == 1">Clean up Task Execution</span>
       <span *ngIf="executions.length > 1">Clean up Task Executions</span>
     </button>

@@ -8,11 +8,16 @@ import { LaunchComponent } from './tasks/launch/launch.component';
 import { ExecutionComponent } from './executions/execution/execution.component';
 import { ExecutionComponent as JobExecutionComponent } from './jobs/execution/execution.component';
 import { StepComponent } from './jobs/step/step.component';
+import { CreateComponent } from './tasks/create/create.component';
 
 const routes: Routes = [
   {
     path: 'tasks-jobs/tasks',
     component: TasksComponent
+  },
+  {
+    path: 'tasks-jobs/tasks/create',
+    component: CreateComponent
   },
   {
     path: 'tasks-jobs/tasks/:name',

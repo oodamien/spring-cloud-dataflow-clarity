@@ -1,10 +1,10 @@
-<clr-modal [(clrModalOpen)]="isOpen" *ngIf="tasks">
+<clr-modal [(clrModalOpen)]="isOpen" *ngIf="tasks" [clrModalClosable]="!isRunning">
   <h3 *ngIf="tasks?.length == 1" class="modal-title">Confirm Destroy Task</h3>
   <h3 *ngIf="tasks?.length > 1" class="modal-title">Confirm Destroy Tasks</h3>
-  <div class="modal-body" *ngIf="tasks.length == 1">
+  <div class="modal-body" *ngIf="tasks.length == 1 && !isRunning">
     This action will destroy and delete the task <u><strong>{{ tasks[0].name }}</strong></u>. Are you sure?
   </div>
-  <div class="modal-body" *ngIf="tasks?.length > 1">
+  <div class="modal-body" *ngIf="tasks?.length > 1 && !isRunning">
     This action will destroy the <u><strong>{{ tasks.length }}
     task{{ tasks?.length > 1 ? 's' : '' }}</strong></u> listed below.<br/>Are you sure?
     <br/>
@@ -25,9 +25,13 @@
       </tbody>
     </table>
   </div>
+  <div class="modal-body" *ngIf="isRunning">
+    <clr-spinner clrInline clrSmall></clr-spinner>
+    Destroying task(s) ...
+  </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline" (click)="isOpen = false">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="destroy()">
+    <button type="button" class="btn btn-outline" (click)="isOpen = false" [disabled]="isRunning">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="destroy()" [disabled]="isRunning">
       <span *ngIf="tasks.length == 1">Destroy the task</span>
       <span *ngIf="tasks.length > 1">Destroy the tasks</span>
     </button>

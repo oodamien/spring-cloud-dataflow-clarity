@@ -11,6 +11,7 @@ export class DestroyComponent {
 
   tasks: Task[];
   isOpen = false;
+  isRunning = false;
   @Output() onDestroyed = new EventEmitter();
 
   constructor(private taskService: TaskService,
@@ -18,11 +19,13 @@ export class DestroyComponent {
   }
 
   open(tasks: Task[]) {
+    this.isRunning = false;
     this.tasks = tasks;
     this.isOpen = true;
   }
 
   destroy() {
+    this.isRunning = true;
     this.taskService.destroyTasks(this.tasks)
       .subscribe(
         data => {

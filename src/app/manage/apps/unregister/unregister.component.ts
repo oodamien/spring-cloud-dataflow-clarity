@@ -11,6 +11,7 @@ export class UnregisterComponent {
 
   apps: App[];
   isOpen = false;
+  isRunning = false;
   @Output() onUnregistered = new EventEmitter();
 
   constructor(private appsService: AppService,
@@ -20,9 +21,11 @@ export class UnregisterComponent {
   open(apps: App[]) {
     this.apps = apps;
     this.isOpen = true;
+    this.isRunning = false;
   }
 
   unregister() {
+    this.isRunning = true;
     this.appsService.unregisterApps(this.apps)
       .subscribe(
         data => {
@@ -37,6 +40,7 @@ export class UnregisterComponent {
           this.apps = null;
         }, error => {
           this.notificationService.error('An error occurred', error);
+          this.onUnregistered.emit(true);
           this.isOpen = false;
           this.apps = null;
         });

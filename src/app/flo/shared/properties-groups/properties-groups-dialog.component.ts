@@ -69,10 +69,13 @@ export class GroupPropertiesSources {
 })
 export class PropertiesGroupsDialogComponent implements OnInit {
 
+
+  isOpen = false;
+
   /**
    * Dialog title.
    */
-  public title: string;
+  title: string;
 
   /**
    * Groups are eventually added here and accessed from a template.

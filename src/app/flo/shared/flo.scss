@@ -1,11 +1,11 @@
 $spring-green: #1BB3A8;
 $spring-brown: #17232a;
 $body-bg: inherit;
-$btn-default-border: #EAEDEF;
+$btn-default-border: #ccc;
 $spring-light-grey: #EEEEEE;
 $btn-default-color: white;
 $btn-default-bg: #607580;
-$flo-shape-fill-color: white;
+$flo-shape-fill-color: var(--clr-custom-background-highlight);
 $spring-grey: #EAEDEF;
 
 $source-color: #0096ff;
@@ -24,8 +24,16 @@ $navy-6: #788E9A;
 $blue-4: #1F8ACC;
 $dark-2: $navy-2;
 
+
 .stream-editor {
+  padding: .5rem 0;
   position: relative;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: .5rem;
+
+  .CodeMirror {
+    height: 98px;
+  }
 
   .canvas-controls-container {
     top: 12px;
@@ -34,12 +42,12 @@ $dark-2: $navy-2;
   .flow-actions {
     position: absolute;
     display: inline-flex;
-    bottom: 0px;
+    bottom: 10px;
     z-index: 2;
 
     .divider {
       height: 16px;
-      border-right: 1px solid $navy-8;
+      border-right: 1px solid #ccc;
       margin: 0 10px;
       margin-top: 4px;
     }
@@ -85,6 +93,12 @@ $dark-2: $navy-2;
 
   #paper {
     background-color: var(--clr-global-app-background);
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+      border: 0 none;
+    }
   }
 
   #paper-container {
@@ -112,13 +126,13 @@ $dark-2: $navy-2;
 .stream-editor #sidebar-resizer {
   width: 1px;
   border-left: 12px solid var(--clr-global-app-background);
-  border-right: 1px solid #dfe5e8;
+  border-right: 1px solid #CCC;
   margin-right: 1px;
   cursor: col-resize;
 }
 
 .flow-definition-container {
-  border: 1px solid #c1c7ca;
+  border: 1px solid #ccc;
   /*border-color: $spring-green;*/
   border-radius: 2px;
   margin-top: 3px;
@@ -135,7 +149,11 @@ $dark-2: $navy-2;
   margin-bottom: 16px;
 
   .CodeMirror {
-    color: $navy-2;
+    color: var(--clr-forms-text-color, #222);
+
+    div.CodeMirror-cursor {
+      border-left-color: var(--clr-custom-border-active, #222);
+    }
   }
 }
 
@@ -289,6 +307,7 @@ svg * {
   height: calc(100% - 32px);
   width: 100%;
   padding-right: 20px;
+  background-color: var(--clr-global-app-background);
 }
 
 .palette-paper {
@@ -303,6 +322,7 @@ svg * {
 .flow-view .palette-filter {
   border-color: #ebf0f2;
   border-width: 0;
+  background-color: var(--clr-global-app-background);
 
   .palette-filter-label {
     position: relative;
@@ -329,46 +349,68 @@ svg * {
     height: ($base-unit*4);
     /* The 6px vertically centers text on FF, ignored by Webkit */
     font-size: 14px;
-    background-color: var(--clr-global-app-background);
+    // background-color: var(--clr-global-app-background);
     border: 0;
-    border-bottom: 1px solid #c1c7ca;
+    // border-bottom: 1px solid #c1c7ca;
     border-radius: 0;
     -webkit-appearance: none;
     box-shadow: none;
     box-sizing: border-box;
     color: $dark-2;
-    padding: 4px $base-unit 12px;
+    padding: 4px $base-unit 12px 40px;
     font-weight: normal;
+    position: relative;
+
+
+    background: linear-gradient(180deg, transparent 95%, var(--clr-forms-focused-color, #0072a3) 0) no-repeat;
+    background-size: 0 100%;
+    transition: background-size .2s ease;
+    border-bottom: .05rem solid #b3b3b3;
+    border-bottom-color: var(--clr-forms-border-color);
 
     &::placeholder {
-      color: red;
+      color: var(--clr-datagrid-placeholder-color);
       opacity: 1;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     &:focus {
       box-shadow: none;
-      border: 0;
-      border-bottom: 1px solid #607580;
       outline: none;
+      border-bottom-color: var(--clr-forms-focused-color, #0072a3);
+      background-size: 100% 100%;
     }
   }
 
+  .palette-filter-label {
+    position: relative;
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 22px;
+      height: 22px;
+      background: url('/assets/img/search.svg') no-repeat;
+      top: 0;
+      left: 8px;
+      opacity: .6;
+    }
+  }
 }
 
 .box {
   stroke-width: 1px;
-  stroke: $navy-7;
+  stroke: #ccc;
   fill: $flo-shape-fill-color;
 }
 
 .sync-box {
   stroke: none;
-  fill: $flo-shape-fill-color;
+  fill: #ccc;
 }
 
 .validation-errors .box {
-  fill: rgb(254, 227, 227);
+  //fill: rgb(254, 227, 227);
   stroke: #da0000;
 }
 
@@ -382,27 +424,27 @@ svg * {
 
 .stream-module {
   .stream-label {
-    fill: $navy-2;
+    fill: #444;
     font-size: 15px;
     font-weight: normal;
   }
 
   .name-label {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Metropolis", sans-serif;
     font-size: 14px;
     fill: #222;
     font-weight: bold;
   }
 
   .palette-entry-name-label {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Metropolis", sans-serif;
     font-size: 12px;
     font-weight: normal;
-    fill: #222;
+    fill: var(--clr-forms-text-color, '#222222');
   }
 
   .type-label {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Metropolis", sans-serif;
     font-size: 12px;
     font-weight: normal;
     fill: white;
@@ -411,21 +453,21 @@ svg * {
 
 .composed-task {
   .name-label {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Metropolis", sans-serif;
     font-size: 14px;
     font-weight: normal;
     fill: #222;
   }
 
   .palette-entry-name-label {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Metropolis", sans-serif;
     font-size: 12px;
     font-weight: normal;
-    fill: #222;
+    fill: var(--clr-forms-text-color, '#222');
   }
 
   .type-label {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Metropolis", sans-serif;
     font-size: 12px;
     font-weight: normal;
     fill: white;
@@ -471,20 +513,19 @@ svg * {
 }
 
 .source-module .type-label-bg {
-
-  fill: $source-color;
+  fill: var(--clr-custom-app-label-source-bg, hsl(198, 80%, 46%));
 }
 
 .processor-module .type-label-bg {
-  fill: $processor-color;
+  fill: var(--clr-custom-app-label-processor-bg, hsl(93, 67%, 38%));
 }
 
 .sink-module .type-label-bg {
-  fill: $sink-color;
+  fill: var(--clr-custom-app-label-sink-bg, hsl(46, 100%, 45%));
 }
 
 .app-module .type-label-bg {
-  fill: $app-color;
+  fill: var(--clr-custom-app-label-app-bg, hsl(282, 43%, 54%));
 }
 
 .other-module .type-label-bg {
@@ -492,7 +533,7 @@ svg * {
 }
 
 .composed-task .type-label-bg {
-  fill: #FF5400;
+  fill: var(--clr-custom-app-label-task-bg, #dc5a4f);
 }
 
 .destination .box {
@@ -505,7 +546,7 @@ svg * {
 }
 
 .CodeMirror-gutters {
-  background: $navy-11;
+  background-color: var(--clr-custom-background-highlight, #f2f2f2);
 }
 
 .CodeMirror pre.CodeMirror-placeholder {
@@ -693,9 +734,10 @@ table.zoom-canvas-control {
   background-color: transparent;
 }
 
-.tooltip {
-  position: absolute;
-}
+//
+//.tooltip {
+//  position: absolute;
+//}
 
 .code-editor-host {
   height: 120px;
@@ -722,8 +764,8 @@ table.zoom-canvas-control {
 }
 
 .flo-port {
-  fill: rgb(24, 41, 50);
-  stroke: white;
+  fill: #888;
+  stroke: var(--clr-global-app-background);
   stroke-width: 2px;
 }
 
@@ -732,7 +774,7 @@ table.zoom-canvas-control {
 }
 
 .flo-port-inner-circle {
-  fill: white;
+  fill: var(--clr-global-app-background);
   stroke: none;
 }
 
@@ -778,7 +820,7 @@ table.zoom-canvas-control {
 .joint-element.highlighted .box {
   stroke: #222;
   stroke-width: 1px;
-  fill: #fff;
+  //fill: #fff;
 }
 
 .joint-element.highlighted .select-1, .joint-element.highlighted .select-2, .joint-element.highlighted .select-3,
@@ -848,15 +890,15 @@ table.zoom-canvas-control {
   }
 
   .group-label-bg.source {
-    fill: $source-color;
+    fill: var(--clr-custom-app-label-source-bg, hsl(198, 80%, 46%));
   }
 
   .group-label-bg.processor {
-    fill: $processor-color;
+    fill: var(--clr-custom-app-label-processor-bg, hsl(93, 67%, 38%));
   }
 
   .group-label-bg.sink {
-    fill: $sink-color;
+    fill: var(--clr-custom-app-label-sink-bg, hsl(46, 100%, 45%));
   }
 
   .group-label-bg.other {
@@ -864,11 +906,11 @@ table.zoom-canvas-control {
   }
 
   .group-label-bg.app {
-    fill: $app-color;
+    fill: var(--clr-custom-app-label-app-bg, hsl(282, 43%, 54%));
   }
 
   .group-label-bg.task {
-    fill: #FF5400;
+    fill: var(--clr-custom-app-label-task-bg, #dc5a4f);
   }
 
   .group-label-bg.control-nodes {
@@ -883,7 +925,7 @@ table.zoom-canvas-control {
   }
 
   .group-line {
-    stroke: #dfe5e8;
+    stroke: #ccc;
     stroke-width: 1px;
     stroke-linecap: round;
   }
@@ -905,7 +947,7 @@ table.zoom-canvas-control {
   }
 
   .handle-separator {
-    fill: $navy-8;
+    fill: #888;
   }
 }
 
@@ -917,10 +959,14 @@ table.zoom-canvas-control {
   position: absolute;
   z-index: 1000;
   background: var(--clr-global-app-background);
-  top: 110px;
+  top: 120px;
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.CodeMirror {
+  background: var(--clr-global-app-background);
 }
 
 .flow-view {

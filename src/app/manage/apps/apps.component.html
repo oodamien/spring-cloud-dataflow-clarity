@@ -1,15 +1,17 @@
 <h1>Applications</h1>
 <clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading" [(clrDgSelected)]="!grouped ? null : selected"
               *ngIf="isInit">
-  <clr-dg-action-bar>
+  <clr-dg-action-bar *ngIf="grouped">
     <button *ngIf="grouped" type="button" class="btn btn-sm btn-outline-danger" (click)="setMode(false)">
       Cancel
     </button>
-    <button *ngIf="grouped" type="button" [disabled]="selected?.length === 0" class="btn btn-sm btn-secondary"
+    <button type="button" [disabled]="selected?.length === 0" class="btn btn-sm btn-secondary"
             (click)="unregistersApp(selected)">
       Unregister application(s)
     </button>
-    <button *ngIf="!grouped" type="button" class="btn btn-sm btn-secondary" (click)="setMode(true)">
+  </clr-dg-action-bar>
+  <clr-dg-action-bar *ngIf="!grouped">
+    <button type="button" class="btn btn-sm btn-secondary" (click)="setMode(true)">
       Group Actions
     </button>
     <button type="button" class="btn btn-sm btn-secondary" (click)="add()">
