@@ -18,6 +18,7 @@ import { CleanupComponent } from './executions/cleanup/cleanup.component';
 import { StepComponent } from './jobs/step/step.component';
 import { CreateComponent } from './tasks/create/create.component';
 import { TaskFloModule } from '../flo/task-flo.module';
+import { LogComponent } from './executions/execution/log/log.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { TaskFloModule } from '../flo/task-flo.module';
     CleanupComponent,
     JobExecutionComponent,
     StepComponent,
-    CreateComponent
+    CreateComponent,
+    LogComponent
   ],
   imports: [
     CommonModule,

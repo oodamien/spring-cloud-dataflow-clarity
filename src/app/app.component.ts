@@ -22,8 +22,8 @@ export class AppComponent {
   }
 
   constructor(private themeService: ThemeService) {
-    themeService.switchTheme('dark');
-    this.darkThemeIsActive = true;
+    // themeService.switchTheme('dark');
+    // this.darkThemeIsActive = true;
   }
 
 }

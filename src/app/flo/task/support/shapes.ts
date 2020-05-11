@@ -328,7 +328,7 @@ export const BatchLink = joint.shapes.flo.Link.extend({
     '<circle r="11" />',
     '<path transform="scale(.8) translate(-16, -16)" d="M24.778,21.419 19.276,15.917 24.777,10.415 21.949,7.585 ' +
     '16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 10.946,24.248 16.447,18.746 21.948,24.248z"/>',
-    '<title>Remove link.</title>',
+    '<titleModal>Remove link.</titleModal>',
     '</g>',
     '<g class="tool-options" event="link:options">',
     '<circle r="11" transform="translate(25)"/>',
@@ -343,7 +343,7 @@ export const BatchLink = joint.shapes.flo.Link.extend({
     '1.993c0.909-0.725,1.733-1.549,2.458-2.458l-1.993-4.193c0.347-0.647,0.633-1.334,0.851-2.049L31.229,17.736zM16,' +
     '20.871c-2.69,0-4.872-2.182-4.872-4.871c0-2.69,2.182-4.872,4.872-4.872c2.689,0,4.871,2.182,4.871,4.872C20.871,' +
     '18.689,18.689,20.871,16,20.871z"/>',
-    '<title>Properties</title>',
+    '<titleModal>Properties</titleModal>',
     '</g>',
     '</g>'
   ].join(''),
@@ -363,7 +363,7 @@ export const BatchLink = joint.shapes.flo.Link.extend({
     '<path class="marker-vertex-remove" idx="<%= idx %>" transform="scale(.8) translate(8.5, -37)" d="M24.778,21.419 ' +
     '19.276,15.917 24.777,10.415 21.949,7.585 16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 ' +
     '10.946,24.248 16.447,18.746 21.948,24.248z">',
-    '<title>Remove vertex.</title>',
+    '<titleModal>Remove vertex.</titleModal>',
     '</path>',
     '</g>'
   ].join(''),

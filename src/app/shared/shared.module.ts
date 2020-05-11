@@ -13,6 +13,14 @@ import { RouterModule } from '@angular/router';
 import { FocusDirective } from './directive/focus.directive';
 import { AutoResizeDirective } from './directive/auto-resize.directive';
 import { CommonModule } from '@angular/common';
+import { CardComponent } from './component/card/card.component';
+import {
+  GrafanaRuntimeAppDirective, GrafanaRuntimeInstanceDirective,
+  GrafanaStreamDirective,
+  GrafanaStreamsDirective,
+  GrafanaTaskDirective,
+  GrafanaTasksDirective
+} from './grafana/grafana.directive';
 
 @NgModule({
   entryComponents: [
@@ -28,7 +36,14 @@ import { CommonModule } from '@angular/common';
     ToastComponent,
     SearchComponent,
     FocusDirective,
-    AutoResizeDirective
+    AutoResizeDirective,
+    CardComponent,
+    GrafanaStreamDirective,
+    GrafanaStreamsDirective,
+    GrafanaTasksDirective,
+    GrafanaTaskDirective,
+    GrafanaRuntimeAppDirective,
+    GrafanaRuntimeInstanceDirective
   ],
   imports: [
     CommonModule,
@@ -54,7 +69,14 @@ import { CommonModule } from '@angular/common';
     DurationPipe,
     SearchComponent,
     FocusDirective,
-    AutoResizeDirective
+    AutoResizeDirective,
+    CardComponent,
+    GrafanaStreamDirective,
+    GrafanaStreamsDirective,
+    GrafanaTasksDirective,
+    GrafanaTaskDirective,
+    GrafanaRuntimeAppDirective,
+    GrafanaRuntimeInstanceDirective
   ]
 })
 export class SharedModule {

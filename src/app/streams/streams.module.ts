@@ -14,6 +14,8 @@ import { DetailsComponent } from './runtime/details/details.component';
 import { StreamFloModule } from '../flo/stream-flo.module';
 import { CreateComponent } from './streams/create/create.component';
 import { DeployFreeTextComponent } from './streams/deploy/free-text/free-text.component';
+import { StreamDeployBuilderComponent } from './streams/deploy/builder/builder.component';
+import { StreamDeployBuilderErrorsComponent } from './streams/deploy/builder/errors/errors.component';
 
 @NgModule({
   imports: [
@@ -35,6 +37,8 @@ import { DeployFreeTextComponent } from './streams/deploy/free-text/free-text.co
     DestroyComponent,
     CreateComponent,
     DeployFreeTextComponent,
+    StreamDeployBuilderComponent,
+    StreamDeployBuilderErrorsComponent
   ],
 })
 export class StreamsModule { }

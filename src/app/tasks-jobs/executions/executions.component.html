@@ -7,7 +7,7 @@
       Cancel
     </button>
     <button type="button" [disabled]="selected?.length === 0" class="btn btn-sm btn-secondary"
-              (click)="cleanup(selected)">
+            (click)="cleanup(selected)">
       Clean Up task execution(s)
     </button>
   </clr-dg-action-bar>
@@ -35,6 +35,14 @@
                  [style.width.px]="context.sizeName || 'auto'">
     <ng-container *clrDgHideableColumn="{hidden: false}">
       Task name
+    </ng-container>
+    <clr-dg-filter style="display:none;"></clr-dg-filter>
+  </clr-dg-column>
+  <clr-dg-column
+    (clrDgColumnResize)="updateContext('sizeDuration', $event)"
+    [style.width.px]="context.sizeDuration || 'auto'">
+    <ng-container *clrDgHideableColumn="{hidden: false}">
+      Duration
     </ng-container>
     <clr-dg-filter style="display:none;"></clr-dg-filter>
   </clr-dg-column>
@@ -70,6 +78,7 @@
       <a routerLink="/tasks-jobs/task-executions/{{execution.executionId}}">{{execution.executionId}}</a>
     </clr-dg-cell>
     <clr-dg-cell>{{execution.taskName}}</clr-dg-cell>
+    <clr-dg-cell>{{execution.startTime | duration: execution.endTime}}</clr-dg-cell>
     <clr-dg-cell>{{execution.startTime | datetime}}</clr-dg-cell>
     <clr-dg-cell>{{execution.endTime | datetime}}</clr-dg-cell>
     <clr-dg-cell>{{execution.exitCode}}</clr-dg-cell>

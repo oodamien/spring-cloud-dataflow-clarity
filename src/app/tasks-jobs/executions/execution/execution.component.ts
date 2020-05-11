@@ -2,12 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TaskExecution } from '../../../shared/model/task-execution.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../../shared/api/task.service';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { EMPTY, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { StopComponent } from '../stop/stop.component';
 import { CleanupComponent } from '../cleanup/cleanup.component';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { HttpError } from '../../../shared/model/error.model';
+import { LogComponent } from './log/log.component';
+import { Task } from '../../../shared/model/task.model';
+import { TaskConversion } from '../../../flo/task/model/models';
+import { ToolsService } from '../../../flo/task/tools.service';
+import get from 'lodash.get';
 
 @Component({
   selector: 'app-execution',
@@ -16,14 +20,18 @@ import { HttpError } from '../../../shared/model/error.model';
 export class ExecutionComponent implements OnInit {
 
   loading = true;
+  loadingTask = true;
   execution: TaskExecution;
-  logs: string;
+  task: Task;
+  applications: any;
+  @ViewChild('logModal', { static: true }) logModal: LogComponent;
   @ViewChild('stopModal', { static: true }) stopModal: StopComponent;
   @ViewChild('cleanModal', { static: true }) cleanModal: CleanupComponent;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private taskService: TaskService,
+              private toolsService: ToolsService,
               private notificationService: NotificationService) {
   }
 
@@ -37,29 +45,10 @@ export class ExecutionComponent implements OnInit {
             return this.taskService.getExecution(params.executionId);
           }
         ),
-        mergeMap(
-          (execution: TaskExecution) => {
-            if (execution.taskExecutionStatus === 'COMPLETE' || execution.taskExecutionStatus === 'ERROR') {
-              return this.taskService.getExecutionLogs(execution).pipe(
-                map(logs => {
-                  return {
-                    execution,
-                    logs
-                  };
-                })
-              );
-            } else {
-              return of({
-                execution,
-                logs: null
-              });
-            }
-          }
-        )
       )
-      .subscribe(({ execution, logs }) => {
+      .subscribe((execution) => {
         this.execution = execution;
-        this.logs = logs;
+        this.getTask();
         this.loading = false;
       }, (error) => {
         this.notificationService.error('An error occurred', error);
@@ -69,12 +58,53 @@ export class ExecutionComponent implements OnInit {
       });
   }
 
-  task() {
-    this.router.navigateByUrl(`/tasks-jobs/tasks/${this.execution.taskName}`);
+  getTask() {
+    this.loadingTask = true;
+    this.taskService.getTask(this.execution.taskName)
+      .subscribe((task) => {
+        this.task = task;
+        this.getApplications();
+        this.loadingTask = false;
+      }, (error) => {
+        this.notificationService.error('An error occurred', error);
+      });
+  }
+
+  getApplications() {
+    this.toolsService
+      .parseTaskTextToGraph(this.task.dslText, this.task.name)
+      .subscribe((taskConversion: TaskConversion) => {
+        let apps = [];
+        if (taskConversion.graph && taskConversion.graph.nodes) {
+          apps = taskConversion.graph.nodes.map((node) => {
+            if (node.name === 'START' || node.name === 'END') {
+              return null;
+            }
+            const item = {
+              name: node.name,
+              origin: node.name,
+              type: 'task'
+            };
+            if (get(node, 'metadata.label')) {
+              item.name = get(node, 'metadata.label');
+            }
+            return item;
+          }).filter((app) => app !== null);
+        }
+        this.applications = apps;
+      });
+  }
+
+  navigateTask() {
+    this.router.navigateByUrl(`/tasks-jobs/tasks/${this.task.name}`);
   }
 
   relaunch() {
-    this.router.navigateByUrl(`/tasks-jobs/tasks/${this.execution.taskName}/launch`);
+    this.router.navigateByUrl(`/tasks-jobs/tasks/${this.task.name}/launch`);
+  }
+
+  log() {
+    this.logModal.open(`Log task execution ${this.execution.executionId}`, this.execution);
   }
 
   stop() {

@@ -51,6 +51,7 @@ export class ContextService {
       by: 'TASK_EXECUTION_ID',
       reverse: true,
       sizeId: 160,
+      sizeDuration: 180,
       sizeStart: 230,
       sizeEnd: 230,
       sizeExit: 110,
@@ -84,11 +85,24 @@ export class ContextService {
       sizeCreatedBy: 160,
       sizePlatformName: 160,
       cols: [true, true, true, true, true, true, true]
+    },
+    stream: {
+      visualize: false,
+      child: {}
+    },
+    task: {
+      visualize: false,
+      child: {}
+    },
+    execution: {
+      child: {}
+    },
+    job: {
+      child: {}
     }
   };
 
   constructor() {
-    console.log(this.size - 800);
   }
 
   update(key, value) {

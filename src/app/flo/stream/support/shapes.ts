@@ -225,14 +225,14 @@ joint.shapes.flo.LinkDataflow = joint.shapes.flo.Link.extend({
     '<circle r="11" transform="scale(.7)"/>',
     '<path transform="scale(.6) translate(-16, -16)" d="M24.778,21.419 19.276,15.917 24.777,10.415 21.949,7.585' +
     ' 16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 10.946,24.248 16.447,18.746 21.948,24.248z"/>',
-    '<title>Remove link.</title>',
+    '<titleModal>Remove link.</titleModal>',
     '</g>',
     '<g class="tool-insert-channel" event="insert-channel">',
     '<circle r="11" transform="scale(0.7) translate(-12,-18)" style="stroke:rgb(0,0,0);fill:#ffffff;"/>',
     '<path stroke-linecap="round" transform="scale(0.7) translate(-12,-18)" d="M0,-8 L0,0 M-4,-4 L0,0 M4,-4 L0,0"' +
     ' style="stroke:rgb(0,0,0);stroke-width:2"/>',
     '<rect width="8" height="4" transform="translate(-12,-12)" style="stroke:rgb(0,0,0);fill:#ffffff;stroke-width:1"/>',
-    '<title>Insert destination</title>',
+    '<titleModal>Insert destination</titleModal>',
     '</g>',
     '<g class="tool-switch" event="switch">',
     '<circle r="11" transform="scale(0.7) translate(12, -18)" style="stroke:rgb(0,0,0);fill:#ffffff;"/>',
@@ -240,7 +240,7 @@ joint.shapes.flo.LinkDataflow = joint.shapes.flo.Link.extend({
     ' style="stroke:rgb(0,0,0);stroke-width:2" stroke-dasharray="3, 4"/>',
     '<path stroke-linecap="round" transform="scale(0.7) translate(3,-26)" d="M0,8 L8,8 M4,12 L8,8 M4,4 L8,8"' +
     ' style="stroke:rgb(0,0,0);stroke-width:2"/>',
-    '<title>Switch to/from tap</title>',
+    '<titleModal>Switch to/from tap</titleModal>',
     '</g>',
     // '<g class="tool-options" event="link:options" transform="translate(-17, -4)">',
     // '<path fill="white" transform="scale(.50)" d="M31.229,17.736c0.064-0.571,0.104-1.148,0.104-' +
@@ -254,7 +254,7 @@ joint.shapes.flo.LinkDataflow = joint.shapes.flo.Link.extend({
     // '1.993c0.909-0.725,1.733-1.549,2.458-2.458l-1.993-4.193c0.347-0.647,0.633-1.334,0.851-2.049L31.229,17.736zM16,' +
     // '20.871c-2.69,0-4.872-2.182-4.872-4.871c0-2.69,2.182-4.872,4.872-4.872c2.689,0,4.871,2.182,4.871,4.872C20.871,' +
     // '18.689,18.689,20.871,16,20.871z"/>',
-    // '<title>Properties</title>',
+    // '<titleModal>Properties</titleModal>',
     // '</g>',
     '</g>'
   ].join(''),

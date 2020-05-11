@@ -6,7 +6,7 @@ import { RenderService } from '../render.service';
 @Component({
   selector: 'app-task-flo-view',
   template: `
-    <div id="task-graph-view-container">
+    <div id="task-graph-view-container" class="task-flo-view">
       <flo-editor (floApi)="setEditorContext($event)" [metamodel]="metamodelService" [renderer]="renderService"
                   [dsl]="dsl" [paperPadding]="paperPadding">
       </flo-editor>

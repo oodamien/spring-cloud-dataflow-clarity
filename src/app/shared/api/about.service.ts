@@ -20,15 +20,15 @@ export class AboutService {
   }
 
   load(): Observable<About> {
-    this.httpClient
+    return this.httpClient
       .get<any>('/about')
       .pipe(
         map(About.parse),
+        map((about: About) => {
+          this.aboutSubject.next(about);
+          return about;
+        }),
         catchError(ErrorUtils.catchError)
-      )
-      .subscribe((about: About) => {
-        this.aboutSubject.next(about);
-      });
-    return this.getAbout();
+      );
   }
 }

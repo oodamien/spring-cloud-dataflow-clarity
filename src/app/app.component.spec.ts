@@ -26,7 +26,7 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('scdf-ui-clarity');
   });
 
-  it('should render title', () => {
+  it('should render titleModal', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;

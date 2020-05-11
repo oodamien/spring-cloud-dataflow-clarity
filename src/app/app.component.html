@@ -11,16 +11,13 @@
       <a routerLink="about" class="nav-link nav-icon" aria-label="settings">
         <clr-icon shape="info-standard"></clr-icon>
       </a>
-      <a class="nav-link nav-icon-text" style="display: flex; cursor: pointer;">
-        <input type="checkbox" clrToggle [checked]="darkThemeIsActive" (click)="toggleDarkTheme()"/>
-      </a>
     </div>
 
 <!--    <app-user-header-action class="header-actions"></app-user-header-action>-->
   </clr-header>
 
   <div class="content-container">
-    <clr-vertical-nav [clrVerticalNavCollapsible]="true">
+    <clr-vertical-nav>
 <!--      <clr-vertical-nav-group routerLinkActive="active" clrVerticalNavGroupExpanded="true">-->
 <!--        <clr-icon shape="dashboard" clrVerticalNavIcon></clr-icon>-->
 <!--        Dashboards-->
@@ -103,6 +100,16 @@
 
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
+
+
+      <div class="clr-vertical-nav-bottom">
+        <button class="btn btn-sm btn-link" (click)="toggleDarkTheme()">
+          <clr-icon shape="sun" *ngIf="darkThemeIsActive"></clr-icon>
+          <clr-icon shape="moon" *ngIf="!darkThemeIsActive"></clr-icon>
+          {{!darkThemeIsActive ? 'Dark' : 'Light'}}
+        </button>
+      </div>
+
     </clr-vertical-nav>
 <!--    <app-left-navi *ngIf="loggedIn$|async"></app-left-navi>-->
     <div class="content-area">

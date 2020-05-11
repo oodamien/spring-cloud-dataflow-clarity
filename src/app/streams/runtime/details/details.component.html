@@ -3,6 +3,9 @@
     Instances for app
     <strong>{{runtimeApp.deploymentId}}</strong>&nbsp;
     <span class="label label-{{runtimeApp.stateColor()}}">{{runtimeApp.state}}</span>
+    <button class="btn btn-sm btn-secondary" grafanaDashboardRuntimeApp [runtimeApp]="runtimeApp">
+      Grafana dashboard
+    </button>
   </h3>
   <div class="modal-body">
 
@@ -12,10 +15,14 @@
           Instance
           <strong>{{ item.instanceId }}</strong>&nbsp;
           <span class="label label-{{item.stateColor()}}">{{item.state}}</span>
+          <button class="btn btn-sm btn-secondary" grafanaDashboardRuntimeInstance [instance]="item">
+            Grafana dashboard
+          </button>
         </h4>
+
         <!--          <span *ngIf="grafanaEnabled" style="margin-left: 1rem; float: right;margin-top:-4px;">-->
         <!--            <button type="button" (click)="grafanaInstanceDashboard(item)" class="btn btn-default btn-fa"-->
-        <!--                    title="Grafana Dashboard">-->
+        <!--                    titleModal="Grafana Dashboard">-->
         <!--              <span class="icon-custom icon-custom-grafana"></span>-->
         <!--              Grafana Dashboard-->
         <!--            </button>-->

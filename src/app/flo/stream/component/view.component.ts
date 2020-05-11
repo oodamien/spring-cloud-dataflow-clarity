@@ -1,8 +1,9 @@
-import { AfterContentInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { StreamService } from '../../../shared/api/stream.service';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { MetamodelService } from '../metamodel.service';
 import { RenderService } from '../render.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stream-flo-view',
@@ -17,9 +18,9 @@ import { RenderService } from '../render.service';
     </div>
   `
 })
-export class StreamFloViewComponent implements OnDestroy, AfterContentInit {
+export class StreamFloViewComponent implements OnDestroy, OnChanges {
   @Input() id: string;
-  @Input() dsl = '';
+  dsl = '';
   @Input() nested = true;
 
   constructor(private streamService: StreamService,
@@ -28,13 +29,12 @@ export class StreamFloViewComponent implements OnDestroy, AfterContentInit {
               public renderService: RenderService) {
   }
 
-  ngAfterContentInit() {
+  ngOnChanges() {
     this.metamodelService.clearCachedData();
     if (this.nested) {
       this.streamService
         .getStreamsRelated(this.id, true)
         .subscribe(streams => {
-          console.log(streams);
           this.dsl = streams.map(s => `${s.name}=${s.dslText}`).join('\n');
         }, (error) => {
           this.notificationService.error(`An error occured`, error);

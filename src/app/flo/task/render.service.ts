@@ -282,7 +282,7 @@ export class RenderService implements Flo.Renderer {
 
   /**
    * After a link is constructed it is initialized, this is a chance to fill in the label for it
-   * (which is used as the title in the properties view for it).
+   * (which is used as the titleModal in the properties view for it).
    */
   initializeNewLink(link: dia.Link, context: Flo.ViewerDescriptor) { // context contains paper and graph
     const paper = context.paper;

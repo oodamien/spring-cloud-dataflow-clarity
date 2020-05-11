@@ -8,7 +8,6 @@ import { HttpError } from '../../../shared/model/error.model';
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { LoggerService } from '../../../shared/service/logger.service';
 import { ClipboardCopyService } from '../../../shared/service/clipboard-copy.service';
-import { AboutService } from '../../../shared/api/about.service';
 import { Parser } from '../../../flo/shared/service/parser';
 import { DateTime } from 'luxon';
 import { StreamDeployService } from './stream-deploy.service';
@@ -27,11 +26,8 @@ export class DeployComponent implements OnInit, OnDestroy {
   stream: Stream;
   loading = true;
   isDeploying = false;
-  state: any = {
-    view: 'builder'
-  };
-
-  private ngUnsubscribe$: Subject<any> = new Subject();
+  state: any = { view: 'builder' };
+  ngUnsubscribe$: Subject<any> = new Subject();
   properties: Array<string> = [];
   ignoreProperties: Array<string> = [];
 
@@ -41,8 +37,7 @@ export class DeployComponent implements OnInit, OnDestroy {
               private loggerService: LoggerService,
               private streamDeployService: StreamDeployService,
               private router: Router,
-              private clipboardCopyService: ClipboardCopyService,
-              private aboutService: AboutService) {
+              private clipboardCopyService: ClipboardCopyService) {
   }
 
   /**

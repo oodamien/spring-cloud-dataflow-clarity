@@ -101,7 +101,7 @@ export class StreamDeployService {
                     options: null
                   }).pipe(
                     mergeMap(
-                      (val1: any) => this.appService.getAppVersions(val1.origin, ApplicationType[node.type])
+                      (val1: any) => this.appService.getAppVersions(val1.origin, node.type as any)
                         .pipe(map((val2: App[]) => {
                           val1.versions = val2;
                           const current = val2.find((a: App) => a.defaultVersion);

@@ -54,6 +54,7 @@
               [id]="def.index.toString()"
               [name]="def.index.toString()"
               [formControlName]="def.index.toString()"
+              [dataflowFocus]="i == 0"
               clrControl
               type="text"
               placeholder="Stream Name"
@@ -92,15 +93,7 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-default" (click)="cancel()" [disabled]="progressData">Cancel</button>
     <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="progressData || !canSubmit()">
-      <span *ngIf="getStreams().length === 1 && !progressData">
-        Create the stream(s)
-      </span>
-      <span *ngIf="getStreams().length > 1 && !progressData">
-        Create the {{ getStreams().length }} streams
-      </span>
-      <span *ngIf="progressData">
-        Create stream(s)
-      </span>
+      Create the stream(s)
     </button>
   </div>
 </clr-modal>

@@ -26,6 +26,9 @@
     <button type="button" class="btn btn-sm btn-secondary" (click)="create()">
       Create stream(s)
     </button>
+    <button type="button" class="btn btn-sm btn-secondary" grafanaDashboardStreams>
+      Grafana Dashboard
+    </button>
     <button type="button" class="btn btn-sm btn-secondary" (click)="refresh(state)">
       <clr-icon shape="refresh"></clr-icon>
       Refresh
@@ -70,17 +73,24 @@
     <clr-dg-cell><span class="label label-{{stream.statusColor()}}">{{stream.status}}</span></clr-dg-cell>
     <clr-dg-action-overflow *ngIf="!grouped">
       <button class="action-item" (click)="details(stream)">Details</button>
-      <button class="action-item" (click)="deploy([stream])">Deploy</button>
+      <button class="action-item" (click)="deploy([stream])" *ngIf="stream.status === 'UNDEPLOYED'">
+        Deploy
+      </button>
+      <button class="action-item" (click)="deploy([stream])" *ngIf="stream.status !== 'UNDEPLOYED'">
+        Update
+      </button>
       <button class="action-item" (click)="undeploy([stream])"
-              [disabled]="stream.status === 'UNDEPLOYED'">Undeploy
+              *ngIf="stream.status !== 'UNDEPLOYED' || stream.status !== 'INCOMPLETE'">
+        Undeploy
       </button>
       <button class="action-item" (click)="destroy([stream])">Destroy</button>
+      <button class="action-item" grafanaDashboardStream [stream]="stream">Grafana Dashboard</button>
     </clr-dg-action-overflow>
     <ng-template [(clrIfExpanded)]="expended[stream.name]"
                  ngProjectAs="clr-dg-row-detail">
       <clr-dg-row-detail>
         <div class="clr-detail-flo">
-          <app-stream-flo-view id="{{stream.name}}" dsl="{{stream.dslText}}"></app-stream-flo-view>
+          <app-stream-flo-view id="{{stream.name}}"></app-stream-flo-view>
         </div>
       </clr-dg-row-detail>
     </ng-template>

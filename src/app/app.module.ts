@@ -47,7 +47,7 @@ import { ManageModule } from './manage/manage.module';
       provide: APP_INITIALIZER,
       useFactory: (aboutService: AboutService) => {
         return () => {
-          return aboutService.load();
+          return aboutService.load().toPromise();
           // return authService.loadSecurityInfo(true)
           //   .pipe(
           //     map(securityInfo => {

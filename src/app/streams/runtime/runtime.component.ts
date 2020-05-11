@@ -30,6 +30,7 @@ export class RuntimeComponent implements OnInit {
 
   details(runtimeApp: RuntimeApp) {
     this.detailsModal.open(runtimeApp);
+    return false;
   }
 
 

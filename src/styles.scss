@@ -121,7 +121,7 @@ a:link, a:visited {
   text-transform: uppercase;
 }
 
-.stream-flo-view {
+.stream-flo-view, .task-flo-view {
   height: 300px;
   overflow: hidden;
 
@@ -212,30 +212,103 @@ a:link, a:visited {
 
 // App Labels
 .label-app {
+  text-transform: uppercase;
 
   &.source {
     background: var(--clr-custom-app-label-source-bg, hsl(198, 80%, 46%));
     border-color: var(--clr-custom-app-label-source-bg, hsl(198, 80%, 46%));
     color: var(--clr-custom-app-label-source-text, white);
   }
+
   &.sink {
     background: var(--clr-custom-app-label-sink-bg, hsl(46, 100%, 45%));
     border-color: var(--clr-custom-app-label-sink-bg, hsl(46, 100%, 45%));
     color: var(--clr-custom-app-label-sink-text, white);
   }
+
   &.processor {
     background: var(--clr-custom-app-label-processor-bg, hsl(93, 67%, 38%));
     border-color: var(--clr-custom-app-label-processor-bg, hsl(93, 67%, 38%));
     color: var(--clr-custom-app-label-processor-text, white);
   }
+
   &.app {
     background: var(--clr-custom-app-label-app-bg, hsl(282, 43%, 54%));
     border-color: var(--clr-custom-app-label-app-bg, hsl(282, 43%, 54%));
     color: var(--clr-custom-app-label-app-text, white);
   }
+
   &.task {
     background: var(--clr-custom-app-label-task-bg, #dc5a4f);
     border-color: var(--clr-custom-app-label-task-bg, #dc5a4f);
     color: var(--clr-custom-app-label-task-text, white);
   }
+}
+
+.card-block-keyvalue {
+  .row {
+    padding: .2rem 0;
+    display: flex;
+
+    .key {
+      min-width: 120px;
+      max-width: 120px;
+      font-weight: bold;
+    }
+
+    .value {
+      word-break: break-all;
+    }
+  }
+  &.lg-key {
+    .key {
+      min-width: 220px;
+      max-width: 220px;
+      font-weight: bold;
+    }
+  }
+
+  .list-item {
+    padding: .4rem 0;
+    border-bottom: 1px solid var(--clr-card-border-color, #dedede);
+
+    &:last-child {
+      border-bottom: 0 none;
+    }
+
+    h4 {
+      padding: .2rem 0;
+      margin: 0;
+      font-size: 15px;
+    }
+  }
+}
+
+.dataflow-card {
+  .card-header {
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    a {
+      text-decoration: none;
+    }
+    .icon {
+      transition: transform .15s;
+      transform: rotate(90deg);
+    }
+  }
+  &.active {
+    .card-header {
+      .icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+.clr-vertical-nav-bottom {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }

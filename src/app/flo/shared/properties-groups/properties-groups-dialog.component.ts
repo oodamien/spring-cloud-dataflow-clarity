@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/index';
 import { debounceTime } from 'rxjs/operators';
 
 /**
- * Class to add group title to a model.
+ * Class to add group titleModal to a model.
  */
 export class GroupPropertiesGroupModel extends PropertiesGroupModel {
 
@@ -73,7 +73,7 @@ export class PropertiesGroupsDialogComponent implements OnInit {
   isOpen = false;
 
   /**
-   * Dialog title.
+   * Dialog titleModal.
    */
   title: string;
 
