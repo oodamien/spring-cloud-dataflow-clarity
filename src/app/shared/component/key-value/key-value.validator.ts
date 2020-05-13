@@ -50,47 +50,53 @@ export class KeyValueValidator {
   }
 
   static getErrors(value: string, validators: KeyValueValidators): Array<any> {
-    if (value.toString() === '') {
+    if (value.trim().toString() === '') {
       return [];
     }
     return (value.toString() || ' ')
       .split('\n')
       .map((line: string, index: number) => {
         const lineClean = line.replace(' ', '');
-        let messages = [KeyValueValidator.validateSyntax(lineClean)];
-        const obj = KeyValueValidator.splitValue(lineClean);
-        if (obj) {
-          messages = messages.concat(validators.key
-            .map((validator: Function): string => {
-              const formControl = new FormControl(obj.key);
-              const errors: ValidationErrors = validator.apply(null, [formControl]);
-              if (errors) {
-                return Object.keys(errors).map((key: string): string => {
-                  return errors[key] as string;
-                }).join(', ');
-              }
-              return null;
-            }));
-          messages = messages.concat(validators.value
-            .map((validator: Function): string => {
-              const formControl = new FormControl(obj.value);
-              const errors: ValidationErrors = validator.apply(null, [formControl]);
-              if (errors) {
-                return Object.keys(errors).map((key: string): string => {
-                  return errors[key] as string;
-                }).join(', ');
-              }
-              return null;
-            }));
+        let obj = KeyValueValidator.splitValue(lineClean);
+        if (!obj) {
+          obj = {
+            key: '',
+            value: ''
+          };
         }
+        const messages = [
+          KeyValueValidator.validateSyntax(lineClean),
+          ...validators.key
+            .map((validator: Function): string => {
+              const formControl = new FormControl(obj.key || null);
+              const errors: ValidationErrors = validator.apply(null, [formControl]);
+              if (errors) {
+                return Object.keys(errors).map((key: string): string => {
+                  return errors[key] as string;
+                }).join(', ');
+              }
+              return null;
+            }),
+          ...validators.value
+            .map((validator: Function): string => {
+              const formControl = new FormControl(obj.value || null);
+              const errors: ValidationErrors = validator.apply(null, [formControl]);
+              if (errors) {
+                return Object.keys(errors).map((key: string): string => {
+                  return errors[key] as string;
+                }).join(', ');
+              }
+              return null;
+            })
+        ];
         const message = messages
-          .filter((mess) => !!mess)
+          .filter((mess) => mess !== null)
           .join('\n');
 
         return {
           label: (index + 1),
           valid: (message === ''),
-          message: message
+          message
         };
       });
   }

@@ -312,3 +312,23 @@ a:link, a:visited {
   bottom: 10px;
   left: 10px;
 }
+
+.register-item, .register-item-empty {
+  border: 1px solid var(--clr-card-border-color, #dedede);
+  padding: 0 1rem 1rem 1rem;
+  margin: 2rem 0 0 0;
+}
+
+.register-item-empty {
+  text-align: center;
+  min-height: 150px;
+  align-items: center;
+  display: flex;
+  .btn {
+    margin: 0 auto;
+  }
+}
+
+.clr-accordion-footer {
+  padding: 1rem 0;
+}

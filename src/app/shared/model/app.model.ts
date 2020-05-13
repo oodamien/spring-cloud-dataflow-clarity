@@ -8,6 +8,15 @@ export enum ApplicationType {
   task
 }
 
+export namespace ApplicationType {
+  export function getKeys(): number[] {
+    return Object.keys(ApplicationType).filter(isNumber).map(value => Number(value));
+  }
+  function isNumber(element, index, array) {
+    return !isNaN(element);
+  }
+}
+
 export class App {
   name: string;
   type: ApplicationType;

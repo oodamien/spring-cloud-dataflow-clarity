@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpUtils } from '../support/http.utils';
 import { forkJoin, Observable, throwError } from 'rxjs';
 import { App, ApplicationType, AppPage } from '../model/app.model';
@@ -37,12 +37,12 @@ export class AppService {
   }
 
   getApp(name: string, type: ApplicationType, appVersion?: string): Observable<DetailedApp> {
-    const httpHeaders = HttpUtils.getDefaultHttpHeaders();
+    const headers = HttpUtils.getDefaultHttpHeaders();
     let url = `/apps/${type}/${name}`;
     if (appVersion) {
       url = `/apps/${type}/${name}/${appVersion}`;
     }
-    return this.httpClient.get(url, { headers: httpHeaders })
+    return this.httpClient.get(url, { headers })
       .pipe(
         map(DetailedApp.parse),
         catchError(ErrorUtils.catchError)
@@ -61,13 +61,13 @@ export class AppService {
   }
 
   unregisterApp(app: App): Observable<any> {
-    const httpHeaders = HttpUtils.getDefaultHttpHeaders();
+    const headers = HttpUtils.getDefaultHttpHeaders();
     let url = `/apps/${app.type}/${app.name}`;
     if (app.version) {
       url = `${url}/${app.version}`;
     }
     return this.httpClient
-      .delete(url, { headers: httpHeaders })
+      .delete(url, { headers })
       .pipe(
         catchError(ErrorUtils.catchError)
       );
@@ -76,4 +76,49 @@ export class AppService {
   unregisterApps(apps: App[]): Observable<any[]> {
     return forkJoin(apps.map(app => this.unregisterApp(app)));
   }
+
+  importUri(uri: string, force: boolean): Observable<any> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    const params = new HttpParams()
+      .append('uri', uri)
+      .append('force', force ? 'true' : 'false');
+    return this.httpClient
+      .post('/apps', {}, { headers, params })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  importProps(properties: string, force: boolean): Observable<any> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    const params = new HttpParams()
+      .append('apps', properties)
+      .append('force', force ? 'true' : 'false');
+    return this.httpClient
+      .post('/apps', {}, { headers, params })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  registerProp(prop: any): Observable<any> {
+    let params = new HttpParams()
+      .append('uri', prop.uri)
+      .append('force', prop.force.toString());
+    if (prop.metaDataUri) {
+      params = params.append('metadata-uri', prop.metaDataUri);
+    }
+    const headers = HttpUtils.getDefaultHttpHeaders();
+
+    return this.httpClient
+      .post(`/apps/${ApplicationType[prop.type]}/${prop.name}`, {}, { params, headers })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
+  registerProps(props: Array<any>): Observable<any> {
+    return forkJoin(props.map(prop => this.registerProp(prop)));
+  }
+
 }
