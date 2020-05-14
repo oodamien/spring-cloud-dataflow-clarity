@@ -21,6 +21,7 @@ import { UriComponent } from './apps/add/uri/uri.component';
 import { PropsComponent } from './apps/add/props/props.component';
 import { StreamImportComponent } from './import-export/stream/import.component';
 import { StreamExportComponent } from './import-export/stream/export.component';
+import { TaskExportComponent } from './import-export/task/export.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { StreamExportComponent } from './import-export/stream/export.component';
     UriComponent,
     PropsComponent,
     StreamImportComponent,
-    StreamExportComponent
+    StreamExportComponent,
+    TaskExportComponent
   ],
   imports: [
     CommonModule,

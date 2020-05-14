@@ -3,14 +3,15 @@ import { Stream } from '../../../shared/model/stream.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { StreamService } from '../../../shared/api/stream.service';
-import { catchError, debounceTime, map, mergeMap } from 'rxjs/operators';
+import { debounceTime, map, mergeMap } from 'rxjs/operators';
 import { HttpError } from '../../../shared/model/error.model';
-import { EMPTY, Observable, of, Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { LoggerService } from '../../../shared/service/logger.service';
 import { ClipboardCopyService } from '../../../shared/service/clipboard-copy.service';
 import { Parser } from '../../../flo/shared/service/parser';
 import { DateTime } from 'luxon';
 import { StreamDeployService } from './stream-deploy.service';
+import { saveAs } from 'file-saver';
 import get from 'lodash.get';
 
 @Component({
@@ -144,8 +145,7 @@ export class DeployComponent implements OnInit, OnDestroy {
       const date = DateTime.local().toFormat('yyyy-MM-HHmmss');
       const filename = `${this.stream.name}_${date}.txt`;
       const blob = new Blob([propertiesText], { type: 'text/plain' });
-      // TODO!
-      // saveAs(blob, filename);
+      saveAs(blob, filename);
     }
   }
 
