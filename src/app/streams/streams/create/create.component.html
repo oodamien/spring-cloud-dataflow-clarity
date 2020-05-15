@@ -22,7 +22,7 @@
   <div class="modal-body" *ngIf="!progressData">
     <form clrForm clrLayout="horizontal" (submit)="submit()" [formGroup]="form" clrLabelSize="4">
       <div *ngIf="errors && errors.length > 0" class="alert alert-error">
-        <div *ngFor="let error of errors">• {{ error }}</div>
+        <div *ngFor="let error of errors">• {{error}}</div>
       </div>
       <div style="margin-bottom: .8rem;">This action will create the following <strong>stream(s)</strong>:</div>
       <div class="alert alert-danger" *ngIf="form.hasError('uniqueStreamNames')">
@@ -42,7 +42,7 @@
           <div class="clr-form-control clr-row" style="margin-top:0;max-height: 16px">
             <label class="clr-control-label clr-col-12 clr-col-md-2">Definition</label>
             <div class="clr-control-container form-control input-sm clr-col-md-10 clr-col-12">
-              <!--                <app-stream-dsl>{{ def.def | truncate: 90 }}</app-stream-dsl>-->
+              <!--                <app-stream-dsl>{{def.def | truncate: 90}}</app-stream-dsl>-->
               <span class="dsl-text dsl-truncate">{{def.def}}</span>
             </div>
           </div>

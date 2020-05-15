@@ -196,7 +196,7 @@
     <span class="label label-app {{log.type}}">{{log.type}}</span>
   </h3>
   <div class="modal-body" *ngIf="!loadingLogs">
-    <pre style="overflow: scroll;max-height: 500px;font-size: 13px;"><code>{{ log.log }}</code></pre>
+    <pre style="overflow: scroll;max-height: 500px;font-size: 13px;"><code>{{log.log}}</code></pre>
   </div>
   <div class="modal-body" *ngIf="loadingLogs">
     <clr-spinner clrInline clrSmall></clr-spinner>

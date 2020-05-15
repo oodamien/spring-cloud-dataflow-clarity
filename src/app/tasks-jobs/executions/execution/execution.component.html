@@ -1,4 +1,4 @@
-<h1>Task execution - Execution ID: <strong *ngIf="execution">{{ execution?.executionId }}</strong></h1>
+<h1>Task execution - Execution ID: <strong *ngIf="execution">{{execution?.executionId}}</strong></h1>
 
 <div *ngIf="!loading">
   <div class="datagrid-action-bar">
@@ -26,8 +26,8 @@
                 <div class="value">
                   <div *ngIf="execution.getArgumentsToArray().length > 0">
                     <div *ngFor="let arg of execution.getArgumentsToArray()">
-                      {{ arg[0] }}:
-                      <strong>{{ arg[1] }}</strong>
+                      {{arg[0]}}:
+                      <strong>{{arg[1]}}</strong>
                     </div>
                   </div>
                   <div *ngIf="execution.getArgumentsToArray().length === 0">
@@ -40,7 +40,7 @@
                 <div class="value">
                   <a [routerLink]="'/jobs/executions/' + jobExecutionId"
                      *ngFor="let jobExecutionId of execution.jobExecutionIds">
-                    {{ jobExecutionId }}
+                    {{jobExecutionId}}
                   </a>
                   <div *ngIf="execution.jobExecutionIds?.length == 0">
                     N/A
@@ -57,43 +57,43 @@
               <div class="row">
                 <div class="key">Job Execution Ids</div>
                 <div class="value">
-                  {{ execution.externalExecutionId || 'N/A' }}
+                  {{execution.externalExecutionId || 'N/A'}}
                 </div>
               </div>
               <div class="row">
                 <div class="key">Start Time</div>
                 <div class="value">
-                  {{ execution.startTime | datetime }}
+                  {{execution.startTime | datetime}}
                 </div>
               </div>
               <div class="row">
                 <div class="key">End Time</div>
                 <div class="value">
-                  {{ execution.endTime | datetime }}
+                  {{execution.endTime | datetime}}
                 </div>
               </div>
               <div class="row">
                 <div class="key">Duration</div>
                 <div class="value">
-                  {{ execution.startTime | duration: execution.endTime }}
+                  {{execution.startTime | duration: execution.endTime}}
                 </div>
               </div>
               <div class="row">
                 <div class="key">Exit Code</div>
                 <div class="value">
-                  {{ execution.exitCode }}
+                  {{execution.exitCode}}
                 </div>
               </div>
               <div class="row">
                 <div class="key">Exit Message</div>
                 <div class="value">
-                  {{ execution.exitMessage || 'N/A' }}
+                  {{execution.exitMessage || 'N/A'}}
                 </div>
               </div>
               <div class="row">
                 <div class="key">Resource URL</div>
                 <div class="value">
-                  {{ execution.resourceUrl || 'N/A' }}
+                  {{execution.resourceUrl || 'N/A'}}
                 </div>
               </div>
               <div class="row">
@@ -101,8 +101,8 @@
                 <div class="value">
                   <div *ngIf="execution.getAppPropertiesToArray().length > 0">
                     <div *ngFor="let arg of execution.getAppPropertiesToArray()">
-                      {{ arg.key }}:
-                      <strong>{{ arg.value }}</strong>
+                      {{arg.key}}:
+                      <strong>{{arg.value}}</strong>
                     </div>
                   </div>
                   <div *ngIf="execution.getAppPropertiesToArray().length === 0">
@@ -115,8 +115,8 @@
                 <div class="value">
                   <div *ngIf="execution.getDeploymentPropertiesToArray().length > 0">
                     <div *ngFor="let arg of execution.getDeploymentPropertiesToArray()">
-                      {{ arg.key }}:
-                      <strong>{{ arg.value }}</strong>
+                      {{arg.key}}:
+                      <strong>{{arg.value}}</strong>
                     </div>
                   </div>
                   <div *ngIf="execution.getDeploymentPropertiesToArray().length === 0">

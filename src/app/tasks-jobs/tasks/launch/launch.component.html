@@ -9,8 +9,8 @@
       </label>
       <select clrSelect tabindex="1" formControlName="platform">
         <option *ngFor="let platform of platforms" [value]="platform.name">
-          {{ platform.name }}
-          ({{ platform.type }})
+          {{platform.name}}
+          ({{platform.type}})
         </option>
       </select>
       <clr-control-error>

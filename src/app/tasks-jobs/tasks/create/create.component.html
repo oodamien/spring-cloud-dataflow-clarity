@@ -26,7 +26,7 @@
   <div class="modal-body" *ngIf="!isCreating">
     <form clrForm clrLayout="horizontal" (submit)="submit()" [formGroup]="form" clrLabelSize="4">
       <div *ngIf="errors && errors.length > 0" class="alert alert-error">
-        <div *ngFor="let error of errors">• {{ error }}</div>
+        <div *ngFor="let error of errors">• {{error}}</div>
       </div>
       <div style="margin-bottom: .8rem;">This action will create the following <strong>stream(s)</strong>:</div>
       <div class="alert alert-danger" *ngIf="form.hasError('uniqueStreamNames')">

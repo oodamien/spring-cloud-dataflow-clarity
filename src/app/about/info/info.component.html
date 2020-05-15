@@ -45,10 +45,10 @@
       <clr-icon shape="times" *ngIf="!about.security.isAuthenticated"></clr-icon>
     </li>
     <li *ngIf="about.security.username">
-      <strong>Username: </strong> {{ about.security.username || 'N/A' }}
+      <strong>Username: </strong> {{about.security.username || 'N/A'}}
     </li>
     <div *ngIf="about.security.roles?.length > 0">
-      <strong>Roles: </strong> {{ about.security.roles }}
+      <strong>Roles: </strong> {{about.security.roles}}
     </div>
   </ul>
 
@@ -56,23 +56,23 @@
   <h3>Versions</h3>
   <ul>
     <li>
-      <strong>Implementation Version: </strong> {{ about.versions.implementation.version }}
-      ({{ about.versions.implementation.name }})
+      <strong>Implementation Version: </strong> {{about.versions.implementation.version}}
+      ({{about.versions.implementation.name}})
     </li>
     <li>
-      <strong>Core: </strong> {{ about.versions.core.version }} ({{ about.versions.core.name }})
+      <strong>Core: </strong> {{about.versions.core.version}} ({{about.versions.core.name}})
     </li>
     <li>
-      <strong>Dashboard: </strong> {{ about.versions.dashboard.version }} ({{ about.versions.dashboard.name }})
+      <strong>Dashboard: </strong> {{about.versions.dashboard.version}} ({{about.versions.dashboard.name}})
     </li>
     <li>
-      <strong>Shell: </strong> {{ about.versions.shell.version }} ({{ about.versions.shell.name }})
+      <strong>Shell: </strong> {{about.versions.shell.version}} ({{about.versions.shell.name}})
     </li>
     <li *ngIf="about.versions.shell.checksumSha1">
-      <strong>Shell Checksum Sha1: </strong> {{ about.versions.shell.checksumSha1 }}
+      <strong>Shell Checksum Sha1: </strong> {{about.versions.shell.checksumSha1}}
     </li>
     <li *ngIf="about.versions.shell.checksumSha256">
-      <strong>Shell Checksum Sha256: </strong> {{ about.versions.shell.checksumSha256 }}
+      <strong>Shell Checksum Sha256: </strong> {{about.versions.shell.checksumSha256}}
     </li>
   </ul>
 
@@ -80,35 +80,35 @@
   <ul>
     <li>
       <strong>Implementation
-        Version: </strong> {{ about.runtimeEnvironment.appDeployer.deployerImplementationVersion }}
+        Version: </strong> {{about.runtimeEnvironment.appDeployer.deployerImplementationVersion}}
     </li>
     <li>
-      <strong>Name: </strong> {{ about.runtimeEnvironment.appDeployer.deployerName || 'N/A' }}
+      <strong>Name: </strong> {{about.runtimeEnvironment.appDeployer.deployerName || 'N/A'}}
     </li>
     <li>
-      <strong>Spi Version: </strong> {{ about.runtimeEnvironment.appDeployer.deployerSpiVersion || 'N/A' }}
+      <strong>Spi Version: </strong> {{about.runtimeEnvironment.appDeployer.deployerSpiVersion || 'N/A'}}
     </li>
     <li>
-      <strong>Java Version: </strong> {{ about.runtimeEnvironment.appDeployer.javaVersion || 'N/A' }}
+      <strong>Java Version: </strong> {{about.runtimeEnvironment.appDeployer.javaVersion || 'N/A'}}
     </li>
     <li>
-      <strong>Platform Api Version: </strong> {{ about.runtimeEnvironment.appDeployer.platformApiVersion || 'N/A' }}
+      <strong>Platform Api Version: </strong> {{about.runtimeEnvironment.appDeployer.platformApiVersion || 'N/A'}}
     </li>
     <li>
       <strong>Platform Client
-        Version: </strong> {{ about.runtimeEnvironment.appDeployer.platformClientVersion || 'N/A' }}
+        Version: </strong> {{about.runtimeEnvironment.appDeployer.platformClientVersion || 'N/A'}}
     </li>
     <li>
-      <strong>Platform Host Version: </strong> {{ about.runtimeEnvironment.appDeployer.platformHostVersion || 'N/A' }}
+      <strong>Platform Host Version: </strong> {{about.runtimeEnvironment.appDeployer.platformHostVersion || 'N/A'}}
     </li>
     <li>
-      <strong>Platform Type: </strong> {{ about.runtimeEnvironment.appDeployer.platformType || 'N/A' }}
+      <strong>Platform Type: </strong> {{about.runtimeEnvironment.appDeployer.platformType || 'N/A'}}
     </li>
     <li>
-      <strong>Spring Boot Version: </strong> {{ about.runtimeEnvironment.appDeployer.springBootVersion || 'N/A' }}
+      <strong>Spring Boot Version: </strong> {{about.runtimeEnvironment.appDeployer.springBootVersion || 'N/A'}}
     </li>
     <li>
-      <strong>Spring Version: </strong> {{ about.runtimeEnvironment.appDeployer.springVersion || 'N/A' }}
+      <strong>Spring Version: </strong> {{about.runtimeEnvironment.appDeployer.springVersion || 'N/A'}}
     </li>
   </ul>
 
@@ -118,7 +118,7 @@
       *ngIf="about.runtimeEnvironment.appDeployer.platformSpecificInfo && about.runtimeEnvironment.appDeployer.platformSpecificInfo.size > 0"
       ngFor let-item [ngForOf]="about.runtimeEnvironment.appDeployer.platformSpecificInfo | keyvalue">
       <li>
-        <strong>{{ item.key }}: </strong> {{ item.value }}
+        <strong>{{item.key}}: </strong> {{item.value}}
       </li>
     </ng-template>
     <li
@@ -139,34 +139,34 @@
       <ul *ngIf="!isEmpty(about.runtimeEnvironment.taskLaunchers)" id="taskLauncherTable">
         <ng-template ngFor let-item [ngForOf]="about.runtimeEnvironment.taskLaunchers">
           <li>
-            <strong>Implementation Version: </strong> {{ item.deployerImplementationVersion }}
+            <strong>Implementation Version: </strong> {{item.deployerImplementationVersion}}
           </li>
           <li>
-            <strong>Name: </strong> {{ item.deployerName }}
+            <strong>Name: </strong> {{item.deployerName}}
           </li>
           <li>
-            <strong>Spi Version: </strong> {{ item.deployerSpiVersion }}
+            <strong>Spi Version: </strong> {{item.deployerSpiVersion}}
           </li>
           <li>
-            <strong>Java Version: </strong> {{ item.javaVersion }}
+            <strong>Java Version: </strong> {{item.javaVersion}}
           </li>
           <li>
-            <strong>Platform Api Version: </strong> {{ item.platformApiVersion }}
+            <strong>Platform Api Version: </strong> {{item.platformApiVersion}}
           </li>
           <li>
-            <strong>Platform Client Version: </strong> {{ item.platformClientVersion }}
+            <strong>Platform Client Version: </strong> {{item.platformClientVersion}}
           </li>
           <li>
-            <strong>Platform Host Version: </strong> {{ item.platformHostVersion }}
+            <strong>Platform Host Version: </strong> {{item.platformHostVersion}}
           </li>
           <li>
-            <strong>Platform Type: </strong> {{ item.platformType }}
+            <strong>Platform Type: </strong> {{item.platformType}}
           </li>
           <li>
-            <strong>Spring Boot Version: </strong> {{ item.springBootVersion }}
+            <strong>Spring Boot Version: </strong> {{item.springBootVersion}}
           </li>
           <li>
-            <strong>Spring Version: </strong> {{ item.springVersion }}
+            <strong>Spring Version: </strong> {{item.springVersion}}
           </li>
           <li>
             <strong>Platform-specific Information of the Task Launcher</strong>
@@ -176,7 +176,7 @@
                 ngFor let-item
                 [ngForOf]="item.platformSpecificInfo | keyvalue">
                 <li>
-                  <strong>{{ item.key }}: </strong> {{ item.value }}
+                  <strong>{{item.key}}: </strong> {{item.value}}
                 </li>
               </ng-template>
               <li *ngIf="!item.platformSpecificInfo || item.platformSpecificInfo.size == 0">
@@ -205,13 +205,13 @@
     </li>
     <li>
       <a target="_blank"
-         href="https://docs.spring.io/spring-cloud-dataflow/docs/{{ about.versions.core.version }}/reference/htmlsingle/">
+         href="https://docs.spring.io/spring-cloud-dataflow/docs/{{about.versions.core.version}}/reference/htmlsingle/">
         <strong>Documentation</strong>: Learn more about the product features.
       </a>
     </li>
     <li>
       <a target="_blank"
-         href="https://docs.spring.io/spring-cloud-dataflow/docs/{{ about.versions.core.version }}/reference/htmlsingle/#api-guide-resources">
+         href="https://docs.spring.io/spring-cloud-dataflow/docs/{{about.versions.core.version}}/reference/htmlsingle/#api-guide-resources">
         <strong>API Docs</strong>: Learn more about the REST-APIs.
       </a>
     </li>

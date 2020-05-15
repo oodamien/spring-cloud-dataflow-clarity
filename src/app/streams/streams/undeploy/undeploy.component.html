@@ -2,11 +2,11 @@
   <h3 *ngIf="streams?.length == 1" class="modal-title">Confirm Undeploy Stream</h3>
   <h3 *ngIf="streams?.length > 1" class="modal-title">Confirm Undeploy Streams</h3>
   <div class="modal-body" *ngIf="streams.length == 1 && !isRunning">
-    This action will undeploy the stream <strong>{{ streams[0].name }}</strong>.
+    This action will undeploy the stream <strong>{{streams[0].name}}</strong>.
     Are you sure?
   </div>
   <div class="modal-body" *ngIf="streams?.length > 1 && !isRunning">
-    This action will undeploy the <strong>{{ streams.length }} stream definitions</strong> listed below.
+    This action will undeploy the <strong>{{streams.length}} stream definitions</strong> listed below.
     Are you sure?
     <br/>
     <table class="table table-striped">
@@ -18,7 +18,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let stream of streams">
-        <td class="left"><strong class="text-truncate" style="max-width: 230px">{{ stream.name }}</strong></td>
+        <td class="left"><strong class="text-truncate" style="max-width: 230px">{{stream.name}}</strong></td>
         <td class="left">
           <span class="dsl-text dsl-truncate" style="max-width: 200px">{{stream.dslText}}</span>
         </td>

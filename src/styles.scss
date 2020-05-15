@@ -199,6 +199,12 @@ a:link, a:visited {
   height: 42px;
 }
 
+.clr-datagrid-no-fixed-height {
+  .datagrid-scrolling-cells {
+    height: auto;
+  }
+}
+
 .clr-accordion-content {
   background-color: var(--clr-global-app-background, #fafafa);
   border-color: var(--clr-accordion-border-color, #cccccc);
@@ -331,4 +337,28 @@ a:link, a:visited {
 
 .clr-accordion-footer {
   padding: 1rem 0;
+}
+
+.clr-file-input-wrapper {
+  input {
+    display: none;
+  }
+  label {
+    display: inline-block;
+    border-bottom: 1px solid var(--clr-forms-border-color,#b3b3b3);
+    padding-bottom: 1px;
+  }
+  span.filename {
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+    .text-truncate {
+      height: 22px;
+    }
+  }
+  span.btn {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+  }
 }

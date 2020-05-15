@@ -5,79 +5,81 @@ import { ImportExportService } from '../../../shared/service/import-export.servi
 @Component({
   selector: 'app-manage-stream-import',
   template: `
-    <clr-modal [(clrModalOpen)]="isOpen" [clrModalClosable]="view !== 'loading'">
+    <clr-modal [(clrModalOpen)]="isOpen" [clrModalClosable]="view !== 'loading'" [clrModalSize]="view === 'result' ? 'lg' : 'md'">
       <h3 class="modal-title">Import stream(s)</h3>
-      <div class="modal-body" *ngIf="view === 'file'">
+      <div class="modal-body clr-form clr-form-horizontal" *ngIf="view === 'file'">
         <div>
           You can import your streams from a <strong>JSON file</strong>.<br/>
           The file needs to be modified for sensitive properties before importing.
         </div>
-        <div class="form-group">
-          <label>JSON file</label>
-          <label class="control-file" for="file">
-            <span class="filename">{{ file?.name }}</span>
-            <span class="button">Select a file</span>
-            <input name="file" id="file" type='file' (change)="fileChanged($event)">
-          </label>
-        </div>
-        <div class="form-group form-group-options">
-          <div class="options-title">
-            <strong>Options:</strong>
-          </div>
-          <div>
-            <label class="checkbox-inline">
-              <input type="checkbox" [(ngModel)]="optimize"/>
-              Optimize the import (sort)
-            </label>
+        <div class="clr-form-control clr-row">
+          <label class="clr-col-2 clr-control-label">JSON file</label>
+          <div class="clr-control-container clr-col-10">
+            <div class="clr-file-input-wrapper">
+              <label for="file">
+                <span class="filename text-truncate">{{file?.name}}</span>
+                <span class="btn btn-sm btn-secondary">Select a file</span>
+                <input name="file" id="file" type='file' (change)="fileChanged($event)">
+              </label>
+            </div>
           </div>
         </div>
+        <clr-checkbox-container class="clr-form-control clr-row">
+          <label class="clr-col-2">Options</label>
+          <clr-checkbox-wrapper>
+            <input type="checkbox" clrCheckbox name="options" value="option1" [(ngModel)]="optimize" class="clr-col-10"/>
+            <label>Optimize</label>
+          </clr-checkbox-wrapper>
+        </clr-checkbox-container>
       </div>
       <div class="modal-body" *ngIf="view === 'result'">
         <div>
-          File: <strong>{{ file?.name }}</strong><br/>
-          Duration: <strong>{{ result.duration }}s</strong>
+          File: <strong>{{file?.name}}</strong><br/>
+          Duration: <strong>{{result.duration}}s</strong>
         </div>
         <div *ngIf="result.error.length > 0">
-          <h4>{{ result.error.length }} error(s)</h4>
-          <table class="table  table-noborder table-compact">
-            <tbody>
-            <ng-container *ngFor="let stream of result.error; index as i">
-              <tr class="error">
-                <td width="10px" class="left">
-                  ICON
-                </td>
-                <td class="left">
-                  <div>
-                    <strong>{{ stream.name }}</strong><br/>
-                    <app-stream-dsl>{{ stream.dslText }}</app-stream-dsl>
-                  </div>
-                  <div class="error">
-                    Message: {{ stream.message}}<br/>
-                    Index: {{ i }}
-                  </div>
-                </td>
-              </tr>
-            </ng-container>
-            </tbody>
-          </table>
+          <h4>{{result.error.length}} error(s)</h4>
+          <clr-datagrid class="clr-datagrid-no-fixed-height">
+            <clr-dg-column [style.width.px]="10">&nbsp;</clr-dg-column>
+            <clr-dg-column>Description</clr-dg-column>
+            <clr-dg-row *clrDgItems="let stream of result.error; index as i">
+              <clr-dg-cell>
+                <clr-icon shape="error-standard" class="is-solid"></clr-icon>
+              </clr-dg-cell>
+              <clr-dg-cell>
+                <div style="padding-bottom: 6px;">
+                  <strong>{{stream.name}}</strong>
+                </div>
+                <div style="padding-bottom: 4px;">
+                  <span class="dsl-text dsl-truncate">{{stream.dslText}}</span>
+                </div>
+                <div class="error">
+                  Message: {{stream.message}}<br/>
+                  Index: {{i}}
+                </div>
+              </clr-dg-cell>
+            </clr-dg-row>
+          </clr-datagrid>
         </div>
         <div *ngIf="result.success.length > 0">
-          <h4>{{ result.success.length }} stream(s) created</h4>
-          <table class="table table-noborder table-compact">
-            <tbody>
-            <ng-container *ngFor="let stream of result.success; index as i">
-              <tr class="created">
-                <td width="10px" class="left">
-                  ICON
-                </td>
-                <td class="left">
-                  <strong>{{ stream.name }}</strong><br/>
-                  <app-stream-dsl>{{ stream.dslText }}</app-stream-dsl>
-                </td>
-              </tr>
-            </ng-container>
-            </tbody>
-          </table>
+          <h4>{{result.success.length}} stream(s) created</h4>
+          <clr-datagrid class="clr-datagrid-no-fixed-height">
+            <clr-dg-column [style.width.px]="10">&nbsp;</clr-dg-column>
+            <clr-dg-column>Description</clr-dg-column>
+            <clr-dg-row *clrDgItems="let stream of result.success">
+              <clr-dg-cell>
+                <clr-icon shape="success-standard" class="is-solid"></clr-icon>
+              </clr-dg-cell>
+              <clr-dg-cell>
+                <div style="padding-bottom: 6px;">
+                  <strong>{{stream.name}}</strong>
+                </div>
+                <div>
+                  <span class="dsl-text">{{stream.dslText}}</span>
+                </div>
+              </clr-dg-cell>
+            </clr-dg-row>
+          </clr-datagrid>
         </div>
       </div>
       <div class="modal-body" *ngIf="view === 'importing'">

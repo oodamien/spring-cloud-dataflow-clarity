@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="form-control form-control-label">
-                  {{ deployer.name }}
+                  {{deployer.name}}
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
                 Deployment Platform
                 <!--
                 <span *ngIf="builder.formGroup.get('platform').value">
-                  ({{ builder.formGroup.get('platform').value }})
+                  ({{builder.formGroup.get('platform').value}})
                 </span>
                 -->
               </a>
@@ -118,7 +118,7 @@
                   <!--                  </ng-template>-->
                 </div>
 
-                <input tabindex="{{ 50 + i }}" placeholder="Enter a value" class="clr-input"
+                <input tabindex="{{50 + i}}" placeholder="Enter a value" class="clr-input"
                        formControlName="property" type="text"/>
               </div>
             </div>
@@ -173,7 +173,7 @@
                     <!--                    </ng-template>-->
                   </div>
 
-                  <input tabindex="{{ 102 + i }}" placeholder="Enter a value" class="clr-input"
+                  <input tabindex="{{102 + i}}" placeholder="Enter a value" class="clr-input"
                          formControlName="property" type="text"/>
                 </div>
               </div>
@@ -198,13 +198,13 @@
                 <select tabindex="1" formControlName="platform" clrSelect>
                   <option value="">Select a value</option>
                   <option *ngFor="let platform of builder.streamDeployConfig.platform.values" [value]="platform.key">
-                    {{ platform.name }}
-                    ({{ platform.type }})
+                    {{platform.name}}
+                    ({{platform.type}})
                   </option>
                   <option
                     *ngIf="isInvalidPlatform(builder.streamDeployConfig.platform.values, builder.formGroup.get('platform').value)"
                     [value]="builder.formGroup.get('platform').value">
-                    {{ builder.formGroup.get('platform').value }} (invalid)
+                    {{builder.formGroup.get('platform').value}} (invalid)
                   </option>
                 </select>
               </clr-select-container>
@@ -219,9 +219,9 @@
                    *ngFor="let deployer of builder.streamDeployConfig.deployers; let i = index"
                    [class.has-error]="builder.formGroup.get('deployers').controls[i].get('global').invalid">
 
-                <input tabindex="{{ 2 + i }}" placeholder="Enter a number" formControlName="global" class="clr-input"
+                <input tabindex="{{2 + i}}" placeholder="Enter a number" formControlName="global" class="clr-input"
                        [class.form-control-number]="deployer.suffix" type="text"/>
-                <span class="placeholder-unit">{{ deployer.suffix }}</span>
+                <span class="placeholder-unit">{{deployer.suffix}}</span>
               </div>
             </div>
 
@@ -231,9 +231,9 @@
             <div class="line-body"
                  *ngIf="state.specificPlatform && builder.builderDeploymentProperties.global.length > 0">
               <div class="form-control form-control-label">
-                <strong>{{ getDeploymentProperties(builder.builderDeploymentProperties).length }}</strong>
-                <span> /</span> {{ builder.builderDeploymentProperties.global.length }} properties
-                <button tabindex="{{ 101 }}" type="button" (click)="openDeploymentProperties(builder)"
+                <strong>{{getDeploymentProperties(builder.builderDeploymentProperties).length}}</strong>
+                <span> /</span> {{builder.builderDeploymentProperties.global.length}} properties
+                <button tabindex="{{101}}" type="button" (click)="openDeploymentProperties(builder)"
                         class="btn btn-sm btn-secondary">
                   Edit
                 </button>
@@ -246,7 +246,7 @@
               <div class="line-body" *ngFor="let f of builder.formGroup.get('specificPlatform').controls;let i = index"
                    [formGroupName]="i"
                    [class.has-error]="builder.formGroup.get('specificPlatform').controls[i].get('global').invalid">
-                <input tabindex="{{ 50 + i }}" placeholder="Enter a value" class="clr-input" formControlName="global"
+                <input tabindex="{{50 + i}}" placeholder="Enter a value" class="clr-input" formControlName="global"
                        type="text"/>
               </div>
             </div>
@@ -262,7 +262,7 @@
                 <div class="line-body" *ngFor="let f of builder.formGroup.get('global').controls;let i = index"
                      [formGroupName]="i"
                      [class.has-error]="builder.formGroup.get('global').controls[i].get('global').invalid">
-                  <input tabindex="{{ 102 + i }}" placeholder="Enter a value" class="clr-input"
+                  <input tabindex="{{102 + i}}" placeholder="Enter a value" class="clr-input"
                          formControlName="global" type="text"/>
                 </div>
               </div>
@@ -276,7 +276,7 @@
 
               <!-- 0 -->
               <div class="line-head">
-                <strong>{{ app.name }}</strong>
+                <strong>{{app.name}}</strong>
                 <br/>
                 <span class="label label-app {{app.type}}">{{app.origin}}</span>
                 <!--                TODO-->
@@ -297,10 +297,10 @@
                 <div [formGroupName]="i" class="line-body"
                      *ngFor="let deployer of builder.streamDeployConfig.deployers; let i = index"
                      [class.has-error]="builder.formGroup.get('deployers').controls[i].get(app.name).invalid">
-                  <input tabindex="{{ 2 + i }}" placeholder="Enter a number" [formControlName]="app.name"
+                  <input tabindex="{{2 + i}}" placeholder="Enter a number" [formControlName]="app.name"
                          class="clr-input"
                          [class.form-control-number]="deployer.suffix" type="text"/>
-                  <span class="placeholder-unit">{{ deployer.suffix }}</span>
+                  <span class="placeholder-unit">{{deployer.suffix}}</span>
                 </div>
               </div>
 
@@ -312,9 +312,9 @@
               <div class="line-body"
                    *ngIf="state.specificPlatform && builder.builderDeploymentProperties.global.length > 0">
                 <div class="form-control form-control-label">
-                  <strong>{{ getDeploymentProperties(builder.builderDeploymentProperties, app.name).length }}</strong>
-                  <span> /</span> {{ builder.builderDeploymentProperties.apps[app.name].length }} properties
-                  <button tabindex="{{ 101 }}" type="button" (click)="openDeploymentProperties(builder, app.name)"
+                  <strong>{{getDeploymentProperties(builder.builderDeploymentProperties, app.name).length}}</strong>
+                  <span> /</span> {{builder.builderDeploymentProperties.apps[app.name].length}} properties
+                  <button tabindex="{{101}}" type="button" (click)="openDeploymentProperties(builder, app.name)"
                           class="btn btn-sm btn-secondary">
                     Edit
                   </button>
@@ -327,7 +327,7 @@
                      *ngFor="let f of builder.formGroup.get('specificPlatform').controls;let i = index"
                      [formGroupName]="i"
                      [class.has-error]="builder.formGroup.get('specificPlatform').controls[i].get(app.name).invalid">
-                  <input tabindex="{{ 50 + i }}" placeholder="Enter a value" class="clr-input"
+                  <input tabindex="{{50 + i}}" placeholder="Enter a value" class="clr-input"
                          [formControlName]="app.name" type="text"/>
                 </div>
               </div>
@@ -341,14 +341,14 @@
                   <div formGroupName="appsVersion">
                     <div class="cell">
                       <clr-select-container style="margin-top:0;">
-                        <select tabindex="{{ 100 }}" [formControlName]="app.name" clrSelect>
-                          <option value="">Default version ({{ app.version }})</option>
+                        <select tabindex="{{100}}" [formControlName]="app.name" clrSelect>
+                          <option value="">Default version ({{app.version}})</option>
                           <option *ngFor="let version of app.versions" [value]="version.version">
-                            {{ version.version }}
+                            {{version.version}}
                           </option>
                           <option *ngIf="app.optionsState.isInvalid"
                                   [value]="builder.formGroup.get('appsVersion').get(app.name).value">
-                            {{ builder.formGroup.get('appsVersion').get(app.name).value }} (invalid)
+                            {{builder.formGroup.get('appsVersion').get(app.name).value}} (invalid)
                           </option>
                         </select>
                       </clr-select-container>
@@ -360,9 +360,9 @@
                     *ngIf="app.options && !app.optionsState.isLoading && !app.optionsState.isOnError && !app.optionsState.isInvalid"
                     class="form-control form-control-label">
                     <div *ngIf="app.options.length > 0">
-                      <strong>{{ getAppProperties(builder.builderAppsProperties, app.name).length }}</strong>
-                      <span> /</span> {{ app.options.length }} properties
-                      <button tabindex="{{ 101 }}" type="button" (click)="openApp(builder, app)"
+                      <strong>{{getAppProperties(builder.builderAppsProperties, app.name).length}}</strong>
+                      <span> /</span> {{app.options.length}} properties
+                      <button tabindex="{{101}}" type="button" (click)="openApp(builder, app)"
                               class="btn btn-sm btn-secondary">
                         Edit
                       </button>
@@ -385,7 +385,7 @@
                   <div class="line-body" *ngFor="let f of builder.formGroup.get('global').controls;let i = index"
                        [formGroupName]="i"
                        [class.has-error]="builder.formGroup.get('global').controls[i].get(app.name).invalid">
-                    <input tabindex="{{ 102 + i }}" placeholder="Enter a value" class="clr-input"
+                    <input tabindex="{{102 + i}}" placeholder="Enter a value" class="clr-input"
                            [formControlName]="app.name" type="text"/>
                   </div>
                 </div>

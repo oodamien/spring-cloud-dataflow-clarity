@@ -45,13 +45,13 @@ import { TaskGraphPropertiesSource } from '../properties/task-properties-source'
         </button>
         <clr-dropdown>
           <button class="btn btn-sm btn-secondary" clrDropdownTrigger>
-            {{ editorContext.zoomPercent }}%
+            {{editorContext.zoomPercent}}%
             <clr-icon shape="caret down"></clr-icon>
           </button>
           <clr-dropdown-menu clrPosition="top-left" *clrIfOpen>
             <div clrDropdownItem *ngFor="let val of zoomValues" [class.active]="editorContext.zoomPercent === val"
                  (click)="editorContext.zoomPercent = val">
-              {{ val }}%
+              {{val}}%
             </div>
           </clr-dropdown-menu>
         </clr-dropdown>

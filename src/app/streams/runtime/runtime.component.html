@@ -29,7 +29,7 @@
                 <span class="label label-{{runtimeApp.stateColor()}}"> {{runtimeApp.state}}</span>
               </h4>
               <p class="card-text">
-                {{ runtimeApp.appInstances.length }}
+                {{runtimeApp.appInstances.length}}
                 <span *ngIf="runtimeApp.appInstances.length > 1">instances</span>
                 <span *ngIf="!(runtimeApp.appInstances.length > 1)">instance</span>
               </p>

@@ -22,6 +22,7 @@ import { PropsComponent } from './apps/add/props/props.component';
 import { StreamImportComponent } from './import-export/stream/import.component';
 import { StreamExportComponent } from './import-export/stream/export.component';
 import { TaskExportComponent } from './import-export/task/export.component';
+import { TaskImportComponent } from './import-export/task/import.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { TaskExportComponent } from './import-export/task/export.component';
     PropsComponent,
     StreamImportComponent,
     StreamExportComponent,
-    TaskExportComponent
+    TaskExportComponent,
+    TaskImportComponent
   ],
   imports: [
     CommonModule,

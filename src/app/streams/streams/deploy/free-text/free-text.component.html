@@ -5,7 +5,7 @@
     <div class="numbers">
       <ng-template ngFor let-item [ngForOf]="lines">
         <div class="number">
-          <span [class.invalid]="!item.valid">{{ item.label }}</span>
+          <span [class.invalid]="!item.valid">{{item.label}}</span>
         </div>
       </ng-template>
     </div>

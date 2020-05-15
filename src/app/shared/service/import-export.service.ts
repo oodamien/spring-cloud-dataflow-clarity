@@ -141,7 +141,7 @@ export class ImportExportService {
     );
   }
 
-  importTasks(file: Blob, excludeChildren: boolean): Observable<any> {
+  tasksImport(file: Blob, excludeChildren: boolean): Observable<any> {
     return new Observable((subscriber: Subscriber<any>) => {
       if (!file) {
         subscriber.error('No file');

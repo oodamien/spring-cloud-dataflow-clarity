@@ -19,12 +19,12 @@ import { UnregisterComponent } from '../../../manage/apps/unregister/unregister.
         <div class="numbers">
           <ng-template ngFor let-item [ngForOf]="lines">
             <div class="number">
-              <span [class.invalid]="!item.valid">{{ item.label }}</span>
+              <span [class.invalid]="!item.valid">{{item.label}}</span>
             </div>
           </ng-template>
         </div>
         <textarea dataflowAutoResize [formControl]="form.get('textarea')" rows="5" cols="20"
-                  (blur)="onBlur()" (focus)="onFocus()" placeholder="{{ placeholder }}"></textarea>
+                  (blur)="onBlur()" (focus)="onFocus()" placeholder="{{placeholder}}"></textarea>
       </div>
     </div>
     <div class="bar">

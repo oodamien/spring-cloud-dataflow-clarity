@@ -1,7 +1,7 @@
 <h1>
-  Application <strong>{{ app.name }}</strong>&nbsp;
-  <span class="label-uppercase label label-{{ app.typeColor() }}">{{ app.type }}</span>
-  <span *ngIf="defaultApp" class="label">{{ defaultApp.version }}</span>
+  Application <strong>{{app.name}}</strong>&nbsp;
+  <span class="label-uppercase label label-{{app.typeColor()}}">{{app.type}}</span>
+  <span *ngIf="defaultApp" class="label">{{defaultApp.version}}</span>
 </h1>
 
 <div *ngIf="!loading">
@@ -19,11 +19,11 @@
     <tbody>
     <tr>
       <td class="left"><strong>URI</strong></td>
-      <td class="left">{{ defaultApp.uri }}</td>
+      <td class="left">{{defaultApp.uri}}</td>
     </tr>
     <tr>
       <td class="left"><strong>Version</strong></td>
-      <td class="left">{{ defaultApp.version }}</td>
+      <td class="left">{{defaultApp.version}}</td>
     </tr>
     </tbody>
   </table>
@@ -41,15 +41,15 @@
       <tbody>
       <tr *ngFor="let property of detailedApp.options | orderby:'name':'ASC'">
         <td class="left">
-          <strong>{{ property.name }}</strong>
+          <strong>{{property.name}}</strong>
           <div *ngIf="property.isDeprecated">
-            <span class="label label-warning">Deprecation level: {{ property.deprecation.level }}</span>
+            <span class="label label-warning">Deprecation level: {{property.deprecation.level}}</span>
           </div>
         </td>
         <td class="left">
-          <div>{{ property.description ? property.description : '(No Description Available)' }}</div>
-          <div class="type-block"><code>{{ property.type }}</code>&nbsp;<span
-            *ngIf="property.defaultValue">(Default value: <code>{{ property.defaultValue }}</code>)</span></div>
+          <div>{{property.description ? property.description : '(No Description Available)'}}</div>
+          <div class="type-block"><code>{{property.type}}</code>&nbsp;<span
+            *ngIf="property.defaultValue">(Default value: <code>{{property.defaultValue}}</code>)</span></div>
         </td>
       </tr>
       </tbody>
