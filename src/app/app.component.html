@@ -12,26 +12,24 @@
         <clr-icon shape="info-standard"></clr-icon>
       </a>
     </div>
-
-<!--    <app-user-header-action class="header-actions"></app-user-header-action>-->
+    <!--    <app-user-header-action class="header-actions"></app-user-header-action>-->
   </clr-header>
-
   <div class="content-container">
     <clr-vertical-nav>
-<!--      <clr-vertical-nav-group routerLinkActive="active" clrVerticalNavGroupExpanded="true">-->
-<!--        <clr-icon shape="dashboard" clrVerticalNavIcon></clr-icon>-->
-<!--        Dashboards-->
-<!--        <clr-vertical-nav-group-children>-->
-<!--          <a-->
-<!--            clrVerticalNavLink-->
-<!--            routerLinkActive="active"-->
-<!--            routerLink="dashboard/my-dashboard">-->
-<!--            My Dashboard-->
-<!--          </a>-->
-<!--        </clr-vertical-nav-group-children>-->
-<!--      </clr-vertical-nav-group>-->
-
-      <clr-vertical-nav-group routerLinkActive="active" clrVerticalNavGroupExpanded="true">
+      <!--      <clr-vertical-nav-group routerLinkActive="active" clrVerticalNavGroupExpanded="true">-->
+      <!--        <clr-icon shape="dashboard" clrVerticalNavIcon></clr-icon>-->
+      <!--        Dashboards-->
+      <!--        <clr-vertical-nav-group-children>-->
+      <!--          <a-->
+      <!--            clrVerticalNavLink-->
+      <!--            routerLinkActive="active"-->
+      <!--            routerLink="dashboard/my-dashboard">-->
+      <!--            My Dashboard-->
+      <!--          </a>-->
+      <!--        </clr-vertical-nav-group-children>-->
+      <!--      </clr-vertical-nav-group>-->
+      <clr-vertical-nav-group routerLinkActive="active" clrVerticalNavGroupExpanded="true"
+                              appRole appFeature="streams">
         <clr-icon shape="cloud-scale" clrVerticalNavIcon></clr-icon>
         Streams
         <clr-vertical-nav-group-children>
@@ -49,8 +47,8 @@
           </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
-
-      <clr-vertical-nav-group routerLinkActive="active" clrVerticalNavGroupExpanded="true">
+      <clr-vertical-nav-group routerLinkActive="active" clrVerticalNavGroupExpanded="true"
+                              appRole appFeature="tasks">
         <clr-icon shape="blocks-group" clrVerticalNavIcon></clr-icon>
         Tasks / Jobs
         <clr-vertical-nav-group-children>
@@ -72,17 +70,24 @@
             routerLink="tasks-jobs/job-executions">
             Jobs executions
           </a>
+          <a
+            clrVerticalNavLink
+            routerLinkActive="active"
+            routerLink="tasks-jobs/scheduler"
+            appRole
+            appFeature="schedules">
+            Scheduler
+          </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
-
       <clr-vertical-nav-group routerLinkActive="active" clrVerticalNavGroupExpanded="false">
         <clr-icon shape="cog" clrVerticalNavIcon></clr-icon>
         Manage
         <clr-vertical-nav-group-children>
           <a
-             clrVerticalNavLink
-             routerLinkActive="active"
-             routerLink="manage/apps">
+            clrVerticalNavLink
+            routerLinkActive="active"
+            routerLink="manage/apps">
             Applications
           </a>
           <a
@@ -94,14 +99,13 @@
           <a
             clrVerticalNavLink
             routerLinkActive="active"
-            routerLink="manage/import-export">
+            routerLink="manage/import-export"
+            appRole
+            appFeature="streams,tasks">
             Import / Export
           </a>
-
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
-
-
       <div class="clr-vertical-nav-bottom">
         <button class="btn btn-sm btn-link" (click)="toggleDarkTheme()">
           <clr-icon shape="sun" *ngIf="darkThemeIsActive"></clr-icon>
@@ -109,12 +113,9 @@
           {{!darkThemeIsActive ? 'Dark' : 'Light'}}
         </button>
       </div>
-
     </clr-vertical-nav>
-<!--    <app-left-navi *ngIf="loggedIn$|async"></app-left-navi>-->
     <div class="content-area">
       <router-outlet></router-outlet>
     </div>
   </div>
-
 </clr-main-container>

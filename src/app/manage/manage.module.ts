@@ -23,6 +23,7 @@ import { StreamImportComponent } from './import-export/stream/import.component';
 import { StreamExportComponent } from './import-export/stream/export.component';
 import { TaskExportComponent } from './import-export/task/export.component';
 import { TaskImportComponent } from './import-export/task/import.component';
+import { VersionComponent } from './apps/version/version.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { TaskImportComponent } from './import-export/task/import.component';
     StreamImportComponent,
     StreamExportComponent,
     TaskExportComponent,
-    TaskImportComponent
+    TaskImportComponent,
+    VersionComponent
   ],
   imports: [
     CommonModule,

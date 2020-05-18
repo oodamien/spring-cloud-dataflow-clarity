@@ -30,7 +30,6 @@ export class JobsComponent extends DatagridComponent {
 
   refresh(state: ClrDatagridStateInterface) {
     if (this.isReady()) {
-      console.log(this.context);
       super.refresh(state);
       const params = this.getParams(state, { name: '', type: '' });
       this.jobService.getExecutions(params.current - 1, params.size)

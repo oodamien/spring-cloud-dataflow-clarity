@@ -5,32 +5,45 @@ import { StreamsComponent } from './streams/streams.component';
 import { StreamComponent } from './streams/stream/stream.component';
 import { CreateComponent } from './streams/create/create.component';
 import { DeployComponent } from './streams/deploy/deploy.component';
+import { SecurityGuard } from '../security/support/security.guard';
 
 const routes: Routes = [
   {
-    path: 'streams/list',
-    component: StreamsComponent,
+    path: 'streams',
+    canActivate: [SecurityGuard],
+    data: {
+      authenticate: true,
+      roles: ['ROLE_VIEW'],
+      feature: 'streams'
+    },
+    children: [
+      {
+        path: 'list',
+        component: StreamsComponent,
+      },
+      {
+        path: 'list/create',
+        component: CreateComponent,
+      },
+      {
+        path: 'list/:name',
+        component: StreamComponent,
+      },
+      {
+        path: 'list/:name/deploy',
+        component: DeployComponent,
+      },
+      {
+        path: 'runtime',
+        component: RuntimeComponent,
+      }
+    ]
   },
-  {
-    path: 'streams/list/create',
-    component: CreateComponent,
-  },
-  {
-    path: 'streams/list/:name',
-    component: StreamComponent,
-  },
-  {
-    path: 'streams/list/:name/deploy',
-    component: DeployComponent,
-  },
-  {
-    path: 'streams/runtime',
-    component: RuntimeComponent,
-  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class StreamsRoutingModule { }
+export class StreamsRoutingModule {
+}

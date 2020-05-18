@@ -18,6 +18,11 @@ import { ThemeService } from './layout/theme/theme.service';
 import { StreamsModule } from './streams/streams.module';
 import { TasksJobsModule } from './tasks-jobs/tasks-jobs.module';
 import { ManageModule } from './manage/manage.module';
+import { SecurityModule } from './security/security.module';
+import { SecurityService } from './security/service/security.service';
+import { map, mergeMap } from 'rxjs/operators';
+import { Security } from './shared/model/security.model';
+import { of } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,8 @@ import { ManageModule } from './manage/manage.module';
     LayoutModule,
     StreamsModule,
     TasksJobsModule,
-    ManageModule
+    ManageModule,
+    SecurityModule
   ],
   providers: [
     AppService,
@@ -45,20 +51,23 @@ import { ManageModule } from './manage/manage.module';
     ThemeService,
     {
       provide: APP_INITIALIZER,
-      useFactory: (aboutService: AboutService) => {
+      useFactory: (securityService: SecurityService, aboutService: AboutService) => {
         return () => {
-          return aboutService.load().toPromise();
-          // return authService.loadSecurityInfo(true)
-          //   .pipe(
-          //     map(securityInfo => {
-          //       if (securityInfo.isAuthenticated || !securityInfo.isAuthenticationEnabled) {
-          //         sharedAboutService.loadAboutInfo();
-          //       }
-          //     })
-          //   ).toPromise();
+          return securityService.load(true)
+            .pipe(
+              mergeMap((security: Security) => {
+                if (security.isAuthenticated || !security.isAuthenticationEnabled) {
+                  return aboutService.load()
+                    .pipe(
+                      map(about => security)
+                    );
+                }
+                return of(security);
+              })
+            ).toPromise();
         };
       },
-      deps: [AboutService],
+      deps: [SecurityService, AboutService],
       multi: true
     }
   ],

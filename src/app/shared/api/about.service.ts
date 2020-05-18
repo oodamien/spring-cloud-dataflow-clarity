@@ -11,6 +11,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AboutService {
 
   private aboutSubject = new BehaviorSubject<About>(undefined);
+  about: About;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -26,6 +27,7 @@ export class AboutService {
         map(About.parse),
         map((about: About) => {
           this.aboutSubject.next(about);
+          this.about = about;
           return about;
         }),
         catchError(ErrorUtils.catchError)

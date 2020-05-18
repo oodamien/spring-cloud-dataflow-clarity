@@ -362,3 +362,9 @@ a:link, a:visited {
     vertical-align: top;
   }
 }
+
+.title-select {
+  padding-top: 1rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--clr-forms-border-color,#b3b3b3);
+}

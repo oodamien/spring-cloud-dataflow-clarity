@@ -108,7 +108,7 @@ export class RegisterComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['apps']);
+    this.router.navigate(['manage/apps']);
   }
 
 }

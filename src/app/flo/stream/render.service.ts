@@ -638,7 +638,7 @@ export class RenderService implements Flo.Renderer {
   handleLinkEvent(flo: Flo.EditorContext, event: string, link: dia.Link) {
     switch (event) {
       case 'options':
-        console.log(flo);
+        // console.log(flo);
         // TODO: migrate it
         // if (this.bsModalService) {
         //   const modalRef = this.bsModalService.show(StreamPropertiesDialogComponent, { class: 'modal-properties' });

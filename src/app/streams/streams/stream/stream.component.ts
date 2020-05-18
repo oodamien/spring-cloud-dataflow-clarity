@@ -131,7 +131,6 @@ export class StreamComponent implements OnInit {
       .subscribe((data: StreamStatus[]) => {
         // this.logs = get(data, 'logs', {});
         this.runtime = data[0];
-        console.log(this.runtime);
         this.loadingRuntime = false;
       }, (error) => {
         // Error: TODO
@@ -144,10 +143,8 @@ export class StreamComponent implements OnInit {
     this.streamService.getStreamHistory(this.stream.name)
       .subscribe((history: StreamHistory[]) => {
         // this.logs = get(data, 'logs', {});
-        console.log(history);
         this.loadingHistory = false;
         this.history = history;
-        console.log(this.logs);
       }, (error) => {
         // Error: TODO
         this.loadingRuntime = false;

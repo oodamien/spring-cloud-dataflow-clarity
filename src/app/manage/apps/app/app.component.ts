@@ -6,7 +6,7 @@ import { DetailedApp } from '../../../shared/model/detailed-app.model';
 import { UnregisterComponent } from '../unregister/unregister.component';
 import { NotificationService } from '../../../shared/service/notification.service';
 import { HttpError } from '../../../shared/model/error.model';
-import { throwError } from 'rxjs';
+import { VersionComponent } from '../version/version.component';
 
 @Component({
   selector: 'app-app',
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   selectedApp: App;
   detailedApp: DetailedApp;
   @ViewChild('unregisterModal', { static: true }) unregisterModal: UnregisterComponent;
+  @ViewChild('versionModal', { static: true }) versionModal: VersionComponent;
 
   constructor(private route: ActivatedRoute,
               private appsService: AppService,
@@ -65,14 +66,19 @@ export class AppComponent implements OnInit {
           // this.showProperties = !this.tooManyProperties;
           // this.detailedAppRegistration = detailed;
           this.detailedApp = detailedApp;
+          this.loading = false;
         },
         error => {
-          console.log(error);
           this.notificationService.error('An error occurred', error);
           if (HttpError.is404(error)) {
             this.back();
           }
-        }, () => {
+          this.detailedApp = DetailedApp.parse({
+            name: app.name,
+            version: app.version,
+            type: app.type,
+            defaultVersion: app.defaultVersion
+          });
           this.loading = false;
         });
   }
@@ -91,6 +97,10 @@ export class AppComponent implements OnInit {
 
   unregister() {
     this.unregisterModal.open([this.app]);
+  }
+
+  manageVersions() {
+    this.versionModal.open(this.detailedApp.name, this.detailedApp.type);
   }
 
 

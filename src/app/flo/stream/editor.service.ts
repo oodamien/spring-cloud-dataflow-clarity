@@ -461,10 +461,10 @@ export class EditorService implements Flo.Editor {
     const invalidOutgoing: Array<dia.Link> = [];
     let port: string;
 
-    console.log(`Validating '${group}' of '${type}'`);
+    // console.log(`Validating '${group}' of '${type}'`);
     graph.getConnectedLinks(element).forEach(link => {
       if (link.get('source').id === element.id) {
-        console.log('Outgoing link end ' + JSON.stringify(link.get('source')));
+        // console.log('Outgoing link end ' + JSON.stringify(link.get('source')));
         port = link.get('source').port;
         if (port === 'output') {
           outgoing.push(link);
@@ -475,7 +475,7 @@ export class EditorService implements Flo.Editor {
           tap.push(link);
         }
       } else if (link.get('target').id === element.id) {
-        console.log('Incoming link end ' + JSON.stringify(link.get('target')));
+        // console.log('Incoming link end ' + JSON.stringify(link.get('target')));
         port = link.get('target').port;
         if (port === 'input') {
           incoming.push(link);
@@ -485,8 +485,8 @@ export class EditorService implements Flo.Editor {
       }
     });
 
-    console.log('Outgoing number ' + outgoing.length);
-    console.log('Incoming number ' + incoming.length);
+    // console.log('Outgoing number ' + outgoing.length);
+    // console.log('Incoming number ' + incoming.length);
 
     if (invalidIncoming.length > 0) {
       errors.push({

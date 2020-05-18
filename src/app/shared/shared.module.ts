@@ -43,7 +43,7 @@ import {
     GrafanaTasksDirective,
     GrafanaTaskDirective,
     GrafanaRuntimeAppDirective,
-    GrafanaRuntimeInstanceDirective
+    GrafanaRuntimeInstanceDirective,
   ],
   imports: [
     CommonModule,
@@ -76,7 +76,7 @@ import {
     GrafanaTasksDirective,
     GrafanaTaskDirective,
     GrafanaRuntimeAppDirective,
-    GrafanaRuntimeInstanceDirective
+    GrafanaRuntimeInstanceDirective,
   ]
 })
 export class SharedModule {

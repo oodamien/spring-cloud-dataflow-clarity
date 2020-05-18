@@ -9,43 +9,55 @@ import { ExecutionComponent } from './executions/execution/execution.component';
 import { ExecutionComponent as JobExecutionComponent } from './jobs/execution/execution.component';
 import { StepComponent } from './jobs/step/step.component';
 import { CreateComponent } from './tasks/create/create.component';
+import { SecurityGuard } from '../security/support/security.guard';
 
 const routes: Routes = [
   {
-    path: 'tasks-jobs/tasks',
-    component: TasksComponent
-  },
-  {
-    path: 'tasks-jobs/tasks/create',
-    component: CreateComponent
-  },
-  {
-    path: 'tasks-jobs/tasks/:name',
-    component: TaskComponent
-  },
-  {
-    path: 'tasks-jobs/tasks/:name/launch',
-    component: LaunchComponent
-  },
-  {
-    path: 'tasks-jobs/task-executions',
-    component: ExecutionsComponent
-  },
-  {
-    path: 'tasks-jobs/task-executions/:executionId',
-    component: ExecutionComponent
-  },
-  {
-    path: 'tasks-jobs/job-executions',
-    component: JobsComponent
-  },
-  {
-    path: 'tasks-jobs/job-executions/:executionId',
-    component: JobExecutionComponent
-  },
-  {
-    path: 'tasks-jobs/job-executions/:executionId/:stepId',
-    component: StepComponent
+    path: 'tasks-jobs',
+    canActivate: [SecurityGuard],
+    data: {
+      authenticate: true,
+      roles: ['ROLE_VIEW'],
+      feature: 'tasks'
+    },
+    children: [
+      {
+        path: 'tasks',
+        component: TasksComponent
+      },
+      {
+        path: 'tasks/create',
+        component: CreateComponent
+      },
+      {
+        path: 'tasks/:name',
+        component: TaskComponent
+      },
+      {
+        path: 'tasks/:name/launch',
+        component: LaunchComponent
+      },
+      {
+        path: 'task-executions',
+        component: ExecutionsComponent
+      },
+      {
+        path: 'task-executions/:executionId',
+        component: ExecutionComponent
+      },
+      {
+        path: 'job-executions',
+        component: JobsComponent
+      },
+      {
+        path: 'job-executions/:executionId',
+        component: JobExecutionComponent
+      },
+      {
+        path: 'job-executions/:executionId/:stepId',
+        component: StepComponent
+      },
+    ]
   },
 ];
 
@@ -53,4 +65,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TasksJobsRoutingModule { }
+export class TasksJobsRoutingModule {
+}

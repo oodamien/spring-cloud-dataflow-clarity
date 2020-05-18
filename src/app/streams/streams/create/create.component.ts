@@ -13,9 +13,6 @@ import { LoggerService } from '../../../shared/service/logger.service';
 
 class ProgressData {
   constructor(public count, public total) {
-
-    console.log(total);
-    console.log(count);
   }
 
   get percent(): number {
