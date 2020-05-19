@@ -77,6 +77,15 @@ export class AppService {
     return forkJoin(apps.map(app => this.unregisterApp(app)));
   }
 
+  defaultVersion(apps: App): Observable<any> {
+    const headers = HttpUtils.getDefaultHttpHeaders();
+    return this.httpClient
+      .put(`/apps/${apps.type}/${apps.name}/${apps.version}`, { headers })
+      .pipe(
+        catchError(ErrorUtils.catchError)
+      );
+  }
+
   importUri(uri: string, force: boolean): Observable<any> {
     const headers = HttpUtils.getDefaultHttpHeaders();
     const params = new HttpParams()

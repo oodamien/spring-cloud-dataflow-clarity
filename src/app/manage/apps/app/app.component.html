@@ -85,5 +85,6 @@
 
   </div>
 </div>
+
 <app-unregister #unregisterModal (onUnregistered)="back()"></app-unregister>
-<app-version #versionModal></app-version>
+<app-version #versionModal (onChange)="getVersions()"></app-version>
