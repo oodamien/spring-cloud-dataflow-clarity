@@ -73,7 +73,7 @@ export class RuntimeAppPage extends Page <RuntimeApp> {
     }
     return page;
   }
-};
+}
 
 export class RuntimeAppInstance {
   instanceId: string;

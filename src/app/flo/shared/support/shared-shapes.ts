@@ -5,7 +5,7 @@ const joint: any = _joint;
 const g = joint.g;
 const V = joint.V;
 
-joint.connectors.smoothHorizontal = function (sourcePoint, targetPoint, route, opt) {
+joint.connectors.smoothHorizontal = function(sourcePoint, targetPoint, route, opt) {
 
   const raw = opt && opt.raw;
   let path;
@@ -39,7 +39,7 @@ joint.connectors.smoothHorizontal = function (sourcePoint, targetPoint, route, o
   return (raw) ? path : path.serialize();
 };
 
-joint.connectors.smoothVertical = function (sourcePoint, targetPoint, route, opt) {
+joint.connectors.smoothVertical = function(sourcePoint, targetPoint, route, opt) {
 
   const raw = opt && opt.raw;
   let path;

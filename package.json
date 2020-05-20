@@ -33,6 +33,7 @@
     "luxon": "^1.23.0",
     "ngx-toastr": "^12.0.1",
     "rxjs": "~6.5.4",
+    "spring-flo": "https://github.com/spring-projects/spring-flo.git#0d7c637598638c4fdd67e3d3516ce13e8a298f85",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
@@ -49,6 +50,7 @@
     "@types/jquery": "^3.3.37",
     "@types/luxon": "^1.22.0",
     "@types/node": "^12.11.1",
+
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -58,7 +60,6 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "protractor": "~5.4.3",
-    "spring-flo": "https://github.com/spring-projects/spring-flo.git#0d7c637598638c4fdd67e3d3516ce13e8a298f85",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
     "typescript": "~3.7.5"

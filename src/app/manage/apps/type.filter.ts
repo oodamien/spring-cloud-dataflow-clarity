@@ -41,7 +41,7 @@ export class TypeFilterComponent implements OnInit {
       this.value = null;
     } else {
       this.val = this.value;
-      this.value = (this.value as any) as ApplicationType
+      this.value = (this.value as any) as ApplicationType;
       this.pchanges.next(true);
     }
   }

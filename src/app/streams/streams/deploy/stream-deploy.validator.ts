@@ -95,7 +95,7 @@ export class StreamDeployValidator {
         .split('\n')
         .map((a) => a.trim())
         .filter((a) => a.toString())
-        .map((a: String) => {
+        .map((a: string) => {
           tmp = a.split(/=(.*)/);
           if (tmp.length !== 3) {
             throw new Error();

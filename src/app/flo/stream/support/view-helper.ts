@@ -53,7 +53,7 @@ export class ViewHelper {
     const V = joint.V;
 
     return joint.shapes.flo.LinkView.extend({
-      renderLabels: function() {
+      renderLabels() {
         const cache = this._V;
         let vLabels = cache.labels;
         const labelCache = this._labelCache = {};
@@ -157,7 +157,7 @@ export class ViewHelper {
     return joint.shapes.flo.ElementView.extend({
       options: joint.util.deepSupplement({}, joint.dia.ElementView.prototype.options),
 
-      renderMarkup: function() {
+      renderMarkup() {
         // Not called often. It's fine to destroy old component and create the new one, because old DOM
         // may have been altered by JointJS updates
         if (componentFactoryResolver && ELEMENT_TYPE_COMPONENT_TYPE.has(this.model.get('type'))) {
@@ -188,7 +188,7 @@ export class ViewHelper {
         }
       },
 
-      onRemove: function() {
+      onRemove() {
         if (this._angularComponentRef) {
           this._angularComponentRef.destroy();
         }

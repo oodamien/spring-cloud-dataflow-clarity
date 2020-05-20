@@ -55,7 +55,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.streams = [];
-    // this.setDsl(`foo${new Date().getTime()}=file --app=sasdasdasdasdasdsadasdasdasdsada --app.toto=asdsadsadasdsadasdsadsad|log\nbar${new Date().getTime()}=file|log\njoo${new Date().getTime()}=file|log\nair${new Date().getTime()}=file|log`);
+    // this.setDsl(`foo${new Date().getTime()}=file --app=sasdasdasdasdasdsadasdasdasdsada --app.toto=asdsadsadasdsadasdsadsad|
+    // log\nbar${new Date().getTime()}=file|log\njoo${new Date().getTime()}=file|log\nair${new Date().getTime()}=file|log`);
     // this.isOpen = true;
   }
 

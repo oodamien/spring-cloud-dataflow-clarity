@@ -12,7 +12,7 @@ export class GraphNodePropertiesSource extends Properties.DefaultCellPropertiesS
   getProperties(): Promise<Array<AppUiProperty>> {
     return super.getProperties().then(semanticProperties => {
       const notationalProperties = this.createNotationalProperties();
-      return semanticProperties ? notationalProperties.concat(<AppUiProperty[]>semanticProperties) : notationalProperties;
+      return semanticProperties ? notationalProperties.concat(semanticProperties as AppUiProperty[]) : notationalProperties;
     });
   }
 

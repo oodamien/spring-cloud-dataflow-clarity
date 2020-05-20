@@ -79,7 +79,7 @@ export class NodeComponent extends ElementComponent {
   private isLabelTruncated(labelProperty: string) {
     const displayedLabel = this.view.model.attr(labelProperty);
     if (typeof displayedLabel === 'string') {
-      return (<string> displayedLabel).endsWith('\u2026');
+      return (displayedLabel as string).endsWith('\u2026');
     }
   }
 

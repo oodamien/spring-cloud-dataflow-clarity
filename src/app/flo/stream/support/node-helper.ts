@@ -57,7 +57,7 @@ export class NodeHelper {
           joint.util.deepSupplement({
             attrs: {
               '.box': {
-                'fill': '#eef4ee',
+                fill: '#eef4ee',
               },
               '.shape': {
                 class: 'shape app-module'
@@ -77,7 +77,7 @@ export class NodeHelper {
           joint.util.deepSupplement({
             attrs: {
               '.box': {
-                'fill': '#eef4ee'
+                fill: '#eef4ee'
               },
               '.shape': {
                 class: 'shape source-module'

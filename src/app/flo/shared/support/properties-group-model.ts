@@ -22,7 +22,7 @@ export class PropertiesGroupModel extends Properties.PropertiesGroupModel {
         // array and we have hints, assume we can now use selector
         if (Array.isArray(property.hints.valueHints) && property.hints.valueHints.length > 0) {
           return new Properties.SelectControlModel(property,
-            Properties.InputType.SELECT, (<Array<any>> property.hints.valueHints)
+            Properties.InputType.SELECT, (property.hints.valueHints as Array<any>)
               .filter(o => o.value.length > 0)
               .map(o => {
                 return {
@@ -56,7 +56,7 @@ export class PropertiesGroupModel extends Properties.PropertiesGroupModel {
             }
           } else if (Array.isArray(property.valueOptions)) {
             return new Properties.SelectControlModel(property,
-              Properties.InputType.SELECT, (<Array<string>> property.valueOptions).filter(o => o.length > 0).map(o => {
+              Properties.InputType.SELECT, (property.valueOptions as Array<string>).filter(o => o.length > 0).map(o => {
                 return {
                   name: o.charAt(0).toUpperCase() + o.substr(1).toLowerCase(),
                   value: o === property.defaultValue ? undefined : o
